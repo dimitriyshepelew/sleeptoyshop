@@ -128,12 +128,9 @@
             gap: 34px;
         }
 
-        /* На мобилках навигацию часто прячут в бургер, 
-   пока оставляем ее скрытие/адаптив под ваши глобальные медиа-запросы */
         @media (max-width: 850px) {
             .nav {
                 display: none;
-                /* Скрываем на планшетах/мобилках, чтобы не ломать строку */
             }
         }
 
@@ -146,12 +143,10 @@
             color: var(--green);
         }
 
-        /* НОВЫЕ СТИЛИ ДЛЯ ИКОНОК И ДЕЙСТВИЙ */
         .header-actions {
             display: flex;
             align-items: center;
             gap: 16px;
-            /* Отступы между иконками и кнопкой */
         }
 
         @media (min-width: 990px) {
@@ -182,7 +177,6 @@
             height: 24px;
         }
 
-        /* Индикатор количества товаров в корзине */
         .cart-btn {
             position: relative;
         }
@@ -605,7 +599,6 @@
     </style>
 
     <style data-name="gallery">
-        /* БАЗОВЫЕ СТИЛИ (ДЕСКТОП) */
         .gallery {
             background: linear-gradient(to bottom, #ffffff 0%, #f8faf5 50%, #ffffff 100%);
             padding: 80px 0;
@@ -651,12 +644,10 @@
             transform: scale(1.06);
         }
 
-        /* Скрываем точки на десктопе */
         .carousel-dots {
             display: none;
         }
 
-        /* МАГИЯ ДЛЯ МОБИЛОК (До 768px) */
         @media (max-width: 768px) {
             .gallery {
                 padding: 50px 0;
@@ -673,7 +664,6 @@
                 padding: 0 10px;
             }
 
-            /* Включаем горизонтальный скролл для сетки */
             .gallery-grid {
                 display: flex;
                 grid-template-columns: none;
@@ -681,16 +671,12 @@
                 overflow-x: auto;
                 overflow-y: hidden;
                 scroll-snap-type: x mandatory;
-                /* Мягкое дотягивание слайда */
                 scroll-behavior: smooth;
                 -webkit-overflow-scrolling: touch;
                 padding: 0 20px 10px 20px;
-                /* Отступы по бокам, чтобы слайды не липли к краю экрана */
                 margin: 0 -20px;
-                /* Компенсируем контейнер сайта */
             }
 
-            /* Прячем дефолтный уродливый скроллбар */
             .gallery-grid::-webkit-scrollbar {
                 display: none;
             }
@@ -700,27 +686,20 @@
                 scrollbar-width: none;
             }
 
-            /* Настройка слайда под мобильный экран */
             .gallery-item {
                 flex: 0 0 82%;
-                /* Слайд занимает 82% экрана, показывая хвостик следующего (стимул свайпнуть) */
                 scroll-snap-align: center;
-                /* Центрируем слайд при остановке */
                 border-radius: 20px;
-                /* Чуть уменьшаем радиус для аккуратности на мобилке */
             }
 
             .gallery-item img {
                 height: 320px;
-                /* Оптимальная высота на смартфоне */
             }
 
-            /* Отключаем тяжелый hover-эффект на мобильных */
             .gallery-item:hover img {
                 transform: none;
             }
 
-            /* Показываем стильные точки-индикаторы */
             .carousel-dots {
                 display: flex;
                 justify-content: center;
@@ -736,23 +715,18 @@
                 transition: all 0.3s ease;
             }
 
-            /* Подсвечиваем первую точку. При желании можно оживить через простой JS, 
-       но даже статично они создают сильный UX-эффект "меня можно листать" */
             .dot.active {
                 background: var(--green, #1c7a2c);
                 width: 20px;
-                /* Эффект активной "вытянутой" пилюли */
                 border-radius: 4px;
             }
         }
     </style>
 
     <style data-name="reviews">
-        /* БАЗОВЫЕ СТИЛИ (ДЕСКТОП) */
         .reviews-section {
             padding: 80px 0;
             background: #fff;
-            /* Или используйте var(--bg), если нужно выделить секцию цветом */
         }
 
         .reviews-section .section-title {
@@ -783,7 +757,6 @@
             display: flex;
             flex-direction: column;
             justify-content: space-between;
-            /* Чтобы карточки одной высоты смотрелись ровно */
             border: 1px solid rgba(0, 0, 0, 0.02);
         }
 
@@ -828,12 +801,10 @@
             font-weight: 700;
         }
 
-        /* Скрываем точки на десктопе */
         .review-dots {
             display: none;
         }
 
-        /* МАГИЯ ДЛЯ МОБИЛОК (До 768px) */
         @media (max-width: 768px) {
             .reviews-section {
                 padding: 50px 0;
@@ -850,7 +821,6 @@
                 padding: 0 10px;
             }
 
-            /* Превращаем сетку во флекс с горизонтальным скроллом */
             .reviews-grid {
                 display: flex;
                 grid-template-columns: none;
@@ -861,11 +831,9 @@
                 scroll-behavior: smooth;
                 -webkit-overflow-scrolling: touch;
                 padding: 10px 20px 70px 20px;
-                /* Отступы сверху/снизу для теней */
                 margin: 0 -20px;
             }
 
-            /* Прячем дефолтный скроллбар */
             .reviews-grid::-webkit-scrollbar {
                 display: none;
             }
@@ -875,10 +843,8 @@
                 scrollbar-width: none;
             }
 
-            /* Адаптируем саму карточку отзыва */
             .review {
                 flex: 0 0 85%;
-                /* 85% ширины экрана, чтобы выглядывал край следующего отзыва */
                 scroll-snap-align: center;
                 padding: 28px 24px;
                 border-radius: 24px;
@@ -890,7 +856,6 @@
                 margin-bottom: 20px;
             }
 
-            /* Показываем точки-индикаторы */
             .review-dots {
                 display: flex;
                 justify-content: center;
@@ -915,10 +880,8 @@
     </style>
 
     <style data-name="comparison-table">
-        /* Основные стили светлой секции */
         .comparison {
             background: linear-gradient(to bottom, #ffffff 0%, #f8faf5 100%);
-            /* Чистый, мягкий светлый фон */
             color: #0f172a;
             padding: 60px 20px;
             font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
@@ -951,7 +914,6 @@
             margin-bottom: 50px;
         }
 
-        /* Контейнер для карточек */
         .compare-container {
             display: flex;
             gap: 30px;
@@ -959,7 +921,6 @@
             justify-content: center;
         }
 
-        /* Общие стили для карточек */
         .compare-card {
             background: #ffffff;
             border-radius: 24px;
@@ -973,15 +934,12 @@
             transition: transform 0.3s ease, box-shadow 0.3s ease;
         }
 
-        /* Стилизация SleepToy (Контрастный, привлекает внимание) */
         .compare-card.leader {
             border-color: var(--green, #22c55e);
             background: #ffffff;
             box-shadow: 0 20px 40px rgba(34, 197, 94, 0.08);
-            /* Нежное зеленоватое свечение */
         }
 
-        /* Насыщенный бейдж для SleepToy */
         .card-badge {
             position: absolute;
             top: -15px;
@@ -996,20 +954,16 @@
             letter-spacing: 0.5px;
         }
 
-        /* Стилизация Amazon (Выглядит блеклым и серым) */
         .compare-card.loser {
             background: #f1f5f9;
-            /* Серый «дешевый» фон */
             border-color: #e2e8f0;
             box-shadow: none;
         }
 
         .compare-card.loser .card-title {
             color: #94a3b8;
-            /* Замыленный заголовок */
         }
 
-        /* Заголовки в карточках */
         .card-title {
             font-size: 26px;
             font-weight: 800;
@@ -1023,7 +977,6 @@
             margin: 0 0 35px 0;
         }
 
-        /* Список преимуществ */
         .features-list {
             list-style: none;
             padding: 0;
@@ -1039,7 +992,6 @@
             gap: 15px;
         }
 
-        /* Иконки */
         .icon {
             display: flex;
             align-items: center;
@@ -1063,7 +1015,6 @@
             color: #dc2626;
         }
 
-        /* Текст описания фичи */
         .features-list .text strong {
             display: block;
             font-size: 16px;
@@ -1078,7 +1029,6 @@
             line-height: 1.4;
         }
 
-        /* Дополнительное размытие текста у Amazon для усиления эффекта проигрыша */
         .compare-card.loser .features-list .text strong {
             color: #64748b;
         }
@@ -1087,7 +1037,6 @@
             color: #94a3b8;
         }
 
-        /* АДАПТИВ (Мобилки) - Без скролла */
         @media (max-width: 768px) {
             .compare-container {
                 flex-direction: column;
@@ -1107,7 +1056,6 @@
 
             .compare-card.loser {
                 order: 2;
-                /* SleepToy всегда выше */
             }
         }
     </style>
@@ -1619,7 +1567,6 @@
             height: 100%;
             object-fit: cover;
         }
-        /* Стили для контейнера миниатюр */
 .hero-slider-thumbs {
     display: flex;
     justify-content: start;
@@ -1627,7 +1574,6 @@
     margin-top: 15px;
 }
 
-/* Базовый стиль кнопки-миниатюры */
 .hero-thumb {
     width: 70px;
     height: 70px;
@@ -1641,7 +1587,6 @@
     opacity: 0.6;
 }
 
-/* Картинка внутри миниатюры заполняет всю область */
 .hero-thumb img {
     width: 100%;
     height: 100%;
@@ -1649,18 +1594,15 @@
     display: block;
 }
 
-/* Эффект при наведении */
 .hero-thumb:hover {
     opacity: 0.9;
 }
 
-/* Стиль для активной миниатюры */
 .hero-thumb.active {
-    border-color: #1c7a2c; /* Цвет рамки под цвет вашей темы */
+    border-color: #1c7a2c;
     opacity: 1;
 }
 
-/* Прячем старые точки, если вы забыли удалить их стили */
 .hero-slider-dots {
     display: none !important;
 }
@@ -1694,64 +1636,43 @@
             box-shadow: 0 10px 30px rgba(0, 0, 0, .12);
         }
 
-        /* CSS-стили */
         .hero-slider-btn {
-            /* Базовые стили: убираем стандартные рамки и фон */
             background-color: #fff;
-            /* Белый фон */
             border: 1px solid #E2E8F0;
-            /* Легкая серая рамка */
             color: #1A202C;
-            /* Цвет иконки */
-
-            /* Делаем кнопку круглой */
             border-radius: 50%;
 
-            /* Размеры кнопки */
             width: 48px;
             height: 48px;
 
-            /* Центрируем иконку внутри кнопки */
             display: flex;
             align-items: center;
             justify-content: center;
 
-            /* Курсор при наведении */
             cursor: pointer;
 
-            /* Плавный переход для эффектов при наведении */
             transition: all 0.2s ease;
 
-            /* Тень */
             box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05);
         }
 
-        /* Стили при наведении (hover) */
         .hero-slider-btn:hover {
             background-color: #a4d16c;
-            /* Используем фирменный цвет #a4d16c */
             border-color: #a4d16c;
-            /* Рамка тоже меняет цвет */
 
-            /* Немного увеличиваем тень и саму кнопку */
             transform: translateY(-1px) scale(1.05);
             box-shadow: 0 6px 15px rgba(164, 209, 108, 0.3);
-            /* Тень в цвет кнопки */
         }
 
-        /* Стили для SVG внутри кнопки */
         .hero-slider-btn svg {
-            /* Иконка не должна сжиматься */
             flex-shrink: 0;
         }
 
-        /* Стили при клике (active) */
         .hero-slider-btn:active {
             transform: translateY(0) scale(1);
             box-shadow: 0 2px 5px rgba(164, 209, 108, 0.3);
         }
 
-        /* Для обеспечения доступности (aria-label) */
         .hero-slider-btn:focus {
             outline: none;
             box-shadow: 0 0 0 3px rgba(164, 209, 108, 0.3);
@@ -1924,7 +1845,6 @@
             opacity: 0;
             transform: translateY(100%);
             pointer-events: none;
-            /* чтобы нельзя было случайно кликнуть на невидимую кнопку */
         }
 
         .fixed-bottom-bar__content {
@@ -2025,11 +1945,9 @@
     </style>
 
     <style data-name="addons-cross-sell">
-        /* Базовые стили секции */
         .addons-section {
             padding: 100px 0;
             background: linear-gradient(to top, #ffffff 0%, #f8faf5 100%);
-            /* Используем ваш мягкий фон */
         }
 
         .addons-section .section-header {
@@ -2052,14 +1970,12 @@
             line-height: 1.6;
         }
 
-        /* Сетка для карточек */
         .addons-grid {
             display: grid;
             grid-template-columns: repeat(3, 1fr);
             gap: 30px;
         }
 
-        /* Стилизация карточки товара */
         .addon-card {
             background: #fff;
             border-radius: var(--radius);
@@ -2076,13 +1992,11 @@
             box-shadow: 0 30px 70px rgba(0, 0, 0, .12);
         }
 
-        /* Фокус на центральном / самом маржинальном товаре */
         .addon-card.bundle-highlight {
             border-color: var(--light-green);
             position: relative;
         }
 
-        /* Обертка картинки */
         .addon-img-wrap {
             position: relative;
             height: 260px;
@@ -2101,7 +2015,6 @@
             transform: scale(1.05);
         }
 
-        /* Бейджи на товарах */
         .card-tag {
             position: absolute;
             top: 20px;
@@ -2120,7 +2033,6 @@
             background: var(--green);
         }
 
-        /* Контентная часть карточки */
         .addon-info {
             padding: 28px;
             display: flex;
@@ -2161,10 +2073,8 @@
             line-height: 1.5;
             margin-bottom: 24px;
             flex-grow: 1;
-            /* Выравнивает кнопки по одной линии */
         }
 
-        /* Подвал карточки с ценой и кнопкой */
         .addon-footer {
             display: flex;
             align-items: center;
@@ -2193,7 +2103,6 @@
             margin-top: 4px;
         }
 
-        /* Компактная продающая кнопка */
         .addon-btn {
             padding: 12px 24px;
             font-size: 15px;
@@ -2209,7 +2118,6 @@
             transform: translateY(-2px);
         }
 
-        /* АДАПТИВНОСТЬ: Идеально на планшетах и мобилках */
         @media (max-width: 990px) {
             .addons-grid {
                 grid-template-columns: repeat(2, 1fr);
@@ -2224,7 +2132,6 @@
         @media (max-width: 650px) {
             .addons-grid {
                 grid-template-columns: 1fr;
-                /* Никакого скролла, карточки ложатся одна под другую */
                 gap: 25px;
             }
 
@@ -2264,9 +2171,7 @@
                 <a href="#">FAQ</a>
             </nav>
 
-            <!-- Группа действий справа -->
             <div class="header-actions">
-                <!-- Личный кабинет -->
                 <a href="/account" class="header-icon-btn" aria-label="Account">
                     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                         <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2" stroke-linecap="round"
@@ -2275,7 +2180,6 @@
                     </svg>
                 </a>
 
-                <!-- Корзина с индикатором количества -->
                 <a href="/cart" class="header-icon-btn cart-btn" aria-label="Cart">
                     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                         <circle cx="9" cy="21" r="1" />
@@ -2283,7 +2187,6 @@
                         <path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6" stroke-linecap="round"
                             stroke-linejoin="round" />
                     </svg>
-                    <!-- Маленький бейдж для количества товаров (опционально) -->
                     <span class="cart-count">0</span>
                 </a>
 
@@ -2340,7 +2243,6 @@
                             </button>
                         </div>
 
-                        <!-- ЗАМЕНИТЕ СТАРЫЙ .hero-slider-dots НА ЭТОТ БЛОК -->
 <div class="hero-slider-thumbs">
     <button class="hero-thumb active" aria-label="Go to slide 1">
         <img src="https://sleeptoyshop.com/cdn/shop/files/ChatGPT_Image_8_lyut._2026_r._21_12_26_1.png?v=1771080444&width=150" alt="Thumbnail 1">
@@ -2823,7 +2725,6 @@
                 Endless combinations. Endless imagination. Endless glowing fun.
             </p>
 
-            <!-- Обертка карусели для мобильных -->
             <div class="gallery-carousel-wrapper reveal">
                 <div class="gallery-grid">
 
@@ -2849,7 +2750,6 @@
 
                 </div>
 
-                <!-- Индикаторы (точки) — видны ТОЛЬКО на мобилке -->
                 <div class="carousel-dots">
                     <div class="dot active"></div>
                     <div class="dot"></div>
@@ -2868,7 +2768,6 @@
                     grid.addEventListener('scroll', () => {
                         const width = grid.clientWidth;
                         const scrollLeft = grid.scrollLeft;
-                        // Вычисляем индекс активного слайда
                         const activeIndex = Math.round(scrollLeft / (width * 0.82));
 
                         dots.forEach((dot, index) => {
@@ -2896,7 +2795,6 @@
                 brand.
             </p>
 
-            <!-- Обертка карусели для мобильных отзывов -->
             <div class="reviews-carousel-wrapper reveal">
                 <div class="reviews-grid">
 
@@ -2947,7 +2845,6 @@
 
                 </div>
 
-                <!-- Индикаторы (точки) — видны ТОЛЬКО на мобилке -->
                 <div class="carousel-dots review-dots">
                     <div class="dot active"></div>
                     <div class="dot"></div>
@@ -2958,7 +2855,6 @@
         </div>
         <script>
             document.addEventListener("DOMContentLoaded", () => {
-                // Функция оживления точек карусели
                 const initCarousel = (gridSelector, dotSelector, itemWidthPercent) => {
                     const grid = document.querySelector(gridSelector);
                     const dots = document.querySelectorAll(dotSelector);
@@ -2967,7 +2863,6 @@
                         grid.addEventListener('scroll', () => {
                             const width = grid.clientWidth;
                             const scrollLeft = grid.scrollLeft;
-                            // Рассчитываем индекс на основе процента ширины карточки
                             const activeIndex = Math.round(scrollLeft / (width * (itemWidthPercent / 100)));
 
                             dots.forEach((dot, index) => {
@@ -2981,10 +2876,8 @@
                     }
                 };
 
-                // Запускаем для отзывов (ширина 85%)
                 initCarousel('.reviews-grid', '.review-dots .dot', 85);
 
-                // Запускаем для галереи (если код галереи из прошлого шага на этой же странице, ширина 82%)
                 initCarousel('.gallery-grid', '.carousel-dots:not(.review-dots) .dot', 82);
             });
         </script>
@@ -3003,7 +2896,6 @@
 
             <div class="compare-container reveal">
 
-                <!-- Карточка SleepToy (Победитель) -->
                 <div class="compare-card leader">
                     <div class="card-badge">Our Choice</div>
                     <h3 class="card-title">SleepToy™</h3>
@@ -3048,7 +2940,6 @@
                     </ul>
                 </div>
 
-                <!-- Карточка Амазона (Проигравший) -->
                 <div class="compare-card loser">
                     <h3 class="card-title">Generic Amazon Brands</h3>
                     <p class="card-price-desc">Cheap Alternatives</p>
@@ -3235,7 +3126,6 @@
     <script>
 
        const slides = document.querySelectorAll('.hero-slide');
-// Находим миниатюры вместо старых точек
 const thumbs = document.querySelectorAll('.hero-thumb'); 
 
 const nextBtn = document.querySelector('.hero-slider-btn.next');
@@ -3245,10 +3135,10 @@ let currentSlide = 0;
 
 function updateSlider(index) {
     slides.forEach(slide => slide.classList.remove('active'));
-    thumbs.forEach(thumb => thumb.classList.remove('active')); // Переключаем класс тут
+    thumbs.forEach(thumb => thumb.classList.remove('active'));
 
     slides[index].classList.add('active');
-    thumbs[index].classList.add('active'); // И тут
+    thumbs[index].classList.add('active'); 
 }
 
 nextBtn.addEventListener('click', () => {
@@ -3267,7 +3157,6 @@ prevBtn.addEventListener('click', () => {
     updateSlider(currentSlide);
 });
 
-// Клик по миниатюре переключает слайд
 thumbs.forEach((thumb, index) => {
     thumb.addEventListener('click', () => {
         currentSlide = index;
@@ -3275,7 +3164,6 @@ thumbs.forEach((thumb, index) => {
     });
 });
 
-// Автопрокрутка раз в 5 секунд
 setInterval(() => {
     currentSlide++;
     if (currentSlide >= slides.length) {
@@ -3325,32 +3213,26 @@ setInterval(() => {
         document.addEventListener('DOMContentLoaded', () => {
             const fixedBar = document.getElementById('js-fixed-bar');
 
-            // Элементы, при появлении которых нужно скрыть бар
-            // Замените 'footer' на правильный селектор вашего футера, если это класс (например, '.footer')
             const targetElements = document.querySelectorAll('footer, .hero-buttons');
 
-            // Храним состояние: виден ли какой-то из целевых элементов прямо сейчас
             const visibleTargets = new Set();
 
             if (!fixedBar || targetElements.length === 0) return;
 
             const observerOptions = {
-                root: null, // отслеживаем относительно вьюпорта (экрана)
-                threshold: 0.1 // срабатывает, как только появляется хотя бы 10% элемента
+                root: null,
+                threshold: 0.1
             };
 
             const observer = new IntersectionObserver((entries) => {
                 entries.forEach(entry => {
                     if (entry.isIntersecting) {
-                        // Если элемент вошел в зону видимости, добавляем его в Set
                         visibleTargets.add(entry.target);
                     } else {
-                        // Если вышел — удаляем
                         visibleTargets.delete(entry.target);
                     }
                 });
 
-                // Если в Set есть хотя бы один элемент — скрываем бар, если Set пустой — показываем
                 if (visibleTargets.size > 0) {
                     fixedBar.classList.add('fixed-bottom-bar--hidden');
                 } else {
@@ -3358,7 +3240,6 @@ setInterval(() => {
                 }
             }, observerOptions);
 
-            // Запускаем слежку за каждым найденным элементом
             targetElements.forEach(element => observer.observe(element));
         });
 
