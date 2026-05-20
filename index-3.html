@@ -508,74 +508,298 @@ a{
 </style>
 
 <style data-name="gallery">
-.gallery{
-    background:#f7fbf0;
+/* БАЗОВЫЕ СТИЛИ (ДЕСКТОП) */
+.gallery {
+    background: var(--bg, #f7fbf0);
+    padding: 80px 0;
 }
 
-.gallery-grid{
-    display:grid;
-    grid-template-columns:repeat(4,1fr);
-    gap:22px;
+.gallery .section-title {
+    font-size: 48px;
+    font-weight: 900;
+    text-align: center;
+    margin-bottom: 12px;
 }
 
-.gallery-item{
-    overflow:hidden;
-    border-radius:28px;
-    position:relative;
+.gallery .section-subtitle {
+    font-size: 18px;
+    color: var(--gray, #6d6d6d);
+    text-align: center;
+    margin-bottom: 48px;
 }
 
-.gallery-item img{
-    height:380px;
-    object-fit:cover;
-    transition:1s;
+.gallery-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 22px;
 }
 
-.gallery-item:hover img{
-    transform:scale(1.08);
+.gallery-item {
+    overflow: hidden;
+    border-radius: var(--radius, 28px);
+    position: relative;
+    box-shadow: var(--shadow, 0 20px 60px rgba(0,0,0,.08));
+    background: #fff;
+}
+
+.gallery-item img {
+    width: 100%;
+    height: 380px;
+    object-fit: cover;
+    transition: transform 0.8s cubic-bezier(0.25, 1, 0.5, 1);
+    display: block;
+}
+
+.gallery-item:hover img {
+    transform: scale(1.06);
+}
+
+/* Скрываем точки на десктопе */
+.carousel-dots {
+    display: none;
+}
+
+/* МАГИЯ ДЛЯ МОБИЛОК (До 768px) */
+@media (max-width: 768px) {
+    .gallery {
+        padding: 50px 0;
+    }
+    
+    .gallery .section-title {
+        font-size: 32px;
+        padding: 0 10px;
+    }
+
+    .gallery .section-subtitle {
+        font-size: 16px;
+        margin-bottom: 30px;
+        padding: 0 10px;
+    }
+
+    /* Включаем горизонтальный скролл для сетки */
+    .gallery-grid {
+        display: flex;
+        grid-template-columns: none;
+        gap: 16px;
+        overflow-x: auto;
+        overflow-y: hidden;
+        scroll-snap-type: x mandatory; /* Мягкое дотягивание слайда */
+        scroll-behavior: smooth;
+        -webkit-overflow-scrolling: touch;
+        padding: 0 20px 10px 20px; /* Отступы по бокам, чтобы слайды не липли к краю экрана */
+        margin: 0 -20px; /* Компенсируем контейнер сайта */
+    }
+    
+    /* Прячем дефолтный уродливый скроллбар */
+    .gallery-grid::-webkit-scrollbar {
+        display: none;
+    }
+    .gallery-grid {
+        -ms-overflow-style: none;
+        scrollbar-width: none;
+    }
+
+    /* Настройка слайда под мобильный экран */
+    .gallery-item {
+        flex: 0 0 82%; /* Слайд занимает 82% экрана, показывая хвостик следующего (стимул свайпнуть) */
+        scroll-snap-align: center; /* Центрируем слайд при остановке */
+        border-radius: 20px; /* Чуть уменьшаем радиус для аккуратности на мобилке */
+    }
+
+    .gallery-item img {
+        height: 320px; /* Оптимальная высота на смартфоне */
+    }
+    
+    /* Отключаем тяжелый hover-эффект на мобильных */
+    .gallery-item:hover img {
+        transform: none;
+    }
+
+    /* Показываем стильные точки-индикаторы */
+    .carousel-dots {
+        display: flex;
+        justify-content: center;
+        gap: 8px;
+        margin-top: 20px;
+    }
+
+    .dot {
+        width: 8px;
+        height: 8px;
+        border-radius: 50%;
+        background: rgba(0, 0, 0, 0.15);
+        transition: all 0.3s ease;
+    }
+
+    /* Подсвечиваем первую точку. При желании можно оживить через простой JS, 
+       но даже статично они создают сильный UX-эффект "меня можно листать" */
+    .dot.active {
+        background: var(--green, #1c7a2c);
+        width: 20px; /* Эффект активной "вытянутой" пилюли */
+        border-radius: 4px;
+    }
 }
 </style>
 
 <style data-name="reviews">
-.reviews-grid{
-    display:grid;
-    grid-template-columns:repeat(3,1fr);
-    gap:28px;
+/* БАЗОВЫЕ СТИЛИ (ДЕСКТОП) */
+.reviews-section {
+    padding: 80px 0;
+    background: #fff; /* Или используйте var(--bg), если нужно выделить секцию цветом */
 }
 
-.review{
-    background:#fff;
-    padding:38px;
-    border-radius:30px;
-    box-shadow:var(--shadow);
+.reviews-section .section-title {
+    font-size: 48px;
+    font-weight: 900;
+    text-align: center;
+    margin-bottom: 12px;
 }
 
-.review-stars{
-    color:#ffb400;
-    margin-bottom:20px;
-    font-size:24px;
+.reviews-section .section-subtitle {
+    font-size: 18px;
+    color: var(--gray, #6d6d6d);
+    text-align: center;
+    margin-bottom: 48px;
 }
 
-.review p{
-    line-height:1.9;
-    color:#444;
-    margin-bottom:28px;
+.reviews-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 28px;
 }
 
-.review-user{
-    display:flex;
-    align-items:center;
-    gap:16px;
+.review {
+    background: #fff;
+    padding: 38px;
+    border-radius: var(--radius, 30px);
+    box-shadow: var(--shadow, 0 20px 60px rgba(0,0,0,.08));
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between; /* Чтобы карточки одной высоты смотрелись ровно */
+    border: 1px solid rgba(0, 0, 0, 0.02);
 }
 
-.review-user img{
-    width:70px;
-    height:70px;
-    border-radius:50%;
-    object-fit:cover;
+.review-stars {
+    color: #ffb400;
+    margin-bottom: 20px;
+    font-size: 24px;
+    letter-spacing: -1px;
 }
 
-.review-user strong{
-    display:block;
+.review p {
+    font-size: 16px;
+    line-height: 1.8;
+    color: #444;
+    margin-bottom: 28px;
+}
+
+.review-user {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+}
+
+.review-user img {
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+    object-fit: cover;
+    flex-shrink: 0;
+}
+
+.review-user strong {
+    display: block;
+    font-size: 16px;
+    font-weight: 800;
+    color: var(--text, #111);
+}
+
+.review-user span {
+    font-size: 13px;
+    color: var(--green, #1c7a2c);
+    font-weight: 700;
+}
+
+/* Скрываем точки на десктопе */
+.review-dots {
+    display: none;
+}
+
+/* МАГИЯ ДЛЯ МОБИЛОК (До 768px) */
+@media (max-width: 768px) {
+    .reviews-section {
+        padding: 50px 0;
+    }
+
+    .reviews-section .section-title {
+        font-size: 32px;
+        padding: 0 10px;
+    }
+
+    .reviews-section .section-subtitle {
+        font-size: 16px;
+        margin-bottom: 30px;
+        padding: 0 10px;
+    }
+
+    /* Превращаем сетку во флекс с горизонтальным скроллом */
+    .reviews-grid {
+        display: flex;
+        grid-template-columns: none;
+        gap: 16px;
+        overflow-x: auto;
+        overflow-y: hidden;
+        scroll-snap-type: x mandatory;
+        scroll-behavior: smooth;
+        -webkit-overflow-scrolling: touch;
+        padding: 10px 20px 70px 20px; /* Отступы сверху/снизу для теней */
+        margin: 0 -20px;
+    }
+
+    /* Прячем дефолтный скроллбар */
+    .reviews-grid::-webkit-scrollbar {
+        display: none;
+    }
+    .reviews-grid {
+        -ms-overflow-style: none;
+        scrollbar-width: none;
+    }
+
+    /* Адаптируем саму карточку отзыва */
+    .review {
+        flex: 0 0 85%; /* 85% ширины экрана, чтобы выглядывал край следующего отзыва */
+        scroll-snap-align: center;
+        padding: 28px 24px;
+        border-radius: 24px;
+    }
+
+    .review p {
+        font-size: 15px;
+        line-height: 1.6;
+        margin-bottom: 20px;
+    }
+
+    /* Показываем точки-индикаторы */
+    .review-dots {
+        display: flex;
+        justify-content: center;
+        gap: 8px;
+        margin-top: -40px;
+    }
+
+    .dot {
+        width: 8px;
+        height: 8px;
+        border-radius: 50%;
+        background: rgba(0, 0, 0, 0.12);
+        transition: all 0.3s ease;
+    }
+
+    .dot.active {
+        background: var(--green, #1c7a2c);
+        width: 20px;
+        border-radius: 4px;
+    }
 }
 </style>
 
@@ -2353,30 +2577,64 @@ a{
             Endless combinations. Endless imagination. Endless glowing fun.
         </p>
 
-        <div class="gallery-grid">
+        <!-- Обертка карусели для мобильных -->
+        <div class="gallery-carousel-wrapper reveal">
+            <div class="gallery-grid">
 
-            <div class="gallery-item reveal">
-                <img src="https://images.unsplash.com/photo-1516627145497-ae6968895b74?q=80&w=1200&auto=format&fit=crop">
+                <div class="gallery-item" id="slide-1">
+                    <img src="https://images.unsplash.com/photo-1516627145497-ae6968895b74?q=80&w=1200&auto=format&fit=crop" alt="Creative kid playing 1">
+                </div>
+
+                <div class="gallery-item" id="slide-2">
+                    <img src="https://images.unsplash.com/photo-1519340241574-2cec6aef0c01?q=80&w=1200&auto=format&fit=crop" alt="Creative kid playing 2">
+                </div>
+
+                <div class="gallery-item" id="slide-3">
+                    <img src="https://images.unsplash.com/photo-1503454537195-1dcabb73ffb9?q=80&w=1200&auto=format&fit=crop" alt="Creative kid playing 3">
+                </div>
+
+                <div class="gallery-item" id="slide-4">
+                    <img src="https://images.unsplash.com/photo-1516627145497-ae6968895b74?q=80&w=1200&auto=format&fit=crop" alt="Creative kid playing 4">
+                </div>
+
             </div>
-
-            <div class="gallery-item reveal">
-                <img src="https://images.unsplash.com/photo-1519340241574-2cec6aef0c01?q=80&w=1200&auto=format&fit=crop">
+            
+            <!-- Индикаторы (точки) — видны ТОЛЬКО на мобилке -->
+            <div class="carousel-dots">
+                <div class="dot active"></div>
+                <div class="dot"></div>
+                <div class="dot"></div>
+                <div class="dot"></div>
             </div>
-
-            <div class="gallery-item reveal">
-                <img src="https://images.unsplash.com/photo-1503454537195-1dcabb73ffb9?q=80&w=1200&auto=format&fit=crop">
-            </div>
-
-            <div class="gallery-item reveal">
-                <img src="https://images.unsplash.com/photo-1516627145497-ae6968895b74?q=80&w=1200&auto=format&fit=crop">
-            </div>
-
         </div>
 
     </div>
+    <script>
+document.addEventListener("DOMContentLoaded", () => {
+    const grid = document.querySelector('.gallery-grid');
+    const dots = document.querySelectorAll('.dot');
+    
+    if (grid && dots.length > 0) {
+        grid.addEventListener('scroll', () => {
+            const width = grid.clientWidth;
+            const scrollLeft = grid.scrollLeft;
+            // Вычисляем индекс активного слайда
+            const activeIndex = Math.round(scrollLeft / (width * 0.82)); 
+            
+            dots.forEach((dot, index) => {
+                if (index === activeIndex) {
+                    dot.classList.add('active');
+                } else {
+                    dot.classList.remove('active');
+                }
+            });
+        });
+    }
+});
+</script>
 </section>
 
-<section class="section">
+<section class="section reviews-section">
     <div class="container">
 
         <h2 class="section-title reveal">
@@ -2387,65 +2645,95 @@ a{
             Thousands of American families already switched from cheap marketplace toys to a trusted educational brand.
         </p>
 
-        <div class="reviews-grid">
+        <!-- Обертка карусели для мобильных отзывов -->
+        <div class="reviews-carousel-wrapper reveal">
+            <div class="reviews-grid">
 
-            <div class="review reveal">
+                <div class="review">
+                    <div class="review-stars">★★★★★</div>
+                    <p>
+                        “My son literally stopped asking for the iPad after we got this. Best purchase we’ve made this year.”
+                    </p>
+                    <div class="review-user">
+                        <img src="https://randomuser.me/api/portraits/women/65.jpg" alt="Jessica M.">
+                        <div>
+                            <strong>Jessica M.</strong>
+                            <span>Verified Buyer</span>
+                        </div>
+                    </div>
+                </div>
 
-                <div class="review-stars">★★★★★</div>
+                <div class="review">
+                    <div class="review-stars">★★★★★</div>
+                    <p>
+                        “You can immediately feel the quality difference compared to cheaper Amazon sets. Magnets are strong and pieces feel premium.”
+                    </p>
+                    <div class="review-user">
+                        <img src="https://randomuser.me/api/portraits/men/41.jpg" alt="David R.">
+                        <div>
+                            <strong>David R.</strong>
+                            <span>Verified Buyer</span>
+                        </div>
+                    </div>
+                </div>
 
-                <p>
-                    “My son literally stopped asking for the iPad after we got this. Best purchase we’ve made this year.”
-                </p>
-
-                <div class="review-user">
-                    <img src="https://randomuser.me/api/portraits/women/65.jpg">
-                    <div>
-                        <strong>Jessica M.</strong>
-                        <span>Verified Buyer</span>
+                <div class="review">
+                    <div class="review-stars">★★★★★</div>
+                    <p>
+                        “Finally a toy that keeps both my kids busy together without fighting. They LOVE the glow effect.”
+                    </p>
+                    <div class="review-user">
+                        <img src="https://randomuser.me/api/portraits/women/24.jpg" alt="Amanda K.">
+                        <div>
+                            <strong>Amanda K.</strong>
+                            <span>Verified Buyer</span>
+                        </div>
                     </div>
                 </div>
 
             </div>
 
-            <div class="review reveal">
-
-                <div class="review-stars">★★★★★</div>
-
-                <p>
-                    “You can immediately feel the quality difference compared to cheaper Amazon sets. Magnets are strong and pieces feel premium.”
-                </p>
-
-                <div class="review-user">
-                    <img src="https://randomuser.me/api/portraits/men/41.jpg">
-                    <div>
-                        <strong>David R.</strong>
-                        <span>Verified Buyer</span>
-                    </div>
-                </div>
-
+            <!-- Индикаторы (точки) — видны ТОЛЬКО на мобилке -->
+            <div class="carousel-dots review-dots">
+                <div class="dot active"></div>
+                <div class="dot"></div>
+                <div class="dot"></div>
             </div>
-
-            <div class="review reveal">
-
-                <div class="review-stars">★★★★★</div>
-
-                <p>
-                    “Finally a toy that keeps both my kids busy together without fighting. They LOVE the glow effect.”
-                </p>
-
-                <div class="review-user">
-                    <img src="https://randomuser.me/api/portraits/women/24.jpg">
-                    <div>
-                        <strong>Amanda K.</strong>
-                        <span>Verified Buyer</span>
-                    </div>
-                </div>
-
-            </div>
-
         </div>
 
     </div>
+    <script>
+document.addEventListener("DOMContentLoaded", () => {
+    // Функция оживления точек карусели
+    const initCarousel = (gridSelector, dotSelector, itemWidthPercent) => {
+        const grid = document.querySelector(gridSelector);
+        const dots = document.querySelectorAll(dotSelector);
+        
+        if (grid && dots.length > 0) {
+            grid.addEventListener('scroll', () => {
+                const width = grid.clientWidth;
+                const scrollLeft = grid.scrollLeft;
+                // Рассчитываем индекс на основе процента ширины карточки
+                const activeIndex = Math.round(scrollLeft / (width * (itemWidthPercent / 100))); 
+                
+                dots.forEach((dot, index) => {
+                    if (index === activeIndex) {
+                        dot.classList.add('active');
+                    } else {
+                        dot.classList.remove('active');
+                    }
+                });
+            });
+        }
+    };
+
+    // Запускаем для отзывов (ширина 85%)
+    initCarousel('.reviews-grid', '.review-dots .dot', 85);
+    
+    // Запускаем для галереи (если код галереи из прошлого шага на этой же странице, ширина 82%)
+    initCarousel('.gallery-grid', '.carousel-dots:not(.review-dots) .dot', 82);
+});
+</script>
 </section>
 
 <section class="section comparison">
