@@ -1613,6 +1613,217 @@ a{
 
 </style>
 
+<style data-name="addons-cross-sell">
+/* Базовые стили секции */
+.addons-section {
+    padding: 100px 0;
+    background: var(--bg); /* Используем ваш мягкий фон */
+}
+
+.addons-section .section-header {
+    text-align: center;
+    max-width: 700px;
+    margin: 0 auto 60px;
+}
+
+.addons-section .section-header h2 {
+    font-size: 48px;
+    font-weight: 900;
+    line-height: 1.1;
+    margin-bottom: 16px;
+    color: var(--text);
+}
+
+.addons-section .section-subtitle {
+    font-size: 18px;
+    color: var(--gray);
+    line-height: 1.6;
+}
+
+/* Сетка для карточек */
+.addons-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 30px;
+}
+
+/* Стилизация карточки товара */
+.addon-card {
+    background: #fff;
+    border-radius: var(--radius);
+    overflow: hidden;
+    box-shadow: var(--shadow);
+    display: flex;
+    flex-direction: column;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    border: 2px solid transparent;
+}
+
+.addon-card:hover {
+    transform: translateY(-8px);
+    box-shadow: 0 30px 70px rgba(0,0,0,.12);
+}
+
+/* Фокус на центральном / самом маржинальном товаре */
+.addon-card.bundle-highlight {
+    border-color: var(--light-green);
+    position: relative;
+}
+
+/* Обертка картинки */
+.addon-img-wrap {
+    position: relative;
+    height: 260px;
+    background: #eee;
+    overflow: hidden;
+}
+
+.addon-img-wrap img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.5s ease;
+}
+
+.addon-card:hover .addon-img-wrap img {
+    transform: scale(1.05);
+}
+
+/* Бейджи на товарах */
+.card-tag {
+    position: absolute;
+    top: 20px;
+    left: 20px;
+    background: var(--text);
+    color: #fff;
+    font-weight: 800;
+    font-size: 12px;
+    padding: 6px 14px;
+    border-radius: 999px;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+.card-tag.special {
+    background: var(--green);
+}
+
+/* Контентная часть карточки */
+.addon-info {
+    padding: 28px;
+    display: flex;
+    flex-direction: column;
+    flex-grow: 1;
+}
+
+.addon-rating {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    margin-bottom: 12px;
+}
+
+.addon-rating .stars {
+    color: #ffb800;
+    font-size: 16px;
+    letter-spacing: -1px;
+}
+
+.addon-rating .rating-count {
+    font-size: 13px;
+    color: var(--gray);
+    font-weight: 700;
+}
+
+.addon-info h3 {
+    font-size: 22px;
+    font-weight: 800;
+    margin-bottom: 10px;
+    line-height: 1.3;
+    color: var(--text);
+}
+
+.addon-desc {
+    font-size: 15px;
+    color: var(--gray);
+    line-height: 1.5;
+    margin-bottom: 24px;
+    flex-grow: 1; /* Выравнивает кнопки по одной линии */
+}
+
+/* Подвал карточки с ценой и кнопкой */
+.addon-footer {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 15px;
+    padding-top: 20px;
+    border-top: 1px solid rgba(0,0,0,0.06);
+}
+
+.addon-price {
+    display: flex;
+    flex-direction: column;
+}
+
+.current-price {
+    font-size: 24px;
+    font-weight: 900;
+    color: var(--green);
+    line-height: 1;
+}
+
+.old-price {
+    font-size: 14px;
+    color: var(--gray);
+    text-decoration: line-through;
+    margin-top: 4px;
+}
+
+/* Компактная продающая кнопка */
+.addon-btn {
+    padding: 12px 24px;
+    font-size: 15px;
+    background: rgba(28, 122, 44, 0.08);
+    color: var(--green);
+    border-radius: 999px;
+    white-space: nowrap;
+}
+
+.addon-btn:hover {
+    background: var(--green);
+    color: #fff;
+    transform: translateY(-2px);
+}
+
+/* АДАПТИВНОСТЬ: Идеально на планшетах и мобилках */
+@media (max-width: 990px) {
+    .addons-grid {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 20px;
+    }
+    .addons-section .section-header h2 {
+        font-size: 38px;
+    }
+}
+
+@media (max-width: 650px) {
+    .addons-grid {
+        grid-template-columns: 1fr; /* Никакого скролла, карточки ложатся одна под другую */
+        gap: 25px;
+    }
+    .addons-section {
+        padding: 60px 0;
+    }
+    .addons-section .section-header h2 {
+        font-size: 30px;
+    }
+    .addon-img-wrap {
+        height: 220px;
+    }
+}
+</style>
+
 
 </head>
 <body>
@@ -1942,6 +2153,101 @@ a{
     </div>
 </section>
 
+<section class="section addons-section">
+    <div class="container">
+
+        <div class="section-header">
+            <span class="badge">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+                    <path d="M12 5v14M5 12h14" stroke-linecap="round" stroke-linejoin="round"/>
+                </svg>
+                Complete Your Set
+            </span>
+            <h2>Frequently Bought Together</h2>
+            <p class="section-subtitle">Parents who bought SleepToy™ also absolutely love these educational extensions.</p>
+        </div>
+
+        <div class="addons-grid">
+            
+            <!-- Item 1 -->
+            <div class="addon-card">
+                <div class="addon-img-wrap">
+                    <img src="https://images.unsplash.com/photo-1596461404969-9ae70f2830c1?q=80&w=600&auto=format&fit=crop" alt="GlowTracks Expansion Pack">
+                    <span class="card-tag">Best Seller</span>
+                </div>
+                <div class="addon-info">
+                    <div class="addon-rating">
+                        <span class="stars">★★★★★</span>
+                        <span class="rating-count">(482)</span>
+                    </div>
+                    <h3>GlowTracks™ Expansion Pack</h3>
+                    <p class="addon-desc">32 additional neon-magnetic tracks that glow in the dark for ultimate night building.</p>
+                    <div class="addon-footer">
+                        <div class="addon-price">
+                            <span class="current-price">$24.99</span>
+                            <span class="old-price">$39.99</span>
+                        </div>
+                        <button class="btn addon-btn" onclick="this.innerHTML='Added! ✓'; this.style.background='#a4d16c'; this.style.color='#17370f'">
+                            Add to Cart
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Item 2 -->
+            <div class="addon-card bundle-highlight">
+                <div class="addon-img-wrap">
+                    <img src="https://images.unsplash.com/photo-1587654780291-39c9404d746b?q=80&w=600&auto=format&fit=crop" alt="STEM Architect Geometry Blocks">
+                    <span class="card-tag special">Most Popular</span>
+                </div>
+                <div class="addon-info">
+                    <div class="addon-rating">
+                        <span class="stars">★★★★★</span>
+                        <span class="rating-count">(914)</span>
+                    </div>
+                    <h3>STEM Architect™ Geo Blocks</h3>
+                    <p class="addon-desc">Advanced 3D geometric shapes to take early brain development and engineering to the next level.</p>
+                    <div class="addon-footer">
+                        <div class="addon-price">
+                            <span class="current-price">$29.99</span>
+                            <span class="old-price">$45.00</span>
+                        </div>
+                        <button class="btn addon-btn" onclick="this.innerHTML='Added! ✓'; this.style.background='#a4d16c'; this.style.color='#17370f'">
+                            Add to Cart
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Item 3 -->
+            <div class="addon-card">
+                <div class="addon-img-wrap">
+                    <img src="https://images.unsplash.com/photo-1587654780291-39c9404d746b?q=80&w=600&auto=format&fit=crop" alt="Eco-Storage Wooden Chest">
+                </div>
+                <div class="addon-info">
+                    <div class="addon-rating">
+                        <span class="stars">★★★★★</span>
+                        <span class="rating-count">(126)</span>
+                    </div>
+                    <h3>Eco-Storage™ Wooden Chest</h3>
+                    <p class="addon-desc">Premium organic canvas & wood organizer. Fits up to 150 pieces. Keeps the playroom 100% tidy.</p>
+                    <div class="addon-footer">
+                        <div class="addon-price">
+                            <span class="current-price">$19.99</span>
+                            <span class="old-price">$29.99</span>
+                        </div>
+                        <button class="btn addon-btn" onclick="this.innerHTML='Added! ✓'; this.style.background='#a4d16c'; this.style.color='#17370f'">
+                            Add to Cart
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
+    </div>
+</section>
+
 <section class="section">
     <div class="container">
 
@@ -1957,7 +2263,7 @@ a{
         <div class="why-grid">
 
             <div class="why-card reveal">
-                <div class="why-icon">🛡️</div>
+                <div class="why-icon"><img width="36" style="object-fit: contain; width: 36px;" src="https://em-content.zobj.net/source/apple/453/shield_1f6e1-fe0f.png"></div>
                 <h3>Premium Safe Materials</h3>
                 <p>
                     BPA-free, non-toxic, ultra-durable magnetic tiles tested for real family use. Built to survive years of creativity.
