@@ -1,3256 +1,3369 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
-<meta charset="UTF-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
-<title>Glow STEM Magnetic Tiles</title>
+    <title>Glow STEM Magnetic Tiles</title>
 
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;500;600;700;800;900&display=swap"
+        rel="stylesheet">
 
-<style data-name="root-and-reset">
-:root{
-    --green:#1c7a2c;
-    --light-green:#a4d16c;
-    --bg:#f8faf5;
-    --text:#111;
-    --gray:#6d6d6d;
-    --radius:28px;
-    --shadow:0 20px 60px rgba(0,0,0,.08);
-}
+    <style data-name="root-and-reset">
+        :root {
+            --green: #1c7a2c;
+            --light-green: #a4d16c;
+            --bg: #f8faf5;
+            --text: #111;
+            --gray: #6d6d6d;
+            --radius: 28px;
+            --shadow: 0 20px 60px rgba(0, 0, 0, .08);
+        }
 
-*{
-    margin:0;
-    padding:0;
-    box-sizing:border-box;
-}
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
 
-html{
-    scroll-behavior:smooth;
-}
+        html {
+            scroll-behavior: smooth;
+        }
 
-body{
-    font-family:'Nunito',sans-serif;
-    color:var(--text);
-    background:#fff;
-    overflow-x:hidden;
-}
+        body {
+            font-family: 'Nunito', sans-serif;
+            color: var(--text);
+            background: #fff;
+            overflow-x: hidden;
+        }
 
-img{
-    width:100%;
-    display:block;
-}
+        img {
+            width: 100%;
+            display: block;
+        }
 
-a{
-    text-decoration:none;
-    color:inherit;
-}
+        a {
+            text-decoration: none;
+            color: inherit;
+        }
 
-.container{
-    width:min(1320px,calc(100% - 40px));
-    margin:auto;
-}
-</style>
+        .container {
+            width: min(1320px, calc(100% - 40px));
+            margin: auto;
+        }
+    </style>
 
-<style data-name="top-bar">
-.top-bar{
-    background:var(--light-green);
-    color:#17370f;
-    padding:12px;
-    text-align:center;
-    font-weight:800;
-    letter-spacing:.4px;
-    font-size:12px;
-}
-@media (min-width: 750px) {
-    .top-bar {
-    font-size:14px;
-    }
-}
-</style>
+    <style data-name="top-bar">
+        .top-bar {
+            background: var(--light-green);
+            color: #17370f;
+            padding: 12px;
+            text-align: center;
+            font-weight: 800;
+            letter-spacing: .4px;
+            font-size: 12px;
+        }
 
-<style data-name="header">
-.header{
-    position:sticky;
-    top:0;
-    z-index:100;
-    background:rgba(255,255,255,.85);
-    backdrop-filter:blur(16px);
-    border-bottom:1px solid rgba(0,0,0,.06);
-}
+        @media (min-width: 750px) {
+            .top-bar {
+                font-size: 14px;
+            }
+        }
+    </style>
 
-.header-icon-btn {
-    display: none!important;
-}
+    <style data-name="header">
+        .header {
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            background: rgba(255, 255, 255, .85);
+            backdrop-filter: blur(16px);
+            border-bottom: 1px solid rgba(0, 0, 0, .06);
+        }
 
-@media (min-width: 1100px) {
-    .header-icon-btn {
-        display: flex!important;
-    }
-}
+        .header-icon-btn {
+            display: none !important;
+        }
 
-.header .btn {
-    font-size: 12px;
-}
+        @media (min-width: 1100px) {
+            .header-icon-btn {
+                display: flex !important;
+            }
+        }
 
-@media (min-width: 990px) {
-    .header .btn {
-        font-size: 18px;
-    }
-}
+        .header .btn {
+            font-size: 12px;
+        }
 
-.header-inner{
-    height:84px;
-    display:flex;
-    align-items:center;
-    justify-content:space-between;
-}
+        @media (min-width: 990px) {
+            .header .btn {
+                font-size: 18px;
+            }
+        }
 
-.logo{
-    font-size:34px;
-    max-width:180px;
-    font-weight:900;
-    color:var(--green);
-}
+        .header-inner {
+            height: 84px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
 
-@media (min-width: 750px) {
-    .logo{
-        max-width:200px;
-    }
-}
+        .logo {
+            font-size: 34px;
+            max-width: 180px;
+            font-weight: 900;
+            color: var(--green);
+        }
 
-.nav{
-    display:flex;
-    gap:34px;
-}
+        @media (min-width: 750px) {
+            .logo {
+                max-width: 200px;
+            }
+        }
 
-/* На мобилках навигацию часто прячут в бургер, 
+        .nav {
+            display: flex;
+            gap: 34px;
+        }
+
+        /* На мобилках навигацию часто прячут в бургер, 
    пока оставляем ее скрытие/адаптив под ваши глобальные медиа-запросы */
-@media (max-width: 850px) {
-    .nav {
-        display: none; /* Скрываем на планшетах/мобилках, чтобы не ломать строку */
-    }
-}
+        @media (max-width: 850px) {
+            .nav {
+                display: none;
+                /* Скрываем на планшетах/мобилках, чтобы не ломать строку */
+            }
+        }
 
-.nav a{
-    font-weight:700;
-    transition:.3s;
-}
+        .nav a {
+            font-weight: 700;
+            transition: .3s;
+        }
 
-.nav a:hover{
-    color:var(--green);
-}
+        .nav a:hover {
+            color: var(--green);
+        }
 
-/* НОВЫЕ СТИЛИ ДЛЯ ИКОНОК И ДЕЙСТВИЙ */
-.header-actions {
-    display: flex;
-    align-items: center;
-    gap: 16px; /* Отступы между иконками и кнопкой */
-}
+        /* НОВЫЕ СТИЛИ ДЛЯ ИКОНОК И ДЕЙСТВИЙ */
+        .header-actions {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+            /* Отступы между иконками и кнопкой */
+        }
 
-@media (min-width: 990px) {
-    .header-actions {
-        gap: 24px;
-    }
-}
+        @media (min-width: 990px) {
+            .header-actions {
+                gap: 24px;
+            }
+        }
 
-.header-icon-btn {
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    width: 44px;
-    height: 44px;
-    color: var(--text, #111);
-    border-radius: 50%;
-    transition: background 0.3s, color 0.3s;
-    position: relative;
-}
+        .header-icon-btn {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 44px;
+            height: 44px;
+            color: var(--text, #111);
+            border-radius: 50%;
+            transition: background 0.3s, color 0.3s;
+            position: relative;
+        }
 
-.header-icon-btn:hover {
-    background: rgba(0, 0, 0, 0.04);
-    color: var(--green);
-}
+        .header-icon-btn:hover {
+            background: rgba(0, 0, 0, 0.04);
+            color: var(--green);
+        }
 
-.header-icon-btn svg {
-    width: 24px;
-    height: 24px;
-}
+        .header-icon-btn svg {
+            width: 24px;
+            height: 24px;
+        }
 
-/* Индикатор количества товаров в корзине */
-.cart-btn {
-    position: relative;
-}
+        /* Индикатор количества товаров в корзине */
+        .cart-btn {
+            position: relative;
+        }
 
-.cart-count {
-    position: absolute;
-    top: 4px;
-    right: 4px;
-    background: var(--green);
-    color: #fff;
-    font-size: 10px;
-    font-weight: 800;
-    width: 16px;
-    height: 16px;
-    border-radius: 50%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-}
-</style>
+        .cart-count {
+            position: absolute;
+            top: 4px;
+            right: 4px;
+            background: var(--green);
+            color: #fff;
+            font-size: 10px;
+            font-weight: 800;
+            width: 16px;
+            height: 16px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+    </style>
 
-<style data-name="buttons">
-.btn{
-    display:inline-flex;
-    align-items:center;
-    justify-content:center;
-    gap:10px;
-    border:none;
-    cursor:pointer;
-    transition:.35s;
-    font-weight:800;
-    border-radius:999px;
-}
+    <style data-name="buttons">
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            border: none;
+            cursor: pointer;
+            transition: .35s;
+            font-weight: 800;
+            border-radius: 999px;
+        }
 
-.btn-primary{
-    background:var(--green);
-    color:#fff;
-    padding:18px 34px;
-    font-size:18px;
-    box-shadow:0 16px 40px rgba(28,122,44,.28);
-}
+        .btn-primary {
+            background: var(--green);
+            color: #fff;
+            padding: 18px 34px;
+            font-size: 18px;
+            box-shadow: 0 16px 40px rgba(28, 122, 44, .28);
+        }
 
-.header .btn {
+        .header .btn {
             padding: 12px 26px;
-}
-
-@media (min-width: 1100px) {
-    .header .btn {
-    padding:18px 34px;
-    }
-}
-
-.btn-primary:hover{
-    transform:translateY(-3px) scale(1.02);
-}
-
-.btn-secondary{
-    background:#fff;
-    color:#111;
-    border:2px solid rgba(0,0,0,.08);
-    padding:18px 28px;
-}
-</style>
-
-<style data-name="hero-layout">
-.hero{
-    padding:90px 0 70px;
-        padding:90px 0 30px;
-    background:
-    radial-gradient(circle at top left, rgba(164,209,108,.3), transparent 35%),
-    radial-gradient(circle at bottom right, rgba(28,122,44,.12), transparent 35%),
-    #fff;
-
-    /* FIXED FOR STICKY */
-    overflow:visible;
-}
-
-@media (min-width: 750px) {
-    .hero {
-        padding:90px 0 70px;
-    }
-}
-
-.hero-grid{
-    position: relative;
-    display:grid;
-    grid-template-columns:1.1fr .9fr;
-    gap:30px;
-    align-items:start;
-}
-
-@media (min-width: 750px) {
-    .hero-grid {
-    gap:70px;
-    }
-}
-
-.hero-image-wrap{
-    position:relative;
-
-    /* FIXED FOR STICKY */
-    overflow:visible;
-}
-
-.hero-sticky{
-    position:sticky;
-    top:120px;
-    align-self:start;
-}
-</style>
-
-<style data-name="hero-content-base">
-.badge{
-    display:inline-flex;
-    align-items:center;
-    gap:8px;
-    padding:10px 18px;
-    background:#edf8df;
-    color:var(--green);
-    border-radius:999px;
-    font-weight:800;
-    margin-bottom:24px;
-}
-
-.badge svg {
-    width: 20px;
-    height: 20px;
-}
-
-.hero h1{
-    font-size:72px;
-    line-height:.95;
-    margin-bottom:28px;
-    font-weight:900;
-}
-
-.hero h1 span{
-    color:var(--green);
-}
-
-.hero-text{
-    font-size:21px;
-    line-height:1.5;
-    color:#444;
-    max-width:680px;
-    margin-bottom:34px;
-}
-
-.hero-buttons{
-    display:flex;
-    gap:16px;
-    flex-wrap:wrap;
-    margin-bottom:34px;
-}
-
-.hero-features{
-    display:flex;
-    gap:28px;
-    flex-wrap:wrap;
-}
-
-.hero-feature{
-    display:flex;
-    align-items:center;
-    gap:12px;
-    font-weight:800;
-}
-</style>
-
-<style data-name="hero-card">
-.hero-card{
-    position:relative;
-}
-
-.hero-card img{
-    height:700px;
-    object-fit:cover;
-    overflow:hidden;
-    border-radius:40px;
-    box-shadow:var(--shadow);
-}
-</style>
-
-<style data-name="floating-boxes">
-.floating-box{
-    position:absolute;
-    background:#fff;
-    border-radius:24px;
-    padding:20px;
-    box-shadow:0 14px 40px rgba(0,0,0,.12);
-    animation:float 4s ease-in-out infinite;
-}
-
-.floating-box strong{
-    display:block;
-    font-size:32px;
-    color:var(--green);
-}
-
-.floating-box span{
-    color:#555;
-    font-weight:700;
-}
-
-.box-1{
-    top:40px;
-        left:-10px;
-}
-
-@media (min-width: 1100px) {
-    .box-1 {
-    left:-40px;
-    }
-}
-
-.box-2{
-    right:-10px;
-    bottom:50px;
-    animation-delay:1s;
-}
-
-@media (min-width: 1100px) {
-    .box-2 {
-        right:-20px;
-    }
-}
-
-@keyframes float{
-    0%,100%{
-        transform:translateY(0);
-    }
-    50%{
-        transform:translateY(-12px);
-    }
-}
-</style>
-
-<style data-name="trust-bar">
-.trust-bar{
-    padding:36px 0;
-    border-top:1px solid rgba(0,0,0,.06);
-    background:var(--bg);
-}
-
-.trust-grid{
-    display:grid;
-    grid-template-columns:repeat(4,1fr);
-    gap:30px;
-}
-
-.trust-item{
-    text-align:center;
-}
-
-.trust-item strong{
-    display:block;
-    font-size:42px;
-    color:var(--green);
-    margin-bottom:6px;
-}
-@media (min-width: 1280px) {
-    .trust-item strong {
-        font-size: 50px;
-    }
-}
-
-.trust-item span{
-    color:#555;
-    font-weight:700;
-}
-</style>
-
-<style data-name="global-sections">
-.section {
-    padding:60px 0;
-}
-
-@media (min-width: 750px) {
-    .section {
-    padding:120px 0;
-    }
-}
-
-.section-title{
-    font-size:58px;
-    line-height:1;
-    font-weight:900;
-    margin-bottom:24px;
-    text-align:center;
-}
-
-.section-title span{
-    color:var(--green);
-}
-
-.section-subtitle{
-    text-align:center;
-    max-width:900px;
-    margin:0 auto 40px;
-    color:#555;
-    font-size:21px;
-    line-height:1.5;
-}
-@media (min-width: 1100px) {
-    .section-subtitle {
-        margin:0 auto 70px;
-    }
-}
-</style>
-
-<style data-name="why-us">
-.why-grid{
-    display:grid;
-    grid-template-columns:repeat(3,1fr);
-    gap:28px;
-} 
-
-.why-card{
-    background:#fff;
-    border-radius:32px;
-    padding:38px;
-    box-shadow:var(--shadow);
-    transition:.4s;
-}
-
-.why-card:hover{
-    transform:translateY(-10px);
-}
-
-.why-icon{
-    width:74px;
-    height:74px;
-    background:#eef8df;
-    border-radius:22px;
-    margin-bottom:24px;
-    display:flex;
-    align-items:center;
-    justify-content:center;
-    font-size:34px;
-}
-
-.why-card h3{
-    font-size:30px;
-    margin-bottom:14px;
-}
-
-.why-card p{
-    color:#666;
-    line-height:1.8;
-    font-size:17px;
-}
-</style>
-
-<style data-name="split-section">
-.split{
-    display:grid;
-    grid-template-columns:1fr 1fr;
-    gap: 35px;
-    align-items:center;
-}
-
-@media (min-width: 1100px) {
-    .split {
-        gap:70px;
-    }
-}
-
-.split-image{
-    position:relative;
-}
-
-.split-image img{
-    border-radius:38px;
-    height:720px;
-    object-fit:cover;
-    box-shadow:var(--shadow);
-}
-
-.split-content h2{
-    font-size:58px;
-    line-height:1;
-    margin-bottom:28px;
-}
-
-.split-content p{
-    color:#555;
-    line-height:1.5;
-    font-size:19px;
-    margin-bottom:24px;
-}
-
-.check-list{
-    display:flex;
-    flex-direction:column;
-    gap:18px;
-    margin-top:36px;
-}
-
-.check-item{
-    display:flex;
-    gap:16px;
-    font-size:18px;
-    font-weight:700;
-}
-
-.check-icon{
-    min-width:32px;
-    height:32px;
-    border-radius:50%;
-    background:var(--light-green);
-    display:flex;
-    align-items:center;
-    justify-content:center;
-}
-</style>
-
-<style data-name="gallery">
-/* БАЗОВЫЕ СТИЛИ (ДЕСКТОП) */
-.gallery {background: linear-gradient(to bottom, #ffffff 0%, #f8faf5 50%, #ffffff 100%);
-    padding: 80px 0;
-}
-
-.gallery .section-title {
-    font-size: 48px;
-    font-weight: 900;
-    text-align: center;
-    margin-bottom: 12px;
-}
-
-.gallery .section-subtitle {
-    font-size: 18px;
-    color: var(--gray, #6d6d6d);
-    text-align: center;
-    margin-bottom: 48px;
-}
-
-.gallery-grid {
-    display: grid;
-    grid-template-columns: repeat(4, 1fr);
-    gap: 22px;
-}
-
-.gallery-item {
-    overflow: hidden;
-    border-radius: var(--radius, 28px);
-    position: relative;
-    box-shadow: var(--shadow, 0 20px 60px rgba(0,0,0,.08));
-    background: #fff;
-}
-
-.gallery-item img {
-    width: 100%;
-    height: 380px;
-    object-fit: cover;
-    transition: transform 0.8s cubic-bezier(0.25, 1, 0.5, 1);
-    display: block;
-}
-
-.gallery-item:hover img {
-    transform: scale(1.06);
-}
-
-/* Скрываем точки на десктопе */
-.carousel-dots {
-    display: none;
-}
-
-/* МАГИЯ ДЛЯ МОБИЛОК (До 768px) */
-@media (max-width: 768px) {
-    .gallery {
-        padding: 50px 0;
-    }
-    
-    .gallery .section-title {
-        font-size: 32px;
-        padding: 0 10px;
-    }
-
-    .gallery .section-subtitle {
-        font-size: 16px;
-        margin-bottom: 30px;
-        padding: 0 10px;
-    }
-
-    /* Включаем горизонтальный скролл для сетки */
-    .gallery-grid {
-        display: flex;
-        grid-template-columns: none;
-        gap: 16px;
-        overflow-x: auto;
-        overflow-y: hidden;
-        scroll-snap-type: x mandatory; /* Мягкое дотягивание слайда */
-        scroll-behavior: smooth;
-        -webkit-overflow-scrolling: touch;
-        padding: 0 20px 10px 20px; /* Отступы по бокам, чтобы слайды не липли к краю экрана */
-        margin: 0 -20px; /* Компенсируем контейнер сайта */
-    }
-    
-    /* Прячем дефолтный уродливый скроллбар */
-    .gallery-grid::-webkit-scrollbar {
-        display: none;
-    }
-    .gallery-grid {
-        -ms-overflow-style: none;
-        scrollbar-width: none;
-    }
-
-    /* Настройка слайда под мобильный экран */
-    .gallery-item {
-        flex: 0 0 82%; /* Слайд занимает 82% экрана, показывая хвостик следующего (стимул свайпнуть) */
-        scroll-snap-align: center; /* Центрируем слайд при остановке */
-        border-radius: 20px; /* Чуть уменьшаем радиус для аккуратности на мобилке */
-    }
-
-    .gallery-item img {
-        height: 320px; /* Оптимальная высота на смартфоне */
-    }
-    
-    /* Отключаем тяжелый hover-эффект на мобильных */
-    .gallery-item:hover img {
-        transform: none;
-    }
-
-    /* Показываем стильные точки-индикаторы */
-    .carousel-dots {
-        display: flex;
-        justify-content: center;
-        gap: 8px;
-        margin-top: 20px;
-    }
-
-    .dot {
-        width: 8px;
-        height: 8px;
-        border-radius: 50%;
-        background: rgba(0, 0, 0, 0.15);
-        transition: all 0.3s ease;
-    }
-
-    /* Подсвечиваем первую точку. При желании можно оживить через простой JS, 
+        }
+
+        @media (min-width: 1100px) {
+            .header .btn {
+                padding: 18px 34px;
+            }
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-3px) scale(1.02);
+        }
+
+        .btn-secondary {
+            background: #fff;
+            color: #111;
+            border: 2px solid rgba(0, 0, 0, .08);
+            padding: 18px 28px;
+        }
+    </style>
+
+    <style data-name="hero-layout">
+        .hero {
+            padding: 90px 0 70px;
+            padding: 90px 0 30px;
+            background:
+                radial-gradient(circle at top left, rgba(164, 209, 108, .3), transparent 35%),
+                radial-gradient(circle at bottom right, rgba(28, 122, 44, .12), transparent 35%),
+                #fff;
+
+            /* FIXED FOR STICKY */
+            overflow: visible;
+        }
+
+        @media (min-width: 750px) {
+            .hero {
+                padding: 90px 0 70px;
+            }
+        }
+
+        .hero-grid {
+            position: relative;
+            display: grid;
+            grid-template-columns: 1.1fr .9fr;
+            gap: 30px;
+            align-items: start;
+        }
+
+        @media (min-width: 750px) {
+            .hero-grid {
+                gap: 70px;
+            }
+        }
+
+        .hero-image-wrap {
+            position: relative;
+
+            /* FIXED FOR STICKY */
+            overflow: visible;
+        }
+
+        .hero-sticky {
+            position: sticky;
+            top: 120px;
+            align-self: start;
+        }
+    </style>
+
+    <style data-name="hero-content-base">
+        .badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 10px 18px;
+            background: #edf8df;
+            color: var(--green);
+            border-radius: 999px;
+            font-weight: 800;
+            margin-bottom: 24px;
+        }
+
+        .badge svg {
+            width: 20px;
+            height: 20px;
+        }
+
+        .hero h1 {
+            font-size: 72px;
+            line-height: .95;
+            margin-bottom: 28px;
+            font-weight: 900;
+        }
+
+        .hero h1 span {
+            color: var(--green);
+        }
+
+        .hero-text {
+            font-size: 21px;
+            line-height: 1.5;
+            color: #444;
+            max-width: 680px;
+            margin-bottom: 34px;
+        }
+
+        .hero-buttons {
+            display: flex;
+            gap: 16px;
+            flex-wrap: wrap;
+            margin-bottom: 34px;
+        }
+
+        .hero-features {
+            display: flex;
+            gap: 28px;
+            flex-wrap: wrap;
+        }
+
+        .hero-feature {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            font-weight: 800;
+        }
+    </style>
+
+    <style data-name="hero-card">
+        .hero-card {
+            position: relative;
+        }
+
+        .hero-card img {
+            height: 700px;
+            object-fit: cover;
+            overflow: hidden;
+            border-radius: 40px;
+            box-shadow: var(--shadow);
+        }
+    </style>
+
+    <style data-name="floating-boxes">
+        .floating-box {
+            position: absolute;
+            background: #fff;
+            border-radius: 24px;
+            padding: 20px;
+            box-shadow: 0 14px 40px rgba(0, 0, 0, .12);
+            animation: float 4s ease-in-out infinite;
+        }
+
+        .floating-box strong {
+            display: block;
+            font-size: 32px;
+            color: var(--green);
+        }
+
+        .floating-box span {
+            color: #555;
+            font-weight: 700;
+        }
+
+        .box-1 {
+            top: 40px;
+            left: -10px;
+        }
+
+        @media (min-width: 1100px) {
+            .box-1 {
+                left: -40px;
+            }
+        }
+
+        .box-2 {
+            right: -10px;
+            bottom: 50px;
+            animation-delay: 1s;
+        }
+
+        @media (min-width: 1100px) {
+            .box-2 {
+                right: -20px;
+            }
+        }
+
+        @keyframes float {
+
+            0%,
+            100% {
+                transform: translateY(0);
+            }
+
+            50% {
+                transform: translateY(-12px);
+            }
+        }
+    </style>
+
+    <style data-name="trust-bar">
+        .trust-bar {
+            padding: 36px 0;
+            border-top: 1px solid rgba(0, 0, 0, .06);
+            background: var(--bg);
+        }
+
+        .trust-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 30px;
+        }
+
+        .trust-item {
+            text-align: center;
+        }
+
+        .trust-item strong {
+            display: block;
+            font-size: 42px;
+            color: var(--green);
+            margin-bottom: 6px;
+        }
+
+        @media (min-width: 1280px) {
+            .trust-item strong {
+                font-size: 50px;
+            }
+        }
+
+        .trust-item span {
+            color: #555;
+            font-weight: 700;
+        }
+    </style>
+
+    <style data-name="global-sections">
+        .section {
+            padding: 60px 0;
+        }
+
+        @media (min-width: 750px) {
+            .section {
+                padding: 120px 0;
+            }
+        }
+
+        .section-title {
+            font-size: 58px;
+            line-height: 1;
+            font-weight: 900;
+            margin-bottom: 24px;
+            text-align: center;
+        }
+
+        .section-title span {
+            color: var(--green);
+        }
+
+        .section-subtitle {
+            text-align: center;
+            max-width: 900px;
+            margin: 0 auto 40px;
+            color: #555;
+            font-size: 21px;
+            line-height: 1.5;
+        }
+
+        @media (min-width: 1100px) {
+            .section-subtitle {
+                margin: 0 auto 70px;
+            }
+        }
+    </style>
+
+    <style data-name="why-us">
+        .why-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 28px;
+        }
+
+        .why-card {
+            background: #fff;
+            border-radius: 32px;
+            padding: 38px;
+            box-shadow: var(--shadow);
+            transition: .4s;
+        }
+
+        .why-card:hover {
+            transform: translateY(-10px);
+        }
+
+        .why-icon {
+            width: 74px;
+            height: 74px;
+            background: #eef8df;
+            border-radius: 22px;
+            margin-bottom: 24px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 34px;
+        }
+
+        .why-card h3 {
+            font-size: 30px;
+            margin-bottom: 14px;
+        }
+
+        .why-card p {
+            color: #666;
+            line-height: 1.8;
+            font-size: 17px;
+        }
+    </style>
+
+    <style data-name="split-section">
+        .split {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 35px;
+            align-items: center;
+        }
+
+        @media (min-width: 1100px) {
+            .split {
+                gap: 70px;
+            }
+        }
+
+        .split-image {
+            position: relative;
+        }
+
+        .split-image img {
+            border-radius: 38px;
+            height: 720px;
+            object-fit: cover;
+            box-shadow: var(--shadow);
+        }
+
+        .split-content h2 {
+            font-size: 58px;
+            line-height: 1;
+            margin-bottom: 28px;
+        }
+
+        .split-content p {
+            color: #555;
+            line-height: 1.5;
+            font-size: 19px;
+            margin-bottom: 24px;
+        }
+
+        .check-list {
+            display: flex;
+            flex-direction: column;
+            gap: 18px;
+            margin-top: 36px;
+        }
+
+        .check-item {
+            display: flex;
+            gap: 16px;
+            font-size: 18px;
+            font-weight: 700;
+        }
+
+        .check-icon {
+            min-width: 32px;
+            height: 32px;
+            border-radius: 50%;
+            background: var(--light-green);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+    </style>
+
+    <style data-name="gallery">
+        /* БАЗОВЫЕ СТИЛИ (ДЕСКТОП) */
+        .gallery {
+            background: linear-gradient(to bottom, #ffffff 0%, #f8faf5 50%, #ffffff 100%);
+            padding: 80px 0;
+        }
+
+        .gallery .section-title {
+            font-size: 48px;
+            font-weight: 900;
+            text-align: center;
+            margin-bottom: 12px;
+        }
+
+        .gallery .section-subtitle {
+            font-size: 18px;
+            color: var(--gray, #6d6d6d);
+            text-align: center;
+            margin-bottom: 48px;
+        }
+
+        .gallery-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 22px;
+        }
+
+        .gallery-item {
+            overflow: hidden;
+            border-radius: var(--radius, 28px);
+            position: relative;
+            box-shadow: var(--shadow, 0 20px 60px rgba(0, 0, 0, .08));
+            background: #fff;
+        }
+
+        .gallery-item img {
+            width: 100%;
+            height: 380px;
+            object-fit: cover;
+            transition: transform 0.8s cubic-bezier(0.25, 1, 0.5, 1);
+            display: block;
+        }
+
+        .gallery-item:hover img {
+            transform: scale(1.06);
+        }
+
+        /* Скрываем точки на десктопе */
+        .carousel-dots {
+            display: none;
+        }
+
+        /* МАГИЯ ДЛЯ МОБИЛОК (До 768px) */
+        @media (max-width: 768px) {
+            .gallery {
+                padding: 50px 0;
+            }
+
+            .gallery .section-title {
+                font-size: 32px;
+                padding: 0 10px;
+            }
+
+            .gallery .section-subtitle {
+                font-size: 16px;
+                margin-bottom: 30px;
+                padding: 0 10px;
+            }
+
+            /* Включаем горизонтальный скролл для сетки */
+            .gallery-grid {
+                display: flex;
+                grid-template-columns: none;
+                gap: 16px;
+                overflow-x: auto;
+                overflow-y: hidden;
+                scroll-snap-type: x mandatory;
+                /* Мягкое дотягивание слайда */
+                scroll-behavior: smooth;
+                -webkit-overflow-scrolling: touch;
+                padding: 0 20px 10px 20px;
+                /* Отступы по бокам, чтобы слайды не липли к краю экрана */
+                margin: 0 -20px;
+                /* Компенсируем контейнер сайта */
+            }
+
+            /* Прячем дефолтный уродливый скроллбар */
+            .gallery-grid::-webkit-scrollbar {
+                display: none;
+            }
+
+            .gallery-grid {
+                -ms-overflow-style: none;
+                scrollbar-width: none;
+            }
+
+            /* Настройка слайда под мобильный экран */
+            .gallery-item {
+                flex: 0 0 82%;
+                /* Слайд занимает 82% экрана, показывая хвостик следующего (стимул свайпнуть) */
+                scroll-snap-align: center;
+                /* Центрируем слайд при остановке */
+                border-radius: 20px;
+                /* Чуть уменьшаем радиус для аккуратности на мобилке */
+            }
+
+            .gallery-item img {
+                height: 320px;
+                /* Оптимальная высота на смартфоне */
+            }
+
+            /* Отключаем тяжелый hover-эффект на мобильных */
+            .gallery-item:hover img {
+                transform: none;
+            }
+
+            /* Показываем стильные точки-индикаторы */
+            .carousel-dots {
+                display: flex;
+                justify-content: center;
+                gap: 8px;
+                margin-top: 20px;
+            }
+
+            .dot {
+                width: 8px;
+                height: 8px;
+                border-radius: 50%;
+                background: rgba(0, 0, 0, 0.15);
+                transition: all 0.3s ease;
+            }
+
+            /* Подсвечиваем первую точку. При желании можно оживить через простой JS, 
        но даже статично они создают сильный UX-эффект "меня можно листать" */
-    .dot.active {
-        background: var(--green, #1c7a2c);
-        width: 20px; /* Эффект активной "вытянутой" пилюли */
-        border-radius: 4px;
-    }
-}
-</style>
+            .dot.active {
+                background: var(--green, #1c7a2c);
+                width: 20px;
+                /* Эффект активной "вытянутой" пилюли */
+                border-radius: 4px;
+            }
+        }
+    </style>
 
-<style data-name="reviews">
-/* БАЗОВЫЕ СТИЛИ (ДЕСКТОП) */
-.reviews-section {
-    padding: 80px 0;
-    background: #fff; /* Или используйте var(--bg), если нужно выделить секцию цветом */
-}
+    <style data-name="reviews">
+        /* БАЗОВЫЕ СТИЛИ (ДЕСКТОП) */
+        .reviews-section {
+            padding: 80px 0;
+            background: #fff;
+            /* Или используйте var(--bg), если нужно выделить секцию цветом */
+        }
 
-.reviews-section .section-title {
-    font-size: 48px;
-    font-weight: 900;
-    text-align: center;
-    margin-bottom: 12px;
-}
+        .reviews-section .section-title {
+            font-size: 48px;
+            font-weight: 900;
+            text-align: center;
+            margin-bottom: 12px;
+        }
 
-.reviews-section .section-subtitle {
-    font-size: 18px;
-    color: var(--gray, #6d6d6d);
-    text-align: center;
-    margin-bottom: 48px;
-}
+        .reviews-section .section-subtitle {
+            font-size: 18px;
+            color: var(--gray, #6d6d6d);
+            text-align: center;
+            margin-bottom: 48px;
+        }
 
-.reviews-grid {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: 28px;
-}
+        .reviews-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 28px;
+        }
 
-.review {
-    background: #fff;
-    padding: 38px;
-    border-radius: var(--radius, 30px);
-    box-shadow: var(--shadow, 0 20px 60px rgba(0,0,0,.08));
+        .review {
+            background: #fff;
+            padding: 38px;
+            border-radius: var(--radius, 30px);
+            box-shadow: var(--shadow, 0 20px 60px rgba(0, 0, 0, .08));
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            /* Чтобы карточки одной высоты смотрелись ровно */
+            border: 1px solid rgba(0, 0, 0, 0.02);
+        }
+
+        .review-stars {
+            color: #ffb400;
+            margin-bottom: 20px;
+            font-size: 24px;
+            letter-spacing: -1px;
+        }
+
+        .review p {
+            font-size: 16px;
+            line-height: 1.8;
+            color: #444;
+            margin-bottom: 28px;
+        }
+
+        .review-user {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+        }
+
+        .review-user img {
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            object-fit: cover;
+            flex-shrink: 0;
+        }
+
+        .review-user strong {
+            display: block;
+            font-size: 16px;
+            font-weight: 800;
+            color: var(--text, #111);
+        }
+
+        .review-user span {
+            font-size: 13px;
+            color: var(--green, #1c7a2c);
+            font-weight: 700;
+        }
+
+        /* Скрываем точки на десктопе */
+        .review-dots {
+            display: none;
+        }
+
+        /* МАГИЯ ДЛЯ МОБИЛОК (До 768px) */
+        @media (max-width: 768px) {
+            .reviews-section {
+                padding: 50px 0;
+            }
+
+            .reviews-section .section-title {
+                font-size: 32px;
+                padding: 0 10px;
+            }
+
+            .reviews-section .section-subtitle {
+                font-size: 16px;
+                margin-bottom: 30px;
+                padding: 0 10px;
+            }
+
+            /* Превращаем сетку во флекс с горизонтальным скроллом */
+            .reviews-grid {
+                display: flex;
+                grid-template-columns: none;
+                gap: 16px;
+                overflow-x: auto;
+                overflow-y: hidden;
+                scroll-snap-type: x mandatory;
+                scroll-behavior: smooth;
+                -webkit-overflow-scrolling: touch;
+                padding: 10px 20px 70px 20px;
+                /* Отступы сверху/снизу для теней */
+                margin: 0 -20px;
+            }
+
+            /* Прячем дефолтный скроллбар */
+            .reviews-grid::-webkit-scrollbar {
+                display: none;
+            }
+
+            .reviews-grid {
+                -ms-overflow-style: none;
+                scrollbar-width: none;
+            }
+
+            /* Адаптируем саму карточку отзыва */
+            .review {
+                flex: 0 0 85%;
+                /* 85% ширины экрана, чтобы выглядывал край следующего отзыва */
+                scroll-snap-align: center;
+                padding: 28px 24px;
+                border-radius: 24px;
+            }
+
+            .review p {
+                font-size: 15px;
+                line-height: 1.6;
+                margin-bottom: 20px;
+            }
+
+            /* Показываем точки-индикаторы */
+            .review-dots {
+                display: flex;
+                justify-content: center;
+                gap: 8px;
+                margin-top: -40px;
+            }
+
+            .dot {
+                width: 8px;
+                height: 8px;
+                border-radius: 50%;
+                background: rgba(0, 0, 0, 0.12);
+                transition: all 0.3s ease;
+            }
+
+            .dot.active {
+                background: var(--green, #1c7a2c);
+                width: 20px;
+                border-radius: 4px;
+            }
+        }
+    </style>
+
+    <style data-name="comparison-table">
+        /* Основные стили светлой секции */
+        .comparison {
+            background: linear-gradient(to bottom, #ffffff 0%, #f8faf5 100%);
+            /* Чистый, мягкий светлый фон */
+            color: #0f172a;
+            padding: 60px 20px;
+            font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+        }
+
+        .comparison .container {
+            max-width: 1100px;
+            margin: 0 auto;
+        }
+
+        @media (max-width: 576px) {
+            .comparison .container {
+                width: 100%;
+            }
+        }
+
+        .comparison .section-title {
+            font-size: 36px;
+            font-weight: 800;
+            text-align: center;
+            margin-bottom: 10px;
+            letter-spacing: -0.5px;
+            color: #0f172a;
+        }
+
+        .comparison .section-subtitle {
+            font-size: 18px;
+            color: #64748b;
+            text-align: center;
+            margin-bottom: 50px;
+        }
+
+        /* Контейнер для карточек */
+        .compare-container {
+            display: flex;
+            gap: 30px;
+            align-items: stretch;
+            justify-content: center;
+        }
+
+        /* Общие стили для карточек */
+        .compare-card {
+            background: #ffffff;
+            border-radius: 24px;
+            padding: 40px 30px;
+            flex: 1;
+            max-width: 500px;
+            position: relative;
+            box-sizing: border-box;
+            border: 2px solid transparent;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05), 0 2px 4px -2px rgba(0, 0, 0, 0.05);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        /* Стилизация SleepToy (Контрастный, привлекает внимание) */
+        .compare-card.leader {
+            border-color: var(--green, #22c55e);
+            background: #ffffff;
+            box-shadow: 0 20px 40px rgba(34, 197, 94, 0.08);
+            /* Нежное зеленоватое свечение */
+        }
+
+        /* Насыщенный бейдж для SleepToy */
+        .card-badge {
+            position: absolute;
+            top: -15px;
+            left: 30px;
+            background: var(--green, #22c55e);
+            color: #ffffff;
+            font-weight: 700;
+            font-size: 12px;
+            text-transform: uppercase;
+            padding: 6px 16px;
+            border-radius: 20px;
+            letter-spacing: 0.5px;
+        }
+
+        /* Стилизация Amazon (Выглядит блеклым и серым) */
+        .compare-card.loser {
+            background: #f1f5f9;
+            /* Серый «дешевый» фон */
+            border-color: #e2e8f0;
+            box-shadow: none;
+        }
+
+        .compare-card.loser .card-title {
+            color: #94a3b8;
+            /* Замыленный заголовок */
+        }
+
+        /* Заголовки в карточках */
+        .card-title {
+            font-size: 26px;
+            font-weight: 800;
+            margin: 0 0 5px 0;
+            color: #0f172a;
+        }
+
+        .card-price-desc {
+            font-size: 14px;
+            color: #64748b;
+            margin: 0 0 35px 0;
+        }
+
+        /* Список преимуществ */
+        .features-list {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+            display: flex;
+            flex-direction: column;
+            gap: 25px;
+        }
+
+        .features-list li {
+            display: flex;
+            align-items: flex-start;
+            gap: 15px;
+        }
+
+        /* Иконки */
+        .icon {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 24px;
+            height: 24px;
+            border-radius: 50%;
+            font-size: 11px;
+            font-weight: bold;
+            flex-shrink: 0;
+            margin-top: 2px;
+        }
+
+        .icon.check {
+            background: rgba(34, 197, 94, 0.15);
+            color: #16a34a;
+        }
+
+        .icon.cross {
+            background: rgba(239, 68, 68, 0.1);
+            color: #dc2626;
+        }
+
+        /* Текст описания фичи */
+        .features-list .text strong {
+            display: block;
+            font-size: 16px;
+            color: #1e293b;
+            margin-bottom: 4px;
+        }
+
+        .features-list .text p {
+            margin: 0;
+            font-size: 14px;
+            color: #64748b;
+            line-height: 1.4;
+        }
+
+        /* Дополнительное размытие текста у Amazon для усиления эффекта проигрыша */
+        .compare-card.loser .features-list .text strong {
+            color: #64748b;
+        }
+
+        .compare-card.loser .features-list .text p {
+            color: #94a3b8;
+        }
+
+        /* АДАПТИВ (Мобилки) - Без скролла */
+        @media (max-width: 768px) {
+            .compare-container {
+                flex-direction: column;
+                align-items: center;
+                gap: 35px;
+            }
+
+            .compare-card {
+                width: 100%;
+                max-width: 100%;
+                padding: 35px 20px;
+            }
+
+            .comparison .section-title {
+                font-size: 28px;
+            }
+
+            .compare-card.loser {
+                order: 2;
+                /* SleepToy всегда выше */
+            }
+        }
+    </style>
+    <style data-name="cta">
+        .cta {
+            padding: 60px 0;
+            text-align: center;
+            background: #f8faf5;
+        }
+
+        @media (min-width: 750px) {
+            .section {
+                padding: 120px 0;
+            }
+        }
+
+        .cta-card {
+            background: #fff;
+            border-radius: 40px;
+            padding: 80px;
+            box-shadow: var(--shadow);
+        }
+
+        .cta h2 {
+            font-size: 68px;
+            line-height: 1;
+            margin-bottom: 24px;
+        }
+
+        .cta p {
+            max-width: 860px;
+            margin: 0 auto 34px;
+            font-size: 22px;
+            color: #555;
+            line-height: 1.8;
+        }
+    </style>
+
+    <style data-name="faq">
+        .faq {
+            background: #f8faf5;
+        }
+
+        .faq-list {
+            max-width: 1000px;
+            margin: auto;
+        }
+
+        .faq-item {
+            background: #fff;
+            border-radius: 24px;
+            margin-bottom: 18px;
+            overflow: hidden;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, .05);
+        }
+
+        .faq-question {
+            padding: 30px;
+            font-size: 22px;
+            font-weight: 800;
+            cursor: pointer;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .faq-answer {
+            max-height: 0;
+            overflow: hidden;
+            transition: .45s;
+        }
+
+        .faq-answer-inner {
+            padding: 0 30px 30px;
+            color: #555;
+            line-height: 1.5;
+            font-size: 18px;
+        }
+    </style>
+
+    <style data-name="footer">
+        .footer {
+            background: #111;
+            color: #fff;
+            padding: 80px 0 40px;
+        }
+
+        .footer-grid {
+            display: grid;
+            grid-template-columns: 1.3fr 1fr 1fr 1fr;
+            gap: 50px;
+            margin-bottom: 60px;
+        }
+
+        .footer p {
+            color: rgba(255, 255, 255, .7);
+            line-height: 1.8;
+        }
+
+        .footer-links {
+            display: flex;
+            flex-direction: column;
+            gap: 16px;
+        }
+
+        .footer-links a {
+            color: rgba(255, 255, 255, .7);
+        }
+
+        .footer-bottom {
+            border-top: 1px solid rgba(255, 255, 255, .1);
+            padding-top: 30px;
+            text-align: center;
+            color: rgba(255, 255, 255, .5);
+        }
+    </style>
+
+    <style data-name="animations">
+        .reveal {
+            opacity: 0;
+            transform: translateY(60px);
+            transition: 1s;
+        }
+
+        .reveal.active {
+            opacity: 1;
+            transform: none;
+        }
+    </style>
+
+    <style data-name="hero-style-2">
+        .hero-content {
+            max-width: 700px;
+        }
+
+        .hero-top {
+            display: flex;
+            align-items: center;
+            gap: 18px;
+            flex-wrap: wrap;
+            margin-bottom: 24px;
+        }
+
+        .badge {
+            background: #edf8df;
+            color: #1c7a2c;
+            border-radius: 999px;
+            padding: 12px 18px;
+            font-weight: 800;
+            font-size: 14px;
+        }
+
+        .hero-rating {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .hero-rating-stars {
+            color: #ffb400;
+            font-size: 20px;
+            letter-spacing: 2px;
+        }
+
+        .hero-rating-text {
+            font-size: 14px;
+            font-weight: 700;
+            color: #555;
+        }
+
+        .hero-content h1 {
+            font-size: 54px;
+            line-height: 110%;
+            margin-bottom: 28px;
+            font-weight: 900;
+            letter-spacing: -2px;
+        }
+
+        .hero-content h1 span {
+            color: #1c7a2c;
+        }
+
+        .hero-text {
+            font-size: 22px;
+            line-height: 1.5;
+            color: #4d4d4d;
+            margin-bottom: 34px;
+        }
+
+        .hero-benefits {
+            display: flex;
+            flex-direction: column;
+            gap: 16px;
+            margin-bottom: 36px;
+        }
+
+        .hero-benefit {
+            display: flex;
+            align-items: center;
+            gap: 14px;
+            font-size: 18px;
+            font-weight: 700;
+        }
+
+        .hero-benefit-icon {
+            width: 32px;
+            height: 32px;
+            min-width: 32px;
+            border-radius: 50%;
+            background: #a4d16c;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 16px;
+        }
+    </style>
+
+    <style data-name="hero-offer-style-2">
+        .hero-offer {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 20px;
+            background: #f8faf5;
+            border: 2px solid #e6efd8;
+            border-radius: 28px;
+            padding: 24px;
+            margin-bottom: 34px;
+            flex-wrap: wrap;
+        }
+
+        .hero-price-top {
+            color: #1c7a2c;
+            font-weight: 900;
+            font-size: 13px;
+            letter-spacing: 1px;
+            margin-bottom: 8px;
+        }
+
+        .hero-price-row {
+            display: flex;
+            align-items: center;
+            gap: 14px;
+            margin-bottom: 6px;
+        }
+
+        .hero-price-old {
+            font-size: 24px;
+            color: #888;
+            text-decoration: line-through;
+            font-weight: 800;
+        }
+
+        .hero-price-new {
+            font-size: 48px;
+            color: #111;
+            font-weight: 900;
+            line-height: 1;
+        }
+
+        .hero-price-save {
+            color: #1c7a2c;
+            font-weight: 800;
+        }
+
+        .hero-stock {
+            background: #fff;
+            border-radius: 999px;
+            padding: 14px 18px;
+            font-weight: 800;
+            border: 1px solid #ececec;
+            box-shadow: 0 4px 18px rgba(0, 0, 0, .04);
+        }
+    </style>
+
+    <style data-name="hero-extra-content">
+        .hero-main-btn {
+            font-size: 20px;
+            padding: 22px 42px;
+            box-shadow: 0 18px 40px rgba(28, 122, 44, .28);
+        }
+
+        @media (max-width: 576px) {
+            .hero-buttons .btn {
+                width: 100%;
+            }
+        }
+
+        .hero-payment {
+            display: flex;
+            gap: 24px;
+            flex-wrap: wrap;
+            margin-bottom: 38px;
+            margin-top: 25px;
+        }
+
+        .hero-payment-item {
+            font-size: 15px;
+            font-weight: 700;
+            color: #555;
+        }
+
+        .hero-brands {
+            border-top: 1px solid rgba(0, 0, 0, .08);
+            margin-top: 24px;
+            padding-top: 24px;
+        }
+
+        .hero-brands span {
+            display: block;
+            margin-bottom: 16px;
+            color: #777;
+            font-size: 13px;
+            font-weight: 800;
+            letter-spacing: 1.5px;
+        }
+
+        .hero-brand-logos {
+            display: flex;
+            gap: 38px;
+            flex-wrap: wrap;
+            align-items: center;
+        }
+
+        .hero-brand-logos div {
+            font-size: 28px;
+            font-weight: 900;
+            color: #1d1d1d;
+            opacity: .7;
+        }
+    </style>
+
+    <style data-name="hero-bundle-offer">
+        .hero-bundle-offer {
+            margin-top: 26px;
+            background: #fff;
+            border: 2px solid #e8f0db;
+            border-radius: 28px;
+            padding: 20px 24px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 24px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, .05);
+            flex-wrap: wrap;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero-bundle-offer::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background:
+                radial-gradient(circle at top right, rgba(164, 209, 108, .18), transparent 30%);
+            pointer-events: none;
+        }
+
+        .hero-bundle-left {
+            flex: 1;
+            min-width: 240px;
+            position: relative;
+            z-index: 2;
+        }
+
+        .hero-bundle-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            background: #edf8df;
+            color: #1c7a2c;
+            padding: 8px 14px;
+            border-radius: 999px;
+            font-size: 12px;
+            font-weight: 900;
+            margin-bottom: 12px;
+            letter-spacing: .5px;
+        }
+
+        .hero-bundle-title {
+            font-size: 28px;
+            line-height: 1.1;
+            font-weight: 900;
+            margin-bottom: 8px;
+        }
+
+        .hero-bundle-title span {
+            color: #1c7a2c;
+        }
+
+        .hero-bundle-text {
+            color: #666;
+            font-size: 15px;
+            line-height: 1.6;
+            max-width: 360px;
+        }
+    </style>
+
+    <style data-name="hero-bundle-products">
+        .hero-bundle-products {
+            display: flex;
+            align-items: center;
+            gap: 14px;
+            position: relative;
+            z-index: 2;
+        }
+
+        .hero-bundle-product {
+            width: 85px;
+            height: 85px;
+            border-radius: 22px;
+            overflow: hidden;
+            background: #f8faf5;
+            border: 2px solid #edf2e5;
+            flex-shrink: 0;
+        }
+
+        @media (min-width: 365px) {
+            .hero-bundle-product {
+                width: 120px;
+                height: 120px;
+            }
+        }
+
+        .hero-bundle-product img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .hero-bundle-plus {
+            font-size: 26px;
+            font-weight: 900;
+            color: #1c7a2c;
+        }
+
+        .hero-bundle-right {
+            display: flex;
+            align-items: center;
+            gap: 18px;
+            position: relative;
+            z-index: 2;
+        }
+
+        .hero-bundle-price {
+            display: flex;
+            flex-direction: column;
+            align-items: flex-end;
+        }
+
+        .hero-bundle-old {
+            font-size: 16px;
+            color: #999;
+            text-decoration: line-through;
+            font-weight: 800;
+        }
+
+        .hero-bundle-new {
+            font-size: 34px;
+            line-height: 1;
+            font-weight: 900;
+            color: #111;
+        }
+
+        .hero-bundle-btn {
+            padding: 16px 26px;
+            font-size: 16px;
+            white-space: nowrap;
+        }
+    </style>
+
+    <style data-name="hero-slider">
+        .hero-slider {
+            position: relative;
+        }
+
+        .hero-slider-track {
+            position: relative;
+            width: 100%;
+            height: 75vh;
+            border-radius: 40px;
+            overflow: hidden;
+            box-shadow: 0 30px 80px rgba(0, 0, 0, .12), 0 10px 30px rgba(0, 0, 0, .06);
+            max-height: 620px;
+        }
+
+        @media (max-width: 576px) {
+            .hero-slider-track {
+                height: 380px;
+            }
+        }
+
+
+        .hero-slide {
+            position: absolute;
+            inset: 0;
+            opacity: 0;
+            visibility: hidden;
+            transition: opacity .7s ease;
+        }
+
+        .hero-slide.active {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        .hero-slide img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+        /* Стили для контейнера миниатюр */
+.hero-slider-thumbs {
     display: flex;
-    flex-direction: column;
-    justify-content: space-between; /* Чтобы карточки одной высоты смотрелись ровно */
-    border: 1px solid rgba(0, 0, 0, 0.02);
+    justify-content: start;
+    gap: 10px;
+    margin-top: 15px;
 }
 
-.review-stars {
-    color: #ffb400;
-    margin-bottom: 20px;
-    font-size: 24px;
-    letter-spacing: -1px;
-}
-
-.review p {
-    font-size: 16px;
-    line-height: 1.8;
-    color: #444;
-    margin-bottom: 28px;
-}
-
-.review-user {
-    display: flex;
-    align-items: center;
-    gap: 16px;
-}
-
-.review-user img {
-    width: 60px;
-    height: 60px;
-    border-radius: 50%;
-    object-fit: cover;
-    flex-shrink: 0;
-}
-
-.review-user strong {
-    display: block;
-    font-size: 16px;
-    font-weight: 800;
-    color: var(--text, #111);
-}
-
-.review-user span {
-    font-size: 13px;
-    color: var(--green, #1c7a2c);
-    font-weight: 700;
-}
-
-/* Скрываем точки на десктопе */
-.review-dots {
-    display: none;
-}
-
-/* МАГИЯ ДЛЯ МОБИЛОК (До 768px) */
-@media (max-width: 768px) {
-    .reviews-section {
-        padding: 50px 0;
-    }
-
-    .reviews-section .section-title {
-        font-size: 32px;
-        padding: 0 10px;
-    }
-
-    .reviews-section .section-subtitle {
-        font-size: 16px;
-        margin-bottom: 30px;
-        padding: 0 10px;
-    }
-
-    /* Превращаем сетку во флекс с горизонтальным скроллом */
-    .reviews-grid {
-        display: flex;
-        grid-template-columns: none;
-        gap: 16px;
-        overflow-x: auto;
-        overflow-y: hidden;
-        scroll-snap-type: x mandatory;
-        scroll-behavior: smooth;
-        -webkit-overflow-scrolling: touch;
-        padding: 10px 20px 70px 20px; /* Отступы сверху/снизу для теней */
-        margin: 0 -20px;
-    }
-
-    /* Прячем дефолтный скроллбар */
-    .reviews-grid::-webkit-scrollbar {
-        display: none;
-    }
-    .reviews-grid {
-        -ms-overflow-style: none;
-        scrollbar-width: none;
-    }
-
-    /* Адаптируем саму карточку отзыва */
-    .review {
-        flex: 0 0 85%; /* 85% ширины экрана, чтобы выглядывал край следующего отзыва */
-        scroll-snap-align: center;
-        padding: 28px 24px;
-        border-radius: 24px;
-    }
-
-    .review p {
-        font-size: 15px;
-        line-height: 1.6;
-        margin-bottom: 20px;
-    }
-
-    /* Показываем точки-индикаторы */
-    .review-dots {
-        display: flex;
-        justify-content: center;
-        gap: 8px;
-        margin-top: -40px;
-    }
-
-    .dot {
-        width: 8px;
-        height: 8px;
-        border-radius: 50%;
-        background: rgba(0, 0, 0, 0.12);
-        transition: all 0.3s ease;
-    }
-
-    .dot.active {
-        background: var(--green, #1c7a2c);
-        width: 20px;
-        border-radius: 4px;
-    }
-}
-</style>
-
-<style data-name="comparison-table">
-/* Основные стили светлой секции */
-.comparison {
-    background: linear-gradient(to bottom, #ffffff 0%, #f8faf5 100%); /* Чистый, мягкий светлый фон */
-    color: #0f172a;
-    padding: 60px 20px;
-    font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
-}
-
-.comparison .container {
-    max-width: 1100px;
-    margin: 0 auto;
-}
-
-@media (max-width: 576px) {
-    .comparison .container {
-        width: 100%;
-    }
-}
-
-.comparison .section-title {
-    font-size: 36px;
-    font-weight: 800;
-    text-align: center;
-    margin-bottom: 10px;
-    letter-spacing: -0.5px;
-    color: #0f172a;
-}
-
-.comparison .section-subtitle {
-    font-size: 18px;
-    color: #64748b;
-    text-align: center;
-    margin-bottom: 50px;
-}
-
-/* Контейнер для карточек */
-.compare-container {
-    display: flex;
-    gap: 30px;
-    align-items: stretch;
-    justify-content: center;
-}
-
-/* Общие стили для карточек */
-.compare-card {
-    background: #ffffff;
-    border-radius: 24px;
-    padding: 40px 30px;
-    flex: 1;
-    max-width: 500px;
-    position: relative;
-    box-sizing: border-box;
-    border: 2px solid transparent;
-    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05), 0 2px 4px -2px rgba(0, 0, 0, 0.05);
-    transition: transform 0.3s ease, box-shadow 0.3s ease;
-}
-
-/* Стилизация SleepToy (Контрастный, привлекает внимание) */
-.compare-card.leader {
-    border-color: var(--green, #22c55e); 
-    background: #ffffff;
-    box-shadow: 0 20px 40px rgba(34, 197, 94, 0.08); /* Нежное зеленоватое свечение */
-}
-
-/* Насыщенный бейдж для SleepToy */
-.card-badge {
-    position: absolute;
-    top: -15px;
-    left: 30px;
-    background: var(--green, #22c55e);
-    color: #ffffff;
-    font-weight: 700;
-    font-size: 12px;
-    text-transform: uppercase;
-    padding: 6px 16px;
-    border-radius: 20px;
-    letter-spacing: 0.5px;
-}
-
-/* Стилизация Amazon (Выглядит блеклым и серым) */
-.compare-card.loser {
-    background: #f1f5f9; /* Серый «дешевый» фон */
-    border-color: #e2e8f0;
-    box-shadow: none;
-}
-
-.compare-card.loser .card-title {
-    color: #94a3b8; /* Замыленный заголовок */
-}
-
-/* Заголовки в карточках */
-.card-title {
-    font-size: 26px;
-    font-weight: 800;
-    margin: 0 0 5px 0;
-    color: #0f172a;
-}
-
-.card-price-desc {
-    font-size: 14px;
-    color: #64748b;
-    margin: 0 0 35px 0;
-}
-
-/* Список преимуществ */
-.features-list {
-    list-style: none;
+/* Базовый стиль кнопки-миниатюры */
+.hero-thumb {
+    width: 70px;
+    height: 70px;
     padding: 0;
-    margin: 0;
-    display: flex;
-    flex-direction: column;
-    gap: 25px;
-}
-
-.features-list li {
-    display: flex;
-    align-items: flex-start;
-    gap: 15px;
-}
-
-/* Иконки */
-.icon {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    width: 24px;
-    height: 24px;
-    border-radius: 50%;
-    font-size: 11px;
-    font-weight: bold;
-    flex-shrink: 0;
-    margin-top: 2px;
-}
-
-.icon.check {
-    background: rgba(34, 197, 94, 0.15);
-    color: #16a34a;
-}
-
-.icon.cross {
-    background: rgba(239, 68, 68, 0.1);
-    color: #dc2626;
-}
-
-/* Текст описания фичи */
-.features-list .text strong {
-    display: block;
-    font-size: 16px;
-    color: #1e293b;
-    margin-bottom: 4px;
-}
-
-.features-list .text p {
-    margin: 0;
-    font-size: 14px;
-    color: #64748b;
-    line-height: 1.4;
-}
-
-/* Дополнительное размытие текста у Amazon для усиления эффекта проигрыша */
-.compare-card.loser .features-list .text strong {
-    color: #64748b;
-}
-.compare-card.loser .features-list .text p {
-    color: #94a3b8;
-}
-
-/* АДАПТИВ (Мобилки) - Без скролла */
-@media (max-width: 768px) {
-    .compare-container {
-        flex-direction: column;
-        align-items: center;
-        gap: 35px;
-    }
-    
-    .compare-card {
-        width: 100%;
-        max-width: 100%;
-        padding: 35px 20px;
-    }
-    
-    .comparison .section-title {
-        font-size: 28px;
-    }
-    
-    .compare-card.loser {
-        order: 2; /* SleepToy всегда выше */
-    }
-}
-</style>
-<style data-name="cta">
-.cta{
-    padding:60px 0;
-    text-align:center;
-    background: #f8faf5;
-}
-@media (min-width: 750px) {
-    .section {
-    padding:120px 0;
-    }
-}
-
-.cta-card{
-    background:#fff;
-    border-radius:40px;
-    padding:80px;
-    box-shadow:var(--shadow);
-}
-
-.cta h2{
-    font-size:68px;
-    line-height:1;
-    margin-bottom:24px;
-}
-
-.cta p{
-    max-width:860px;
-    margin:0 auto 34px;
-    font-size:22px;
-    color:#555;
-    line-height:1.8;
-}
-</style>
-
-<style data-name="faq">
-.faq{
-    background:#f8faf5;
-}
-
-.faq-list{
-    max-width:1000px;
-    margin:auto;
-}
-
-.faq-item{
-    background:#fff;
-    border-radius:24px;
-    margin-bottom:18px;
-    overflow:hidden;
-    box-shadow:0 10px 30px rgba(0,0,0,.05);
-}
-
-.faq-question{
-    padding:30px;
-    font-size:22px;
-    font-weight:800;
-    cursor:pointer;
-    display:flex;
-    justify-content:space-between;
-    align-items:center;
-}
-
-.faq-answer{
-    max-height:0;
-    overflow:hidden;
-    transition:.45s;
-}
-
-.faq-answer-inner{
-    padding:0 30px 30px;
-    color:#555;
-    line-height:1.5;
-    font-size:18px;
-}
-</style>
-
-<style data-name="footer">
-.footer{
-    background:#111;
-    color:#fff;
-    padding:80px 0 40px;
-}
-
-.footer-grid{
-    display:grid;
-    grid-template-columns:1.3fr 1fr 1fr 1fr;
-    gap:50px;
-    margin-bottom:60px;
-}
-
-.footer p{
-    color:rgba(255,255,255,.7);
-    line-height:1.8;
-}
-
-.footer-links{
-    display:flex;
-    flex-direction:column;
-    gap:16px;
-}
-
-.footer-links a{
-    color:rgba(255,255,255,.7);
-}
-
-.footer-bottom{
-    border-top:1px solid rgba(255,255,255,.1);
-    padding-top:30px;
-    text-align:center;
-    color:rgba(255,255,255,.5);
-}
-</style>
-
-<style data-name="animations">
-.reveal{
-    opacity:0;
-    transform:translateY(60px);
-    transition:1s;
-}
-
-.reveal.active{
-    opacity:1;
-    transform:none;
-}
-</style>
-
-<style data-name="hero-style-2">
-.hero-content{
-    max-width:700px;
-}
-
-.hero-top{
-    display:flex;
-    align-items:center;
-    gap:18px;
-    flex-wrap:wrap;
-    margin-bottom:24px;
-}
-
-.badge{
-    background:#edf8df;
-    color:#1c7a2c;
-    border-radius:999px;
-    padding:12px 18px;
-    font-weight:800;
-    font-size:14px;
-}
-
-.hero-rating{
-    display:flex;
-    align-items:center;
-    gap:12px;
-}
-
-.hero-rating-stars{
-    color:#ffb400;
-    font-size:20px;
-    letter-spacing:2px;
-}
-
-.hero-rating-text{
-    font-size:14px;
-    font-weight:700;
-    color:#555;
-}
-
-.hero-content h1{
-    font-size:54px;
-    line-height:110%;
-    margin-bottom:28px;
-    font-weight:900;
-    letter-spacing:-2px;
-}
-
-.hero-content h1 span{
-    color:#1c7a2c;
-}
-
-.hero-text{
-    font-size:22px;
-    line-height:1.5;
-    color:#4d4d4d;
-    margin-bottom:34px;
-}
-
-.hero-benefits{
-    display:flex;
-    flex-direction:column;
-    gap:16px;
-    margin-bottom:36px;
-}
-
-.hero-benefit{
-    display:flex;
-    align-items:center;
-    gap:14px;
-    font-size:18px;
-    font-weight:700;
-}
-
-.hero-benefit-icon{
-    width:32px;
-    height:32px;
-    min-width:32px;
-    border-radius:50%;
-    background:#a4d16c;
-    display:flex;
-    align-items:center;
-    justify-content:center;
-    font-size:16px;
-}
-</style>
-
-<style data-name="hero-offer-style-2">
-.hero-offer{
-    display:flex;
-    align-items:center;
-    justify-content:space-between;
-    gap:20px;
-    background:#f8faf5;
-    border:2px solid #e6efd8;
-    border-radius:28px;
-    padding:24px;
-    margin-bottom:34px;
-    flex-wrap:wrap;
-}
-
-.hero-price-top{
-    color:#1c7a2c;
-    font-weight:900;
-    font-size:13px;
-    letter-spacing:1px;
-    margin-bottom:8px;
-}
-
-.hero-price-row{
-    display:flex;
-    align-items:center;
-    gap:14px;
-    margin-bottom:6px;
-}
-
-.hero-price-old{
-    font-size:24px;
-    color:#888;
-    text-decoration:line-through;
-    font-weight:800;
-}
-
-.hero-price-new{
-    font-size:48px;
-    color:#111;
-    font-weight:900;
-    line-height:1;
-}
-
-.hero-price-save{
-    color:#1c7a2c;
-    font-weight:800;
-}
-
-.hero-stock{
-    background:#fff;
-    border-radius:999px;
-    padding:14px 18px;
-    font-weight:800;
-    border:1px solid #ececec;
-    box-shadow:0 4px 18px rgba(0,0,0,.04);
-}
-</style>
-
-<style data-name="hero-extra-content">
-.hero-main-btn{
-    font-size:20px;
-    padding:22px 42px;
-    box-shadow:0 18px 40px rgba(28,122,44,.28);
-}
-@media (max-width: 576px) {
-    .hero-buttons .btn {
-        width: 100%;
-    }
-}
-
-.hero-payment{
-    display:flex;
-    gap:24px;
-    flex-wrap:wrap;
-    margin-bottom:38px;
-    margin-top: 25px;
-}
-
-.hero-payment-item{
-    font-size:15px;
-    font-weight:700;
-    color:#555;
-}
-
-.hero-brands{
-    border-top:1px solid rgba(0,0,0,.08);
-    margin-top: 24px;
-    padding-top:24px;
-}
-
-.hero-brands span{
-    display:block;
-    margin-bottom:16px;
-    color:#777;
-    font-size:13px;
-    font-weight:800;
-    letter-spacing:1.5px;
-}
-
-.hero-brand-logos{
-    display:flex;
-    gap:38px;
-    flex-wrap:wrap;
-    align-items:center;
-}
-
-.hero-brand-logos div{
-    font-size:28px;
-    font-weight:900;
-    color:#1d1d1d;
-    opacity:.7;
-}
-</style>
-
-<style data-name="hero-bundle-offer">
-.hero-bundle-offer{
-    margin-top:26px;
-    background:#fff;
-    border:2px solid #e8f0db;
-    border-radius:28px;
-    padding:20px 24px;
-    display:flex;
-    align-items:center;
-    justify-content:space-between;
-    gap:24px;
-    box-shadow:0 10px 30px rgba(0,0,0,.05);
-    flex-wrap:wrap;
-    position:relative;
-    overflow:hidden;
-}
-
-.hero-bundle-offer::before{
-    content:'';
-    position:absolute;
-    inset:0;
-    background:
-    radial-gradient(circle at top right, rgba(164,209,108,.18), transparent 30%);
-    pointer-events:none;
-}
-
-.hero-bundle-left{
-    flex:1;
-    min-width:240px;
-    position:relative;
-    z-index:2;
-}
-
-.hero-bundle-badge{
-    display:inline-flex;
-    align-items:center;
-    gap:8px;
-    background:#edf8df;
-    color:#1c7a2c;
-    padding:8px 14px;
-    border-radius:999px;
-    font-size:12px;
-    font-weight:900;
-    margin-bottom:12px;
-    letter-spacing:.5px;
-}
-
-.hero-bundle-title{
-    font-size:28px;
-    line-height:1.1;
-    font-weight:900;
-    margin-bottom:8px;
-}
-
-.hero-bundle-title span{
-    color:#1c7a2c;
-}
-
-.hero-bundle-text{
-    color:#666;
-    font-size:15px;
-    line-height:1.6;
-    max-width:360px;
-}
-</style>
-
-<style data-name="hero-bundle-products">
-.hero-bundle-products{
-    display:flex;
-    align-items:center;
-    gap:14px;
-    position:relative;
-    z-index:2;
-}
-
-.hero-bundle-product{
-    width: 85px;
-    height: 85px;
-    border-radius:22px;
-    overflow:hidden;
-    background:#f8faf5;
-    border:2px solid #edf2e5;
-    flex-shrink:0;
-}
-
-@media (min-width: 365px) {
-    .hero-bundle-product{
-        width: 120px;
-        height: 120px;
-    }
-} 
-
-.hero-bundle-product img{
-    width:100%;
-    height:100%;
-    object-fit:cover;
-}
-
-.hero-bundle-plus{
-    font-size:26px;
-    font-weight:900;
-    color:#1c7a2c;
-}
-
-.hero-bundle-right{
-    display:flex;
-    align-items:center;
-    gap:18px;
-    position:relative;
-    z-index:2;
-}
-
-.hero-bundle-price{
-    display:flex;
-    flex-direction:column;
-    align-items:flex-end;
-}
-
-.hero-bundle-old{
-    font-size:16px;
-    color:#999;
-    text-decoration:line-through;
-    font-weight:800;
-}
-
-.hero-bundle-new{
-    font-size:34px;
-    line-height:1;
-    font-weight:900;
-    color:#111;
-}
-
-.hero-bundle-btn{
-    padding:16px 26px;
-    font-size:16px;
-    white-space:nowrap;
-}
-</style>
-
-<style data-name="hero-slider">
-.hero-slider{
-    position:relative;
-}
-
-.hero-slider-track{
-    position:relative;
-    width: 100%;
-    height: 75vh;
-    border-radius: 40px;
-    overflow: hidden;
-    box-shadow: 0 30px 80px rgba(0, 0, 0, .12), 0 10px 30px rgba(0, 0, 0, .06);
-    max-height:620px;
-}
-
-@media (max-width: 576px) {
-    .hero-slider-track {
-        height: 380px;
-    }
-}
-
-
-.hero-slide{
-    position:absolute;
-    inset:0;
-    opacity:0;
-    visibility:hidden;
-    transition:opacity .7s ease;
-}
-
-.hero-slide.active{
-    opacity:1;
-    visibility:visible;
-}
-
-.hero-slide img{
-    width:100%;
-    height:100%;
-    object-fit:cover;
-}
-</style>
-
-<style data-name="hero-slider-navigation">
-.hero-slider-nav{
-    position:absolute;
-    left:24px;
-    right:24px;
-    top:50%;
-    transform:translateY(-50%);
-    display:flex;
-    justify-content:space-between;
-    z-index:5;
-    pointer-events:none;
-}
-
-.hero-slider-btn{
-    width:54px;
-    height:54px;
-    border:none;
-    border-radius:50%;
-    background:rgba(255,255,255,.9);
-    backdrop-filter:blur(10px);
-    cursor:pointer;
-    font-size:20px;
-    font-weight:900;
-    transition:.3s;
-    pointer-events:auto;
-    box-shadow:0 10px 30px rgba(0,0,0,.12);
-}
-
-/* CSS-стили */
-.hero-slider-btn {
-    /* Базовые стили: убираем стандартные рамки и фон */
-    background-color: #fff; /* Белый фон */
-    border: 1px solid #E2E8F0; /* Легкая серая рамка */
-    color: #1A202C; /* Цвет иконки */
-    
-    /* Делаем кнопку круглой */
-    border-radius: 50%;
-    
-    /* Размеры кнопки */
-    width: 48px;
-    height: 48px;
-    
-    /* Центрируем иконку внутри кнопки */
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    
-    /* Курсор при наведении */
-    cursor: pointer;
-    
-    /* Плавный переход для эффектов при наведении */
-    transition: all 0.2s ease;
-    
-    /* Тень */
-    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05);
-}
-
-/* Стили при наведении (hover) */
-.hero-slider-btn:hover {
-    background-color: #a4d16c; /* Используем фирменный цвет #a4d16c */
-    border-color: #a4d16c; /* Рамка тоже меняет цвет */
-    
-    /* Немного увеличиваем тень и саму кнопку */
-    transform: translateY(-1px) scale(1.05);
-    box-shadow: 0 6px 15px rgba(164, 209, 108, 0.3); /* Тень в цвет кнопки */
-}
-
-/* Стили для SVG внутри кнопки */
-.hero-slider-btn svg {
-    /* Иконка не должна сжиматься */
-    flex-shrink: 0;
-}
-
-/* Стили при клике (active) */
-.hero-slider-btn:active {
-    transform: translateY(0) scale(1);
-    box-shadow: 0 2px 5px rgba(164, 209, 108, 0.3);
-}
-
-/* Для обеспечения доступности (aria-label) */
-.hero-slider-btn:focus {
-    outline: none;
-    box-shadow: 0 0 0 3px rgba(164, 209, 108, 0.3);
-}
-
-.hero-slider-btn:hover{
-    transform:scale(1.08);
-    background:#fff;
-}
-
-.hero-slider-dots{
-    position:absolute;
-    bottom:24px;
-    left:50%;
-    transform:translateX(-50%);
-    display:flex;
-    gap:10px;
-    z-index:5;
-}
-
-.hero-dot{
-    width:10px;
-    height:10px;
-    border-radius:50%;
-    border:none;
-    background:rgba(255,255,255,.45);
-    cursor:pointer;
-    transition:.3s;
-}
-
-.hero-dot.active{
-    width:34px;
-    border-radius:999px;
-    background:#fff;
-}
-</style>
-
-<style data-name="responsive">
-@media(max-width:1100px){
-
-    .hero-grid,
-    .split{
-        grid-template-columns:1fr;
-    }
-
-    .trust-grid,
-    .why-grid,
-    .reviews-grid,
-    .gallery-grid,
-    .footer-grid{
-        grid-template-columns:1fr 1fr;
-    }
-
-    .hero h1,
-    .section-title,
-    .split-content h2,
-    .cta h2{
-        font-size:52px;
-    }
-
-    .hero-sticky{
-        position:relative;
-        top:0;
-    }
-
-}
-
-@media(max-width:768px){
-
-    .nav{
-        display:none;
-    }
-
-    .hero{
-        padding-top:50px;
-    }
-
-    .hero h1,
-    .section-title,
-    .split-content h2,
-    .cta h2{
-        font-size:32px;
-    }
-
-    .hero-text,
-    .section-subtitle,
-    .cta p{
-        font-size:18px;
-    }
-
-    .trust-grid,
-    .why-grid,
-    .reviews-grid,
-    .gallery-grid,
-    .footer-grid{
-        grid-template-columns:1fr;
-    }
-
-    .cta-card{
-        padding:50px 30px;
-    }
-
-    .split-image img,
-    .hero-card img{
-        height:auto;
-    }
-
-    .hero-content h1{
-        font-size:36px;
-    }
-
-    .hero-price-new{
-        font-size:38px;
-    }
-
-    .hero-brand-logos{
-        gap:20px;
-    }
-
-    .hero-brand-logos div{
-        font-size:22px;
-    }
-
-
-    .floating-box{
-        padding:14px 16px;
-    }
-
-    .floating-box strong{
-        font-size:24px;
-    }
-
-    .hero-slider-btn{
-        width:46px;
-        height:46px;
-    }
-
-    .hero-bundle-offer{
-        padding:20px;
-    }
-
-    .hero-bundle-title{
-        font-size:22px;
-    }
-
-    .hero-bundle-right{
-        width:100%;
-        justify-content:space-between;
-    }
-}
-
-
-</style>
-
-<style data-name="fixed-bottom-bar">
-
-.fixed-bottom-bar{
-    position:fixed;
-    left:0;
-    right:0;
-    bottom:0;
-    z-index:999;
-    padding:14px 20px calc(14px + env(safe-area-inset-bottom));
-    background:rgba(255,255,255,.82);
-    backdrop-filter:blur(18px);
-    border-top:1px solid rgba(0,0,0,.06);
-}
-
-.fixed-bottom-bar__content{
-    max-width:760px;
-    margin:auto;
-    background:#fff;
-    border-radius:999px;
-    padding:12px;
-    display:flex;
-    align-items:center;
-    justify-content:space-between;
-    gap:14px;
-    box-shadow:
-    0 20px 60px rgba(0,0,0,.10),
-    0 4px 20px rgba(0,0,0,.04);
-}
-
-.fixed-bottom-bar__info{
-    padding-left:14px;
-}
-
-.fixed-bottom-bar__top{
-    font-size:12px;
-    font-weight:900;
-    color:#1c7a2c;
-    letter-spacing:.5px;
-    margin-bottom:4px;
-}
-
-.fixed-bottom-bar__price{
-    display:flex;
-    align-items:center;
-    gap:10px;
-}
-
-.old-price{
-    font-size:16px;
-    color:#999;
-    text-decoration:line-through;
-    font-weight:700;
-}
-
-.new-price{
-    font-size:30px;
-    line-height:1;
-    font-weight:900;
-    color:#111;
-}
-
-.fixed-bottom-bar__btn{
-    height:64px;
-    padding:0 38px;
-    border:none;
-    border-radius:999px;
-    background:#1c7a2c;
-    color:#fff;
-    font-size:18px;
-    font-weight:900;
-    cursor:pointer;
-    transition:.3s;
-    width: 80%;
-    box-shadow:0 14px 30px rgba(28,122,44,.25);
-}
-
-.fixed-bottom-bar__btn:hover{
-    transform:translateY(-2px);
-}
-
-.fixed-bottom-bar {
-    display: none;
-}
-
-@media(max-width:768px){
-
-    .fixed-bottom-bar{
-        display: block;
-        padding:12px;
-    }
-
-    .fixed-bottom-bar__content{
-        border-radius:28px;
-        padding:10px;
-    }
-
-    .fixed-bottom-bar__btn{
-        flex:1;
-        min-width:0;
-        padding:0 18px;
-        font-size:16px;
-        height:58px;
-    }
-
-    .new-price{
-        font-size:24px;
-    }
-
-}
-
-</style>
-
-<style data-name="addons-cross-sell">
-/* Базовые стили секции */
-.addons-section {
-    padding: 100px 0;
-     background: linear-gradient(to top, #ffffff 0%, #f8faf5 100%);  /* Используем ваш мягкий фон */
-}
-
-.addons-section .section-header {
-    text-align: center;
-    max-width: 700px;
-    margin: 0 auto 60px;
-}
-
-.addons-section .section-header h2 {
-    font-size: 48px;
-    font-weight: 900;
-    line-height: 1.1;
-    margin-bottom: 16px;
-    color: var(--text);
-}
-
-.addons-section .section-subtitle {
-    font-size: 18px;
-    color: var(--gray);
-    line-height: 1.6;
-}
-
-/* Сетка для карточек */
-.addons-grid {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: 30px;
-}
-
-/* Стилизация карточки товара */
-.addon-card {
-    background: #fff;
-    border-radius: var(--radius);
-    overflow: hidden;
-    box-shadow: var(--shadow);
-    display: flex;
-    flex-direction: column;
-    transition: transform 0.3s ease, box-shadow 0.3s ease;
     border: 2px solid transparent;
-}
-
-.addon-card:hover {
-    transform: translateY(-8px);
-    box-shadow: 0 30px 70px rgba(0,0,0,.12);
-}
-
-/* Фокус на центральном / самом маржинальном товаре */
-.addon-card.bundle-highlight {
-    border-color: var(--light-green);
-    position: relative;
-}
-
-/* Обертка картинки */
-.addon-img-wrap {
-    position: relative;
-    height: 260px;
-    background: #eee;
+    border-radius: 8px;
+    background: none;
+    cursor: pointer;
     overflow: hidden;
+    transition: border-color 0.2s ease, opacity 0.2s ease;
+    opacity: 0.6;
 }
 
-.addon-img-wrap img {
+/* Картинка внутри миниатюры заполняет всю область */
+.hero-thumb img {
     width: 100%;
     height: 100%;
     object-fit: cover;
-    transition: transform 0.5s ease;
+    display: block;
 }
 
-.addon-card:hover .addon-img-wrap img {
-    transform: scale(1.05);
+/* Эффект при наведении */
+.hero-thumb:hover {
+    opacity: 0.9;
 }
 
-/* Бейджи на товарах */
-.card-tag {
-    position: absolute;
-    top: 20px;
-    left: 20px;
-    background: var(--text);
-    color: #fff;
-    font-weight: 800;
-    font-size: 12px;
-    padding: 6px 14px;
-    border-radius: 999px;
-    text-transform: uppercase;
-    letter-spacing: 0.5px;
+/* Стиль для активной миниатюры */
+.hero-thumb.active {
+    border-color: #1c7a2c; /* Цвет рамки под цвет вашей темы */
+    opacity: 1;
 }
 
-.card-tag.special {
-    background: var(--green);
+/* Прячем старые точки, если вы забыли удалить их стили */
+.hero-slider-dots {
+    display: none !important;
 }
+    </style>
 
-/* Контентная часть карточки */
-.addon-info {
-    padding: 28px;
-    display: flex;
-    flex-direction: column;
-    flex-grow: 1;
-}
+    <style data-name="hero-slider-navigation">
+        .hero-slider-nav {
+            position: absolute;
+            left: 24px;
+            right: 24px;
+            top: 50%;
+            transform: translateY(-50%);
+            display: flex;
+            justify-content: space-between;
+            z-index: 5;
+            pointer-events: none;
+        }
 
-.addon-rating {
-    display: flex;
-    align-items: center;
-    gap: 6px;
-    margin-bottom: 12px;
-}
+        .hero-slider-btn {
+            width: 54px;
+            height: 54px;
+            border: none;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, .9);
+            backdrop-filter: blur(10px);
+            cursor: pointer;
+            font-size: 20px;
+            font-weight: 900;
+            transition: .3s;
+            pointer-events: auto;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, .12);
+        }
 
-.addon-rating .stars {
-    color: #ffb800;
-    font-size: 16px;
-    letter-spacing: -1px;
-}
+        /* CSS-стили */
+        .hero-slider-btn {
+            /* Базовые стили: убираем стандартные рамки и фон */
+            background-color: #fff;
+            /* Белый фон */
+            border: 1px solid #E2E8F0;
+            /* Легкая серая рамка */
+            color: #1A202C;
+            /* Цвет иконки */
 
-.addon-rating .rating-count {
-    font-size: 13px;
-    color: var(--gray);
-    font-weight: 700;
-}
+            /* Делаем кнопку круглой */
+            border-radius: 50%;
 
-.addon-info a {
-    font-size: 22px;
-    font-weight: 800;
-    margin-bottom: 10px;
-    line-height: 1.3;
-    color: var(--text);
-}
+            /* Размеры кнопки */
+            width: 48px;
+            height: 48px;
 
-.addon-desc {
-    font-size: 15px;
-    color: var(--gray);
-    line-height: 1.5;
-    margin-bottom: 24px;
-    flex-grow: 1; /* Выравнивает кнопки по одной линии */
-}
+            /* Центрируем иконку внутри кнопки */
+            display: flex;
+            align-items: center;
+            justify-content: center;
 
-/* Подвал карточки с ценой и кнопкой */
-.addon-footer {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    gap: 15px;
-    padding-top: 20px;
-    border-top: 1px solid rgba(0,0,0,0.06);
-}
+            /* Курсор при наведении */
+            cursor: pointer;
 
-.addon-price {
-    display: flex;
-    flex-direction: column;
-}
+            /* Плавный переход для эффектов при наведении */
+            transition: all 0.2s ease;
 
-.current-price {
-    font-size: 24px;
-    font-weight: 900;
-    color: var(--green);
-    line-height: 1;
-}
+            /* Тень */
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05);
+        }
 
-.old-price {
-    font-size: 14px;
-    color: var(--gray);
-    text-decoration: line-through;
-    margin-top: 4px;
-}
+        /* Стили при наведении (hover) */
+        .hero-slider-btn:hover {
+            background-color: #a4d16c;
+            /* Используем фирменный цвет #a4d16c */
+            border-color: #a4d16c;
+            /* Рамка тоже меняет цвет */
 
-/* Компактная продающая кнопка */
-.addon-btn {
-    padding: 12px 24px;
-    font-size: 15px;
-    background: rgba(28, 122, 44, 0.08);
-    color: var(--green);
-    border-radius: 999px;
-    white-space: nowrap;
-}
+            /* Немного увеличиваем тень и саму кнопку */
+            transform: translateY(-1px) scale(1.05);
+            box-shadow: 0 6px 15px rgba(164, 209, 108, 0.3);
+            /* Тень в цвет кнопки */
+        }
 
-.addon-btn:hover {
-    background: var(--green);
-    color: #fff;
-    transform: translateY(-2px);
-}
+        /* Стили для SVG внутри кнопки */
+        .hero-slider-btn svg {
+            /* Иконка не должна сжиматься */
+            flex-shrink: 0;
+        }
 
-/* АДАПТИВНОСТЬ: Идеально на планшетах и мобилках */
-@media (max-width: 990px) {
-    .addons-grid {
-        grid-template-columns: repeat(2, 1fr);
-        gap: 20px;
-    }
-    .addons-section .section-header h2 {
-        font-size: 38px;
-    }
-}
+        /* Стили при клике (active) */
+        .hero-slider-btn:active {
+            transform: translateY(0) scale(1);
+            box-shadow: 0 2px 5px rgba(164, 209, 108, 0.3);
+        }
 
-@media (max-width: 650px) {
-    .addons-grid {
-        grid-template-columns: 1fr; /* Никакого скролла, карточки ложатся одна под другую */
-        gap: 25px;
-    }
-    .addons-section {
-        padding: 60px 0;
-    }
-    .addons-section .section-header h2 {
-        font-size: 30px;
-    }
-    .addon-img-wrap {
-        height: 220px;
-    }
-}
-</style>
+        /* Для обеспечения доступности (aria-label) */
+        .hero-slider-btn:focus {
+            outline: none;
+            box-shadow: 0 0 0 3px rgba(164, 209, 108, 0.3);
+        }
+
+        .hero-slider-btn:hover {
+            transform: scale(1.08);
+            background: #fff;
+        }
+
+        .hero-slider-dots {
+            position: absolute;
+            bottom: 24px;
+            left: 50%;
+            transform: translateX(-50%);
+            display: flex;
+            gap: 10px;
+            z-index: 5;
+        }
+
+        .hero-dot {
+            width: 10px;
+            height: 10px;
+            border-radius: 50%;
+            border: none;
+            background: rgba(255, 255, 255, .45);
+            cursor: pointer;
+            transition: .3s;
+        }
+
+        .hero-dot.active {
+            width: 34px;
+            border-radius: 999px;
+            background: #fff;
+        }
+    </style>
+
+    <style data-name="responsive">
+        @media(max-width:1100px) {
+
+            .hero-grid,
+            .split {
+                grid-template-columns: 1fr;
+            }
+
+            .trust-grid,
+            .why-grid,
+            .reviews-grid,
+            .gallery-grid,
+            .footer-grid {
+                grid-template-columns: 1fr 1fr;
+            }
+
+            .hero h1,
+            .section-title,
+            .split-content h2,
+            .cta h2 {
+                font-size: 52px;
+            }
+
+            .hero-sticky {
+                position: relative;
+                top: 0;
+            }
+
+        }
+
+        @media(max-width:768px) {
+
+            .nav {
+                display: none;
+            }
+
+            .hero {
+                padding-top: 50px;
+            }
+
+            .hero h1,
+            .section-title,
+            .split-content h2,
+            .cta h2 {
+                font-size: 32px;
+            }
+
+            .hero-text,
+            .section-subtitle,
+            .cta p {
+                font-size: 18px;
+            }
+
+            .trust-grid,
+            .why-grid,
+            .reviews-grid,
+            .gallery-grid,
+            .footer-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .cta-card {
+                padding: 50px 30px;
+            }
+
+            .split-image img,
+            .hero-card img {
+                height: auto;
+            }
+
+            .hero-content h1 {
+                font-size: 36px;
+            }
+
+            .hero-price-new {
+                font-size: 38px;
+            }
+
+            .hero-brand-logos {
+                gap: 20px;
+            }
+
+            .hero-brand-logos div {
+                font-size: 22px;
+            }
+
+
+            .floating-box {
+                padding: 14px 16px;
+            }
+
+            .floating-box strong {
+                font-size: 24px;
+            }
+
+            .hero-slider-btn {
+                width: 46px;
+                height: 46px;
+            }
+
+            .hero-bundle-offer {
+                padding: 20px;
+            }
+
+            .hero-bundle-title {
+                font-size: 22px;
+            }
+
+            .hero-bundle-right {
+                width: 100%;
+                justify-content: space-between;
+            }
+        }
+    </style>
+
+    <style data-name="fixed-bottom-bar">
+        .fixed-bottom-bar {
+            position: fixed;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            opacity: 1;
+            transform: translateY(0);
+            z-index: 999;
+            transition: transform 0.3s ease, opacity 0.3s ease;
+            padding: 14px 20px calc(14px + env(safe-area-inset-bottom));
+            background: rgba(255, 255, 255, .82);
+            backdrop-filter: blur(18px);
+            border-top: 1px solid rgba(0, 0, 0, .06);
+        }
+
+        .fixed-bottom-bar--hidden {
+            opacity: 0;
+            transform: translateY(100%);
+            pointer-events: none;
+            /* чтобы нельзя было случайно кликнуть на невидимую кнопку */
+        }
+
+        .fixed-bottom-bar__content {
+            max-width: 760px;
+            margin: auto;
+            background: #fff;
+            border-radius: 999px;
+            padding: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 14px;
+            box-shadow:
+                0 20px 60px rgba(0, 0, 0, .10),
+                0 4px 20px rgba(0, 0, 0, .04);
+        }
+
+        .fixed-bottom-bar__info {
+            padding-left: 14px;
+        }
+
+        .fixed-bottom-bar__top {
+            font-size: 12px;
+            font-weight: 900;
+            color: #1c7a2c;
+            letter-spacing: .5px;
+            margin-bottom: 4px;
+        }
+
+        .fixed-bottom-bar__price {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .old-price {
+            font-size: 16px;
+            color: #999;
+            text-decoration: line-through;
+            font-weight: 700;
+        }
+
+        .new-price {
+            font-size: 30px;
+            line-height: 1;
+            font-weight: 900;
+            color: #111;
+        }
+
+        .fixed-bottom-bar__btn {
+            height: 64px;
+            padding: 0 38px;
+            border: none;
+            border-radius: 999px;
+            background: #1c7a2c;
+            color: #fff;
+            font-size: 18px;
+            font-weight: 900;
+            cursor: pointer;
+            transition: .3s;
+            width: 80%;
+            box-shadow: 0 14px 30px rgba(28, 122, 44, .25);
+        }
+
+        .fixed-bottom-bar__btn:hover {
+            transform: translateY(-2px);
+        }
+
+        .fixed-bottom-bar {
+            display: none;
+        }
+
+        @media(max-width:768px) {
+
+            .fixed-bottom-bar {
+                display: block;
+                padding: 12px;
+            }
+
+            .fixed-bottom-bar__content {
+                border-radius: 28px;
+                padding: 10px;
+            }
+
+            .fixed-bottom-bar__btn {
+                flex: 1;
+                min-width: 0;
+                padding: 0 18px;
+                font-size: 16px;
+                height: 58px;
+            }
+
+            .new-price {
+                font-size: 24px;
+            }
+
+        }
+    </style>
+
+    <style data-name="addons-cross-sell">
+        /* Базовые стили секции */
+        .addons-section {
+            padding: 100px 0;
+            background: linear-gradient(to top, #ffffff 0%, #f8faf5 100%);
+            /* Используем ваш мягкий фон */
+        }
+
+        .addons-section .section-header {
+            text-align: center;
+            max-width: 700px;
+            margin: 0 auto 60px;
+        }
+
+        .addons-section .section-header h2 {
+            font-size: 48px;
+            font-weight: 900;
+            line-height: 1.1;
+            margin-bottom: 16px;
+            color: var(--text);
+        }
+
+        .addons-section .section-subtitle {
+            font-size: 18px;
+            color: var(--gray);
+            line-height: 1.6;
+        }
+
+        /* Сетка для карточек */
+        .addons-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 30px;
+        }
+
+        /* Стилизация карточки товара */
+        .addon-card {
+            background: #fff;
+            border-radius: var(--radius);
+            overflow: hidden;
+            box-shadow: var(--shadow);
+            display: flex;
+            flex-direction: column;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            border: 2px solid transparent;
+        }
+
+        .addon-card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 30px 70px rgba(0, 0, 0, .12);
+        }
+
+        /* Фокус на центральном / самом маржинальном товаре */
+        .addon-card.bundle-highlight {
+            border-color: var(--light-green);
+            position: relative;
+        }
+
+        /* Обертка картинки */
+        .addon-img-wrap {
+            position: relative;
+            height: 260px;
+            background: #eee;
+            overflow: hidden;
+        }
+
+        .addon-img-wrap img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.5s ease;
+        }
+
+        .addon-card:hover .addon-img-wrap img {
+            transform: scale(1.05);
+        }
+
+        /* Бейджи на товарах */
+        .card-tag {
+            position: absolute;
+            top: 20px;
+            left: 20px;
+            background: var(--text);
+            color: #fff;
+            font-weight: 800;
+            font-size: 12px;
+            padding: 6px 14px;
+            border-radius: 999px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .card-tag.special {
+            background: var(--green);
+        }
+
+        /* Контентная часть карточки */
+        .addon-info {
+            padding: 28px;
+            display: flex;
+            flex-direction: column;
+            flex-grow: 1;
+        }
+
+        .addon-rating {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            margin-bottom: 12px;
+        }
+
+        .addon-rating .stars {
+            color: #ffb800;
+            font-size: 16px;
+            letter-spacing: -1px;
+        }
+
+        .addon-rating .rating-count {
+            font-size: 13px;
+            color: var(--gray);
+            font-weight: 700;
+        }
+
+        .addon-info a {
+            font-size: 22px;
+            font-weight: 800;
+            margin-bottom: 10px;
+            line-height: 1.3;
+            color: var(--text);
+        }
+
+        .addon-desc {
+            font-size: 15px;
+            color: var(--gray);
+            line-height: 1.5;
+            margin-bottom: 24px;
+            flex-grow: 1;
+            /* Выравнивает кнопки по одной линии */
+        }
+
+        /* Подвал карточки с ценой и кнопкой */
+        .addon-footer {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 15px;
+            padding-top: 20px;
+            border-top: 1px solid rgba(0, 0, 0, 0.06);
+        }
+
+        .addon-price {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .current-price {
+            font-size: 24px;
+            font-weight: 900;
+            color: var(--green);
+            line-height: 1;
+        }
+
+        .old-price {
+            font-size: 14px;
+            color: var(--gray);
+            text-decoration: line-through;
+            margin-top: 4px;
+        }
+
+        /* Компактная продающая кнопка */
+        .addon-btn {
+            padding: 12px 24px;
+            font-size: 15px;
+            background: rgba(28, 122, 44, 0.08);
+            color: var(--green);
+            border-radius: 999px;
+            white-space: nowrap;
+        }
+
+        .addon-btn:hover {
+            background: var(--green);
+            color: #fff;
+            transform: translateY(-2px);
+        }
+
+        /* АДАПТИВНОСТЬ: Идеально на планшетах и мобилках */
+        @media (max-width: 990px) {
+            .addons-grid {
+                grid-template-columns: repeat(2, 1fr);
+                gap: 20px;
+            }
+
+            .addons-section .section-header h2 {
+                font-size: 38px;
+            }
+        }
+
+        @media (max-width: 650px) {
+            .addons-grid {
+                grid-template-columns: 1fr;
+                /* Никакого скролла, карточки ложатся одна под другую */
+                gap: 25px;
+            }
+
+            .addons-section {
+                padding: 60px 0;
+            }
+
+            .addons-section .section-header h2 {
+                font-size: 30px;
+            }
+
+            .addon-img-wrap {
+                height: 220px;
+            }
+        }
+    </style>
 
 
 </head>
+
 <body>
 
-<div class="top-bar">
-    FREE SHIPPING OVER $75 • SAFE FOR KIDS • TRUSTED BY 25,000+ FAMILIES
-</div>
-
-<header class="header">
-    <div class="container header-inner">
-        <div class="logo"><img src="https://sleeptoyshop.com/cdn/shop/files/logo.png?v=1769462388&width=280" alt="SleepToy Logo"></div>
-
-        <nav class="nav">
-            <a href="#">Best Sellers</a>
-            <a href="#">STEM Toys</a>
-            <a href="#">Bundles</a>
-            <a href="#">Reviews</a>
-            <a href="#">FAQ</a>
-        </nav>
-
-        <!-- Группа действий справа -->
-        <div class="header-actions">
-            <!-- Личный кабинет -->
-            <a href="/account" class="header-icon-btn" aria-label="Account">
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                    <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2" stroke-linecap="round" stroke-linejoin="round"/>
-                    <circle cx="12" cy="7" r="4" stroke-linecap="round" stroke-linejoin="round"/>
-                </svg>
-            </a>
-
-            <!-- Корзина с индикатором количества -->
-            <a href="/cart" class="header-icon-btn cart-btn" aria-label="Cart">
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                    <circle cx="9" cy="21" r="1"/>
-                    <circle cx="20" cy="21" r="1"/>
-                    <path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6" stroke-linecap="round" stroke-linejoin="round"/>
-                </svg>
-                <!-- Маленький бейдж для количества товаров (опционально) -->
-                <span class="cart-count">0</span>
-            </a>
-
-            <button class="btn btn-primary">
-                Shop Now
-            </button>
-        </div>
+    <div class="top-bar">
+        FREE SHIPPING OVER $75 • SAFE FOR KIDS • TRUSTED BY 25,000+ FAMILIES
     </div>
-</header>
 
-<section class="hero">
-    <div class="container hero-grid">
-        <div class="hero-image-wrap hero-sticky reveal">
+    <header class="header">
+        <div class="container header-inner">
+            <div class="logo"><img src="https://sleeptoyshop.com/cdn/shop/files/logo.png?v=1769462388&width=280"
+                    alt="SleepToy Logo"></div>
 
-            <div class="">
+            <nav class="nav">
+                <a href="#">Best Sellers</a>
+                <a href="#">STEM Toys</a>
+                <a href="#">Bundles</a>
+                <a href="#">Reviews</a>
+                <a href="#">FAQ</a>
+            </nav>
 
-                <div class="hero-slider">
-
-                    <div class="hero-slider-track">
-
-                        <div class="hero-slide active">
-                            <img src="https://sleeptoyshop.com/cdn/shop/files/ChatGPT_Image_8_lyut._2026_r._21_12_26_1.png?v=1771080444&width=1646" alt="">
-                        </div>
-
-                        <div class="hero-slide">
-                            <img src="https://sleeptoyshop.com/cdn/shop/files/ChatGPT_Image_9_lyut._2026_r._11_55_50_1_34e51475-e07b-4c2d-8613-c184dddc7607.png?v=1771080444&width=1646" alt="">
-                        </div>
-
-                        <div class="hero-slide">
-                            <img style="object-position: top;" src="https://sleeptoyshop.com/cdn/shop/files/Group_2012.png?v=1771080444&width=1646" alt="">
-                        </div>
-
-                    </div>
-
-                    <div class="hero-slider-nav">
-                        <button class="hero-slider-btn prev" aria-label="Previous slide">
-                            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                <path d="M19 12H5M5 12L12 19M5 12L12 5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-                            </svg>
-                        </button>
-
-                        <button class="hero-slider-btn next" aria-label="Next slide">
-                            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                <path d="M5 12H19M19 12L12 5M19 12L12 19" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-                            </svg>
-                        </button>
-                    </div>
-
-                    <div class="hero-slider-dots">
-
-                        <button class="hero-dot active"></button>
-                        <button class="hero-dot"></button>
-                        <button class="hero-dot"></button>
-
-                    </div>
-
-                    <div class="floating-box box-1">
-                        <strong>25,000+</strong>
-                        <span>Happy Parents</span>
-                    </div>
-
-                    <div class="floating-box box-2">
-                        <strong>4.9 ★</strong>
-                        <span>Parent Rated</span>
-                    </div>
-
-                </div>
-
-            </div>
-
-        </div>
-        <div class="hero-content reveal">
-
-            <div class="hero-top">
-
-                <div class="badge">
-                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none">
-                        <path d="M12 2l8 4v6c0 5-3.5 9.5-8 10-4.5-.5-8-5-8-10V6l8-4z"
-                            stroke="currentColor"
-                            stroke-width="2"
-                            fill="none"/>
-                        <path d="M9 12l2 2 4-4"
-                            stroke="currentColor"
-                            stroke-width="2"
-                            fill="none"/>
+            <!-- Группа действий справа -->
+            <div class="header-actions">
+                <!-- Личный кабинет -->
+                <a href="/account" class="header-icon-btn" aria-label="Account">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2" stroke-linecap="round"
+                            stroke-linejoin="round" />
+                        <circle cx="12" cy="7" r="4" stroke-linecap="round" stroke-linejoin="round" />
                     </svg>
+                </a>
 
-                    Trusted by 25,000+ American Families
-                </div>
+                <!-- Корзина с индикатором количества -->
+                <a href="/cart" class="header-icon-btn cart-btn" aria-label="Cart">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <circle cx="9" cy="21" r="1" />
+                        <circle cx="20" cy="21" r="1" />
+                        <path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6" stroke-linecap="round"
+                            stroke-linejoin="round" />
+                    </svg>
+                    <!-- Маленький бейдж для количества товаров (опционально) -->
+                    <span class="cart-count">0</span>
+                </a>
 
-                <div class="hero-rating">
-
-                    <div class="hero-rating-stars">
-                        ★★★★★
-                    </div>
-
-                    <div class="hero-rating-text">
-                        4.9/5 Rated by Parents Across The USA
-                    </div>
-
-                </div>
-
-            </div>
-
-            <h1>
-                The <span>Glow Magnetic Tile Set</span><br>
-                Kids Can't Put Down
-            </h1>
-
-            <p class="hero-text">
-                Build giant glowing race tracks, magnetic cities, towers, and endless STEM creations while developing creativity, focus, engineering skills, and confidence — without screen time battles.
-            </p>
-
-            <div class="hero-benefits">
-
-                <div class="hero-benefit">
-                    <div class="hero-benefit-icon">✔</div>
-                    Encourages STEM learning through play
-                </div>
-
-                <div class="hero-benefit">
-                    <div class="hero-benefit-icon">✔</div>
-                    Keeps kids engaged for hours independently
-                </div>
-
-                <div class="hero-benefit">
-                    <div class="hero-benefit-icon">✔</div>
-                    Premium stronger magnets than generic Amazon sets
-                </div>
-
-                <div class="hero-benefit">
-                    <div class="hero-benefit-icon">✔</div>
-                    Safe BPA-free materials for peace of mind
-                </div>
-
-            </div>
-
-            <div class="hero-offer">
-
-                <div class="hero-price">
-
-                    <div class="hero-price-top">
-                        TODAY ONLY
-                    </div>
-
-                    <div class="hero-price-row">
-                        <span class="hero-price-old">$89.00</span>
-                        <span class="hero-price-new">$49.00</span>
-                    </div>
-
-                    <div class="hero-price-save">
-                        Save 45% + Free US Shipping
-                    </div>
-
-                </div>
-
-                <div class="hero-stock">
-                    🔥 Almost Sold Out This Week
-                </div>
-
-            </div>
-
-            <div class="hero-buttons">
-
-                <button class="btn btn-primary hero-main-btn">
-                    Add To Cart — $49
+                <button class="btn btn-primary">
+                    Shop Now
                 </button>
-
-                <button class="btn btn-secondary">
-                    Watch Real Kids Play
-                </button>
-
             </div>
-
-            <div class="hero-bundle-offer">
-
-            <div class="hero-bundle-left">
-
-                <div class="hero-bundle-badge">
-                    🔥 Most Popular Bundle
-                </div>
-
-                <div class="hero-bundle-title">
-                    Add 1 More Set & Save <span>20%</span>
-                </div>
-
-                <div class="hero-bundle-text">
-                    Perfect for siblings, bigger builds, and longer play sessions.
-                </div>
-
-            </div>
-
-            <div class="hero-bundle-products">
-
-                <div class="hero-bundle-product">
-                    <img src="https://images.unsplash.com/photo-1516627145497-ae6968895b74?q=80&w=400&auto=format&fit=crop" alt="">
-                </div>
-
-                <div class="hero-bundle-plus">
-                    +
-                </div>
-
-                <div class="hero-bundle-product">
-                    <img src="https://images.unsplash.com/photo-1519340241574-2cec6aef0c01?q=80&w=400&auto=format&fit=crop" alt="">
-                </div>
-
-            </div>
-
-            <div class="hero-bundle-right">
-
-                <div class="hero-bundle-price">
-
-                    <span class="hero-bundle-old">
-                        $98
-                    </span>
-
-                    <span class="hero-bundle-new">
-                        $78
-                    </span>
-
-                </div>
-
-                <button class="btn btn-primary hero-bundle-btn">
-                    Add Bundle
-                </button>
-
-            </div>
-
         </div>
+    </header>
 
-            <div class="hero-payment">
+    <section class="hero">
+        <div class="container hero-grid">
+            <div class="hero-image-wrap hero-sticky reveal">
 
-                <div class="hero-payment-item">
-                    ✅ 30-Day Money Back Guarantee
-                </div>
+                <div class="">
 
-                <div class="hero-payment-item">
-                    🚚 Ships From USA
-                </div>
+                    <div class="hero-slider">
 
-                <div class="hero-payment-item">
-                    🔒 Secure Checkout
-                </div>
+                        <div class="hero-slider-track">
 
-            </div>
+                            <div class="hero-slide active">
+                                <img src="https://sleeptoyshop.com/cdn/shop/files/ChatGPT_Image_8_lyut._2026_r._21_12_26_1.png?v=1771080444&width=1646"
+                                    alt="">
+                            </div>
 
-            <div class="hero-brands">
+                            <div class="hero-slide">
+                                <img src="https://sleeptoyshop.com/cdn/shop/files/ChatGPT_Image_9_lyut._2026_r._11_55_50_1_34e51475-e07b-4c2d-8613-c184dddc7607.png?v=1771080444&width=1646"
+                                    alt="">
+                            </div>
 
-                <span>AS SEEN IN</span>
+                            <div class="hero-slide">
+                                <img style="object-position: top;"
+                                    src="https://sleeptoyshop.com/cdn/shop/files/Group_2012.png?v=1771080444&width=1646"
+                                    alt="">
+                            </div>
 
-                <div class="hero-brand-logos">
-                    <div>Parents</div>
-                    <div>Forbes</div>
-                    <div>USA Today</div>
-                    <div>FOX</div>
-                </div>
+                        </div>
 
-            </div>
+                        <div class="hero-slider-nav">
+                            <button class="hero-slider-btn prev" aria-label="Previous slide">
+                                <svg width="24" height="24" viewBox="0 0 24 24" fill="none"
+                                    xmlns="http://www.w3.org/2000/svg">
+                                    <path d="M19 12H5M5 12L12 19M5 12L12 5" stroke="currentColor" stroke-width="2"
+                                        stroke-linecap="round" stroke-linejoin="round" />
+                                </svg>
+                            </button>
 
-        </div>
-        <div class="fixed-bottom-bar">
+                            <button class="hero-slider-btn next" aria-label="Next slide">
+                                <svg width="24" height="24" viewBox="0 0 24 24" fill="none"
+                                    xmlns="http://www.w3.org/2000/svg">
+                                    <path d="M5 12H19M19 12L12 5M19 12L12 19" stroke="currentColor" stroke-width="2"
+                                        stroke-linecap="round" stroke-linejoin="round" />
+                                </svg>
+                            </button>
+                        </div>
 
-    <div class="fixed-bottom-bar__content">
-
-        <div class="fixed-bottom-bar__info">
-
-            <div class="fixed-bottom-bar__top">
-                🔥 Limited Sale
-            </div>
-
-            <div class="fixed-bottom-bar__price">
-                <span class="old-price">$89</span>
-                <span class="new-price">$49</span>
-            </div>
-
-        </div>
-
-        <button class="fixed-bottom-bar__btn">
-            Add To Cart
-        </button>
-
-    </div>
-
+                        <!-- ЗАМЕНИТЕ СТАРЫЙ .hero-slider-dots НА ЭТОТ БЛОК -->
+<div class="hero-slider-thumbs">
+    <button class="hero-thumb active" aria-label="Go to slide 1">
+        <img src="https://sleeptoyshop.com/cdn/shop/files/ChatGPT_Image_8_lyut._2026_r._21_12_26_1.png?v=1771080444&width=150" alt="Thumbnail 1">
+    </button>
+    <button class="hero-thumb" aria-label="Go to slide 2">
+        <img src="https://sleeptoyshop.com/cdn/shop/files/ChatGPT_Image_9_lyut._2026_r._11_55_50_1_34e51475-e07b-4c2d-8613-c184dddc7607.png?v=1771080444&width=150" alt="Thumbnail 2">
+    </button>
+    <button class="hero-thumb" aria-label="Go to slide 3">
+        <img src="https://sleeptoyshop.com/cdn/shop/files/Group_2012.png?v=1771080444&width=150" alt="Thumbnail 3">
+    </button>
 </div>
-    </div>
-</section>
 
-<section class="trust-bar">
-    <div class="container trust-grid">
-
-        <div class="trust-item">
-            <strong>25K+</strong>
-            <span>Families Trust SleepToy™</span>
-        </div>
-
-        <div class="trust-item">
-            <strong>4.9★</strong>
-            <span>Average Review Rating</span>
-        </div>
-
-        <div class="trust-item">
-            <strong>3M+</strong>
-            <span>Hours of Creative Play</span>
-        </div>
-
-        <div class="trust-item">
-            <strong>100%</strong>
-            <span>Safe Non-Toxic Materials</span>
-        </div>
-
-    </div>
-</section>
-
-<section class="section addons-section">
-    <div class="container">
-
-        <div class="section-header">
-            <span class="badge">
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
-                    <path d="M12 5v14M5 12h14" stroke-linecap="round" stroke-linejoin="round"/>
-                </svg>
-                Complete Your Set
-            </span>
-            <h2>Frequently Bought Together</h2>
-            <p class="section-subtitle">Parents who bought SleepToy™ also absolutely love these educational extensions.</p>
-        </div>
-
-        <div class="addons-grid">
-            
-            <!-- Item 1 -->
-            <div class="addon-card">
-                <div class="addon-img-wrap">
-                    <img src="https://images.unsplash.com/photo-1596461404969-9ae70f2830c1?q=80&w=600&auto=format&fit=crop" alt="GlowTracks Expansion Pack">
-                    <span class="card-tag">Best Seller</span>
-                </div>
-                <div class="addon-info">
-                    <div class="addon-rating">
-                        <span class="stars">★★★★★</span>
-                        <span class="rating-count">(482)</span>
-                    </div>
-                    <a href="#">GlowTracks™ Expansion Pack</a>
-                    <p class="addon-desc">32 additional neon-magnetic tracks that glow in the dark for ultimate night building.</p>
-                    <div class="addon-footer">
-                        <div class="addon-price">
-                            <span class="current-price">$24.99</span>
-                            <span class="old-price">$39.99</span>
+                        <div class="floating-box box-1">
+                            <strong>25,000+</strong>
+                            <span>Happy Parents</span>
                         </div>
-                        <button class="btn addon-btn" onclick="this.innerHTML='Added! ✓'; this.style.background='#a4d16c'; this.style.color='#17370f'">
-                            Add to Cart
-                        </button>
-                    </div>
-                </div>
-            </div>
 
-            <!-- Item 2 -->
-            <div class="addon-card bundle-highlight">
-                <div class="addon-img-wrap">
-                    <img src="https://images.unsplash.com/photo-1587654780291-39c9404d746b?q=80&w=600&auto=format&fit=crop" alt="STEM Architect Geometry Blocks">
-                    <span class="card-tag special">Most Popular</span>
-                </div>
-                <div class="addon-info">
-                    <div class="addon-rating">
-                        <span class="stars">★★★★★</span>
-                        <span class="rating-count">(914)</span>
-                    </div>
-                    <a href="#">STEM Architect™ Geo Blocks</a>
-                    <p class="addon-desc">Advanced 3D geometric shapes to take early brain development and engineering to the next level.</p>
-                    <div class="addon-footer">
-                        <div class="addon-price">
-                            <span class="current-price">$29.99</span>
-                            <span class="old-price">$45.00</span>
+                        <div class="floating-box box-2">
+                            <strong>4.9 ★</strong>
+                            <span>Parent Rated</span>
                         </div>
-                        <button class="btn addon-btn" onclick="this.innerHTML='Added! ✓'; this.style.background='#a4d16c'; this.style.color='#17370f'">
-                            Add to Cart
-                        </button>
-                    </div>
-                </div>
-            </div>
 
-            <!-- Item 3 -->
-            <div class="addon-card">
-                <div class="addon-img-wrap">
-                    <img src="https://images.unsplash.com/photo-1587654780291-39c9404d746b?q=80&w=600&auto=format&fit=crop" alt="Eco-Storage Wooden Chest">
-                </div>
-                <div class="addon-info">
-                    <div class="addon-rating">
-                        <span class="stars">★★★★★</span>
-                        <span class="rating-count">(126)</span>
                     </div>
-                    <a href="#">Eco-Storage™ Wooden Chest</a>
-                    <p class="addon-desc">Premium organic canvas & wood organizer. Fits up to 150 pieces. Keeps the playroom 100% tidy.</p>
-                    <div class="addon-footer">
-                        <div class="addon-price">
-                            <span class="current-price">$19.99</span>
-                            <span class="old-price">$29.99</span>
+
+                </div>
+
+            </div>
+            <div class="hero-content reveal">
+
+                <div class="hero-top">
+
+                    <div class="badge">
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none">
+                            <path d="M12 2l8 4v6c0 5-3.5 9.5-8 10-4.5-.5-8-5-8-10V6l8-4z" stroke="currentColor"
+                                stroke-width="2" fill="none" />
+                            <path d="M9 12l2 2 4-4" stroke="currentColor" stroke-width="2" fill="none" />
+                        </svg>
+
+                        Trusted by 25,000+ American Families
+                    </div>
+
+                    <div class="hero-rating">
+
+                        <div class="hero-rating-stars">
+                            ★★★★★
                         </div>
-                        <button class="btn addon-btn" onclick="this.innerHTML='Added! ✓'; this.style.background='#a4d16c'; this.style.color='#17370f'">
-                            Add to Cart
-                        </button>
+
+                        <div class="hero-rating-text">
+                            4.9/5 Rated by Parents Across The USA
+                        </div>
+
                     </div>
+
+                </div>
+
+                <h1>
+                    The <span>Glow Magnetic Tile Set</span><br>
+                    Kids Can't Put Down
+                </h1>
+
+                <p class="hero-text">
+                    Build giant glowing race tracks, magnetic cities, towers, and endless STEM creations while
+                    developing creativity, focus, engineering skills, and confidence — without screen time battles.
+                </p>
+
+                <div class="hero-benefits">
+
+                    <div class="hero-benefit">
+                        <div class="hero-benefit-icon">✔</div>
+                        Encourages STEM learning through play
+                    </div>
+
+                    <div class="hero-benefit">
+                        <div class="hero-benefit-icon">✔</div>
+                        Keeps kids engaged for hours independently
+                    </div>
+
+                    <div class="hero-benefit">
+                        <div class="hero-benefit-icon">✔</div>
+                        Premium stronger magnets than generic Amazon sets
+                    </div>
+
+                    <div class="hero-benefit">
+                        <div class="hero-benefit-icon">✔</div>
+                        Safe BPA-free materials for peace of mind
+                    </div>
+
+                </div>
+
+                <div class="hero-offer">
+
+                    <div class="hero-price">
+
+                        <div class="hero-price-top">
+                            TODAY ONLY
+                        </div>
+
+                        <div class="hero-price-row">
+                            <span class="hero-price-old">$89.00</span>
+                            <span class="hero-price-new">$49.00</span>
+                        </div>
+
+                        <div class="hero-price-save">
+                            Save 45% + Free US Shipping
+                        </div>
+
+                    </div>
+
+                    <div class="hero-stock">
+                        🔥 Almost Sold Out This Week
+                    </div>
+
+                </div>
+
+                <div class="hero-buttons">
+
+                    <button class="btn btn-primary hero-main-btn">
+                        Add To Cart — $49
+                    </button>
+
+                    <button class="btn btn-secondary">
+                        Watch Real Kids Play
+                    </button>
+
+                </div>
+
+                <div class="hero-bundle-offer">
+
+                    <div class="hero-bundle-left">
+
+                        <div class="hero-bundle-badge">
+                            🔥 Most Popular Bundle
+                        </div>
+
+                        <div class="hero-bundle-title">
+                            Add 1 More Set & Save <span>20%</span>
+                        </div>
+
+                        <div class="hero-bundle-text">
+                            Perfect for siblings, bigger builds, and longer play sessions.
+                        </div>
+
+                    </div>
+
+                    <div class="hero-bundle-products">
+
+                        <div class="hero-bundle-product">
+                            <img src="https://images.unsplash.com/photo-1516627145497-ae6968895b74?q=80&w=400&auto=format&fit=crop"
+                                alt="">
+                        </div>
+
+                        <div class="hero-bundle-plus">
+                            +
+                        </div>
+
+                        <div class="hero-bundle-product">
+                            <img src="https://images.unsplash.com/photo-1519340241574-2cec6aef0c01?q=80&w=400&auto=format&fit=crop"
+                                alt="">
+                        </div>
+
+                    </div>
+
+                    <div class="hero-bundle-right">
+
+                        <div class="hero-bundle-price">
+
+                            <span class="hero-bundle-old">
+                                $98
+                            </span>
+
+                            <span class="hero-bundle-new">
+                                $78
+                            </span>
+
+                        </div>
+
+                        <button class="btn btn-primary hero-bundle-btn">
+                            Add Bundle
+                        </button>
+
+                    </div>
+
+                </div>
+
+                <div class="hero-payment">
+
+                    <div class="hero-payment-item">
+                        ✅ 30-Day Money Back Guarantee
+                    </div>
+
+                    <div class="hero-payment-item">
+                        🚚 Ships From USA
+                    </div>
+
+                    <div class="hero-payment-item">
+                        🔒 Secure Checkout
+                    </div>
+
+                </div>
+
+                <div class="hero-brands">
+
+                    <span>AS SEEN IN</span>
+
+                    <div class="hero-brand-logos">
+                        <div>Parents</div>
+                        <div>Forbes</div>
+                        <div>USA Today</div>
+                        <div>FOX</div>
+                    </div>
+
+                </div>
+
+            </div>
+            <div class="fixed-bottom-bar " id="js-fixed-bar">
+                <div class="fixed-bottom-bar__content">
+
+                    <div class="fixed-bottom-bar__info">
+
+                        <div class="fixed-bottom-bar__top">
+                            🔥 Limited Sale
+                        </div>
+
+                        <div class="fixed-bottom-bar__price">
+                            <span class="old-price">$89</span>
+                            <span class="new-price">$49</span>
+                        </div>
+
+                    </div>
+
+                    <button class="fixed-bottom-bar__btn">
+                        Add To Cart
+                    </button>
+
                 </div>
             </div>
-
         </div>
+    </section>
 
-    </div>
-</section>
+    <section class="trust-bar">
+        <div class="container trust-grid">
 
-<section class="section">
-    <div class="container">
-
-        <h2 class="section-title reveal">
-            Why Parents Choose <span>SleepToy™</span><br>
-            Over Amazon Brands
-        </h2>
-
-        <p class="section-subtitle reveal">
-            We’re not a random marketplace seller. We’re a family-focused STEM toy brand built around safety, learning, quality, and customer support that actually cares.
-        </p>
-
-        <div class="why-grid">
-
-            <div class="why-card reveal">
-                <div class="why-icon"><img width="36" style="object-fit: contain; width: 36px;" src="https://em-content.zobj.net/source/apple/453/shield_1f6e1-fe0f.png"></div>
-                <h3>Premium Safe Materials</h3>
-                <p>
-                    BPA-free, non-toxic, ultra-durable magnetic tiles tested for real family use. Built to survive years of creativity.
-                </p>
+            <div class="trust-item">
+                <strong>25K+</strong>
+                <span>Families Trust SleepToy™</span>
             </div>
 
-            <div class="why-card reveal">
-                <div class="why-icon">🚚</div>
-                <h3>Fast US Shipping</h3>
-                <p>
-                    Ships directly from the USA with fast delivery and real tracking — no mystery packages or slow overseas shipping.
-                </p>
+            <div class="trust-item">
+                <strong>4.9★</strong>
+                <span>Average Review Rating</span>
             </div>
 
-            <div class="why-card reveal">
-                <div class="why-icon">❤️</div>
-                <h3>Real Customer Support</h3>
-                <p>
-                    Questions? Missing pieces? We actually help. Our support team responds fast and takes care of families personally.
-                </p>
+            <div class="trust-item">
+                <strong>3M+</strong>
+                <span>Hours of Creative Play</span>
+            </div>
+
+            <div class="trust-item">
+                <strong>100%</strong>
+                <span>Safe Non-Toxic Materials</span>
             </div>
 
         </div>
+    </section>
 
-    </div>
-</section>
+    <section class="section addons-section">
+        <div class="container">
 
-<section class="section">
-    <div class="container split">
+            <div class="section-header">
+                <span class="badge">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+                        <path d="M12 5v14M5 12h14" stroke-linecap="round" stroke-linejoin="round" />
+                    </svg>
+                    Complete Your Set
+                </span>
+                <h2>Frequently Bought Together</h2>
+                <p class="section-subtitle">Parents who bought SleepToy™ also absolutely love these educational
+                    extensions.</p>
+            </div>
 
-        <div class="split-image reveal">
-            <img src="https://images.unsplash.com/photo-1516627145497-ae6968895b74?q=80&w=1200&auto=format&fit=crop" alt="">
+            <div class="addons-grid">
+
+                <!-- Item 1 -->
+                <div class="addon-card">
+                    <div class="addon-img-wrap">
+                        <img src="https://images.unsplash.com/photo-1596461404969-9ae70f2830c1?q=80&w=600&auto=format&fit=crop"
+                            alt="GlowTracks Expansion Pack">
+                        <span class="card-tag">Best Seller</span>
+                    </div>
+                    <div class="addon-info">
+                        <div class="addon-rating">
+                            <span class="stars">★★★★★</span>
+                            <span class="rating-count">(482)</span>
+                        </div>
+                        <a href="#">GlowTracks™ Expansion Pack</a>
+                        <p class="addon-desc">32 additional neon-magnetic tracks that glow in the dark for ultimate
+                            night building.</p>
+                        <div class="addon-footer">
+                            <div class="addon-price">
+                                <span class="current-price">$24.99</span>
+                                <span class="old-price">$39.99</span>
+                            </div>
+                            <button class="btn addon-btn"
+                                onclick="this.innerHTML='Added! ✓'; this.style.background='#a4d16c'; this.style.color='#17370f'">
+                                Add to Cart
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Item 2 -->
+                <div class="addon-card bundle-highlight">
+                    <div class="addon-img-wrap">
+                        <img src="https://images.unsplash.com/photo-1587654780291-39c9404d746b?q=80&w=600&auto=format&fit=crop"
+                            alt="STEM Architect Geometry Blocks">
+                        <span class="card-tag special">Most Popular</span>
+                    </div>
+                    <div class="addon-info">
+                        <div class="addon-rating">
+                            <span class="stars">★★★★★</span>
+                            <span class="rating-count">(914)</span>
+                        </div>
+                        <a href="#">STEM Architect™ Geo Blocks</a>
+                        <p class="addon-desc">Advanced 3D geometric shapes to take early brain development and
+                            engineering to the next level.</p>
+                        <div class="addon-footer">
+                            <div class="addon-price">
+                                <span class="current-price">$29.99</span>
+                                <span class="old-price">$45.00</span>
+                            </div>
+                            <button class="btn addon-btn"
+                                onclick="this.innerHTML='Added! ✓'; this.style.background='#a4d16c'; this.style.color='#17370f'">
+                                Add to Cart
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Item 3 -->
+                <div class="addon-card">
+                    <div class="addon-img-wrap">
+                        <img src="https://images.unsplash.com/photo-1587654780291-39c9404d746b?q=80&w=600&auto=format&fit=crop"
+                            alt="Eco-Storage Wooden Chest">
+                    </div>
+                    <div class="addon-info">
+                        <div class="addon-rating">
+                            <span class="stars">★★★★★</span>
+                            <span class="rating-count">(126)</span>
+                        </div>
+                        <a href="#">Eco-Storage™ Wooden Chest</a>
+                        <p class="addon-desc">Premium organic canvas & wood organizer. Fits up to 150 pieces. Keeps the
+                            playroom 100% tidy.</p>
+                        <div class="addon-footer">
+                            <div class="addon-price">
+                                <span class="current-price">$19.99</span>
+                                <span class="old-price">$29.99</span>
+                            </div>
+                            <button class="btn addon-btn"
+                                onclick="this.innerHTML='Added! ✓'; this.style.background='#a4d16c'; this.style.color='#17370f'">
+                                Add to Cart
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+
         </div>
+    </section>
 
-        <div class="split-content reveal">
+    <section class="section">
+        <div class="container">
 
-            <h2>
-                More Than A Toy.<br>
-                It’s A Brain-Building Experience.
+            <h2 class="section-title reveal">
+                Why Parents Choose <span>SleepToy™</span><br>
+                Over Amazon Brands
             </h2>
 
-            <p>
-                Every magnetic tile encourages creativity, independent thinking, engineering skills, spatial awareness, and focus — while kids think they’re simply having fun.
+            <p class="section-subtitle reveal">
+                We’re not a random marketplace seller. We’re a family-focused STEM toy brand built around safety,
+                learning, quality, and customer support that actually cares.
             </p>
 
-            <p>
-                Designed for modern parents who want less screen time and more meaningful playtime.
-            </p>
+            <div class="why-grid">
 
-            <div class="check-list">
-
-                <div class="check-item">
-                    <div class="check-icon">✓</div>
-                    Encourages independent learning
+                <div class="why-card reveal">
+                    <div class="why-icon"><img width="36" style="object-fit: contain; width: 36px;"
+                            src="https://em-content.zobj.net/source/apple/453/shield_1f6e1-fe0f.png"></div>
+                    <h3>Premium Safe Materials</h3>
+                    <p>
+                        BPA-free, non-toxic, ultra-durable magnetic tiles tested for real family use. Built to survive
+                        years of creativity.
+                    </p>
                 </div>
 
-                <div class="check-item">
-                    <div class="check-icon">✓</div>
-                    Helps develop STEM skills naturally
+                <div class="why-card reveal">
+                    <div class="why-icon">🚚</div>
+                    <h3>Fast US Shipping</h3>
+                    <p>
+                        Ships directly from the USA with fast delivery and real tracking — no mystery packages or slow
+                        overseas shipping.
+                    </p>
                 </div>
 
-                <div class="check-item">
-                    <div class="check-icon">✓</div>
-                    Keeps children engaged for hours
-                </div>
-
-                <div class="check-item">
-                    <div class="check-icon">✓</div>
-                    Reduces screen time
+                <div class="why-card reveal">
+                    <div class="why-icon">❤️</div>
+                    <h3>Real Customer Support</h3>
+                    <p>
+                        Questions? Missing pieces? We actually help. Our support team responds fast and takes care of
+                        families personally.
+                    </p>
                 </div>
 
             </div>
 
         </div>
+    </section>
 
-    </div>
-</section>
+    <section class="section">
+        <div class="container split">
 
-<section class="section gallery">
-    <div class="container">
+            <div class="split-image reveal">
+                <img src="https://images.unsplash.com/photo-1516627145497-ae6968895b74?q=80&w=1200&auto=format&fit=crop"
+                    alt="">
+            </div>
 
-        <h2 class="section-title reveal">
-            Made For Creative Kids
-        </h2>
+            <div class="split-content reveal">
 
-        <p class="section-subtitle reveal">
-            Endless combinations. Endless imagination. Endless glowing fun.
-        </p>
+                <h2>
+                    More Than A Toy.<br>
+                    It’s A Brain-Building Experience.
+                </h2>
 
-        <!-- Обертка карусели для мобильных -->
-        <div class="gallery-carousel-wrapper reveal">
-            <div class="gallery-grid">
+                <p>
+                    Every magnetic tile encourages creativity, independent thinking, engineering skills, spatial
+                    awareness, and focus — while kids think they’re simply having fun.
+                </p>
 
-                <div class="gallery-item" id="slide-1">
-                    <img src="https://images.unsplash.com/photo-1516627145497-ae6968895b74?q=80&w=1200&auto=format&fit=crop" alt="Creative kid playing 1">
-                </div>
+                <p>
+                    Designed for modern parents who want less screen time and more meaningful playtime.
+                </p>
 
-                <div class="gallery-item" id="slide-2">
-                    <img src="https://images.unsplash.com/photo-1519340241574-2cec6aef0c01?q=80&w=1200&auto=format&fit=crop" alt="Creative kid playing 2">
-                </div>
+                <div class="check-list">
 
-                <div class="gallery-item" id="slide-3">
-                    <img src="https://images.unsplash.com/photo-1503454537195-1dcabb73ffb9?q=80&w=1200&auto=format&fit=crop" alt="Creative kid playing 3">
-                </div>
+                    <div class="check-item">
+                        <div class="check-icon">✓</div>
+                        Encourages independent learning
+                    </div>
 
-                <div class="gallery-item" id="slide-4">
-                    <img src="https://images.unsplash.com/photo-1516627145497-ae6968895b74?q=80&w=1200&auto=format&fit=crop" alt="Creative kid playing 4">
+                    <div class="check-item">
+                        <div class="check-icon">✓</div>
+                        Helps develop STEM skills naturally
+                    </div>
+
+                    <div class="check-item">
+                        <div class="check-icon">✓</div>
+                        Keeps children engaged for hours
+                    </div>
+
+                    <div class="check-item">
+                        <div class="check-icon">✓</div>
+                        Reduces screen time
+                    </div>
+
                 </div>
 
             </div>
-            
-            <!-- Индикаторы (точки) — видны ТОЛЬКО на мобилке -->
-            <div class="carousel-dots">
-                <div class="dot active"></div>
-                <div class="dot"></div>
-                <div class="dot"></div>
-                <div class="dot"></div>
-            </div>
+
         </div>
+    </section>
 
-    </div>
-    <script>
-document.addEventListener("DOMContentLoaded", () => {
-    const grid = document.querySelector('.gallery-grid');
-    const dots = document.querySelectorAll('.dot');
-    
-    if (grid && dots.length > 0) {
-        grid.addEventListener('scroll', () => {
-            const width = grid.clientWidth;
-            const scrollLeft = grid.scrollLeft;
-            // Вычисляем индекс активного слайда
-            const activeIndex = Math.round(scrollLeft / (width * 0.82)); 
-            
-            dots.forEach((dot, index) => {
-                if (index === activeIndex) {
-                    dot.classList.add('active');
-                } else {
-                    dot.classList.remove('active');
+    <section class="section gallery">
+        <div class="container">
+
+            <h2 class="section-title reveal">
+                Made For Creative Kids
+            </h2>
+
+            <p class="section-subtitle reveal">
+                Endless combinations. Endless imagination. Endless glowing fun.
+            </p>
+
+            <!-- Обертка карусели для мобильных -->
+            <div class="gallery-carousel-wrapper reveal">
+                <div class="gallery-grid">
+
+                    <div class="gallery-item" id="slide-1">
+                        <img src="https://images.unsplash.com/photo-1516627145497-ae6968895b74?q=80&w=1200&auto=format&fit=crop"
+                            alt="Creative kid playing 1">
+                    </div>
+
+                    <div class="gallery-item" id="slide-2">
+                        <img src="https://images.unsplash.com/photo-1519340241574-2cec6aef0c01?q=80&w=1200&auto=format&fit=crop"
+                            alt="Creative kid playing 2">
+                    </div>
+
+                    <div class="gallery-item" id="slide-3">
+                        <img src="https://images.unsplash.com/photo-1503454537195-1dcabb73ffb9?q=80&w=1200&auto=format&fit=crop"
+                            alt="Creative kid playing 3">
+                    </div>
+
+                    <div class="gallery-item" id="slide-4">
+                        <img src="https://images.unsplash.com/photo-1516627145497-ae6968895b74?q=80&w=1200&auto=format&fit=crop"
+                            alt="Creative kid playing 4">
+                    </div>
+
+                </div>
+
+                <!-- Индикаторы (точки) — видны ТОЛЬКО на мобилке -->
+                <div class="carousel-dots">
+                    <div class="dot active"></div>
+                    <div class="dot"></div>
+                    <div class="dot"></div>
+                    <div class="dot"></div>
+                </div>
+            </div>
+
+        </div>
+        <script>
+            document.addEventListener("DOMContentLoaded", () => {
+                const grid = document.querySelector('.gallery-grid');
+                const dots = document.querySelectorAll('.dot');
+
+                if (grid && dots.length > 0) {
+                    grid.addEventListener('scroll', () => {
+                        const width = grid.clientWidth;
+                        const scrollLeft = grid.scrollLeft;
+                        // Вычисляем индекс активного слайда
+                        const activeIndex = Math.round(scrollLeft / (width * 0.82));
+
+                        dots.forEach((dot, index) => {
+                            if (index === activeIndex) {
+                                dot.classList.add('active');
+                            } else {
+                                dot.classList.remove('active');
+                            }
+                        });
+                    });
                 }
             });
-        });
-    }
-});
-</script>
-</section>
+        </script>
+    </section>
 
-<section class="section reviews-section">
-    <div class="container">
+    <section class="section reviews-section">
+        <div class="container">
 
-        <h2 class="section-title reveal">
-            Parents Are Obsessed
-        </h2>
-
-        <p class="section-subtitle reveal">
-            Thousands of American families already switched from cheap marketplace toys to a trusted educational brand.
-        </p>
-
-        <!-- Обертка карусели для мобильных отзывов -->
-        <div class="reviews-carousel-wrapper reveal">
-            <div class="reviews-grid">
-
-                <div class="review">
-                    <div class="review-stars">★★★★★</div>
-                    <p>
-                        “My son literally stopped asking for the iPad after we got this. Best purchase we’ve made this year.”
-                    </p>
-                    <div class="review-user">
-                        <img src="https://randomuser.me/api/portraits/women/65.jpg" alt="Jessica M.">
-                        <div>
-                            <strong>Jessica M.</strong>
-                            <span>Verified Buyer</span>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="review">
-                    <div class="review-stars">★★★★★</div>
-                    <p>
-                        “You can immediately feel the quality difference compared to cheaper Amazon sets. Magnets are strong and pieces feel premium.”
-                    </p>
-                    <div class="review-user">
-                        <img src="https://randomuser.me/api/portraits/men/41.jpg" alt="David R.">
-                        <div>
-                            <strong>David R.</strong>
-                            <span>Verified Buyer</span>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="review">
-                    <div class="review-stars">★★★★★</div>
-                    <p>
-                        “Finally a toy that keeps both my kids busy together without fighting. They LOVE the glow effect.”
-                    </p>
-                    <div class="review-user">
-                        <img src="https://randomuser.me/api/portraits/women/24.jpg" alt="Amanda K.">
-                        <div>
-                            <strong>Amanda K.</strong>
-                            <span>Verified Buyer</span>
-                        </div>
-                    </div>
-                </div>
-
-            </div>
-
-            <!-- Индикаторы (точки) — видны ТОЛЬКО на мобилке -->
-            <div class="carousel-dots review-dots">
-                <div class="dot active"></div>
-                <div class="dot"></div>
-                <div class="dot"></div>
-            </div>
-        </div>
-
-    </div>
-    <script>
-document.addEventListener("DOMContentLoaded", () => {
-    // Функция оживления точек карусели
-    const initCarousel = (gridSelector, dotSelector, itemWidthPercent) => {
-        const grid = document.querySelector(gridSelector);
-        const dots = document.querySelectorAll(dotSelector);
-        
-        if (grid && dots.length > 0) {
-            grid.addEventListener('scroll', () => {
-                const width = grid.clientWidth;
-                const scrollLeft = grid.scrollLeft;
-                // Рассчитываем индекс на основе процента ширины карточки
-                const activeIndex = Math.round(scrollLeft / (width * (itemWidthPercent / 100))); 
-                
-                dots.forEach((dot, index) => {
-                    if (index === activeIndex) {
-                        dot.classList.add('active');
-                    } else {
-                        dot.classList.remove('active');
-                    }
-                });
-            });
-        }
-    };
-
-    // Запускаем для отзывов (ширина 85%)
-    initCarousel('.reviews-grid', '.review-dots .dot', 85);
-    
-    // Запускаем для галереи (если код галереи из прошлого шага на этой же странице, ширина 82%)
-    initCarousel('.gallery-grid', '.carousel-dots:not(.review-dots) .dot', 82);
-});
-</script>
-</section>
-
-<section class="section comparison">
-    <div class="container">
-
-        <h2 class="section-title reveal">
-            SleepToy™ vs Generic Amazon Sets
-        </h2>
-
-        <p class="section-subtitle reveal">
-            The difference is obvious the moment you open the box.
-        </p>
-
-        <div class="compare-container reveal">
-            
-            <!-- Карточка SleepToy (Победитель) -->
-            <div class="compare-card leader">
-                <div class="card-badge">Our Choice</div>
-                <h3 class="card-title">SleepToy™</h3>
-                <p class="card-price-desc">Premium Quality & Safety</p>
-                
-                <ul class="features-list">
-                    <li>
-                        <span class="icon check">✔</span>
-                        <div class="text">
-                            <strong>Premium Safe Materials</strong>
-                            <p>100% certified non-toxic, child-safe materials only.</p>
-                        </div>
-                    </li>
-                    <li>
-                        <span class="icon check">✔</span>
-                        <div class="text">
-                            <strong>Fast US Shipping</strong>
-                            <p>Delivered from local warehouses in 2-5 business days.</p>
-                        </div>
-                    </li>
-                    <li>
-                        <span class="icon check">✔</span>
-                        <div class="text">
-                            <strong>Strong Durable Magnets</strong>
-                            <p>Reinforced magnets that actually hold structures together.</p>
-                        </div>
-                    </li>
-                    <li>
-                        <span class="icon check">✔</span>
-                        <div class="text">
-                            <strong>Real Brand Support</strong>
-                            <p>24/7 dedicated customer care and hassle-free warranty.</p>
-                        </div>
-                    </li>
-                    <li>
-                        <span class="icon check">✔</span>
-                        <div class="text">
-                            <strong>Educational STEM Focus</strong>
-                            <p>Designed together with experts to boost brain development.</p>
-                        </div>
-                    </li>
-                </ul>
-            </div>
-
-            <!-- Карточка Амазона (Проигравший) -->
-            <div class="compare-card loser">
-                <h3 class="card-title">Generic Amazon Brands</h3>
-                <p class="card-price-desc">Cheap Alternatives</p>
-                
-                <ul class="features-list">
-                    <li>
-                        <span class="icon cross">✕</span>
-                        <div class="text">
-                            <strong>Premium Safe Materials</strong>
-                            <p>Sometimes (unverified sellers, strong plastic smell).</p>
-                        </div>
-                    </li>
-                    <li>
-                        <span class="icon cross">✕</span>
-                        <div class="text">
-                            <strong>Fast US Shipping</strong>
-                            <p>Varies drastically (often ships from overseas for weeks).</p>
-                        </div>
-                    </li>
-                    <li>
-                        <span class="icon cross">✕</span>
-                        <div class="text">
-                            <strong>Strong Durable Magnets</strong>
-                            <p>Weak magnets. Structures collapse instantly, frustrating kids.</p>
-                        </div>
-                    </li>
-                    <li>
-                        <span class="icon cross">✕</span>
-                        <div class="text">
-                            <strong>Real Brand Support</strong>
-                            <p>Usually none. Good luck returning a broken toy.</p>
-                        </div>
-                    </li>
-                    <li>
-                        <span class="icon cross">✕</span>
-                        <div class="text">
-                            <strong>Educational STEM Focus</strong>
-                            <p>Minimal. Just random cheap blocks without a clear system.</p>
-                        </div>
-                    </li>
-                </ul>
-            </div>
-
-        </div>
-
-    </div>
-</section>
-
-<section class="cta">
-
-    <div class="container">
-
-        <div class="cta-card reveal">
-
-            <h2>
-                Give Your Child<br>
-                A Smarter Way To Play
+            <h2 class="section-title reveal">
+                Parents Are Obsessed
             </h2>
 
-            <p>
-                Join thousands of parents choosing meaningful play, creativity, and STEM learning instead of cheap disposable toys.
+            <p class="section-subtitle reveal">
+                Thousands of American families already switched from cheap marketplace toys to a trusted educational
+                brand.
             </p>
 
-            <button class="btn btn-primary">
-                Get Your Glow Set Today
-            </button>
+            <!-- Обертка карусели для мобильных отзывов -->
+            <div class="reviews-carousel-wrapper reveal">
+                <div class="reviews-grid">
+
+                    <div class="review">
+                        <div class="review-stars">★★★★★</div>
+                        <p>
+                            “My son literally stopped asking for the iPad after we got this. Best purchase we’ve made
+                            this year.”
+                        </p>
+                        <div class="review-user">
+                            <img src="https://randomuser.me/api/portraits/women/65.jpg" alt="Jessica M.">
+                            <div>
+                                <strong>Jessica M.</strong>
+                                <span>Verified Buyer</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="review">
+                        <div class="review-stars">★★★★★</div>
+                        <p>
+                            “You can immediately feel the quality difference compared to cheaper Amazon sets. Magnets
+                            are strong and pieces feel premium.”
+                        </p>
+                        <div class="review-user">
+                            <img src="https://randomuser.me/api/portraits/men/41.jpg" alt="David R.">
+                            <div>
+                                <strong>David R.</strong>
+                                <span>Verified Buyer</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="review">
+                        <div class="review-stars">★★★★★</div>
+                        <p>
+                            “Finally a toy that keeps both my kids busy together without fighting. They LOVE the glow
+                            effect.”
+                        </p>
+                        <div class="review-user">
+                            <img src="https://randomuser.me/api/portraits/women/24.jpg" alt="Amanda K.">
+                            <div>
+                                <strong>Amanda K.</strong>
+                                <span>Verified Buyer</span>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+
+                <!-- Индикаторы (точки) — видны ТОЛЬКО на мобилке -->
+                <div class="carousel-dots review-dots">
+                    <div class="dot active"></div>
+                    <div class="dot"></div>
+                    <div class="dot"></div>
+                </div>
+            </div>
 
         </div>
+        <script>
+            document.addEventListener("DOMContentLoaded", () => {
+                // Функция оживления точек карусели
+                const initCarousel = (gridSelector, dotSelector, itemWidthPercent) => {
+                    const grid = document.querySelector(gridSelector);
+                    const dots = document.querySelectorAll(dotSelector);
 
-    </div>
+                    if (grid && dots.length > 0) {
+                        grid.addEventListener('scroll', () => {
+                            const width = grid.clientWidth;
+                            const scrollLeft = grid.scrollLeft;
+                            // Рассчитываем индекс на основе процента ширины карточки
+                            const activeIndex = Math.round(scrollLeft / (width * (itemWidthPercent / 100)));
 
-</section>
+                            dots.forEach((dot, index) => {
+                                if (index === activeIndex) {
+                                    dot.classList.add('active');
+                                } else {
+                                    dot.classList.remove('active');
+                                }
+                            });
+                        });
+                    }
+                };
 
-<section class="section faq">
-    <div class="container">
+                // Запускаем для отзывов (ширина 85%)
+                initCarousel('.reviews-grid', '.review-dots .dot', 85);
 
-        <h2 class="section-title reveal">
-            Frequently Asked Questions
-        </h2>
+                // Запускаем для галереи (если код галереи из прошлого шага на этой же странице, ширина 82%)
+                initCarousel('.gallery-grid', '.carousel-dots:not(.review-dots) .dot', 82);
+            });
+        </script>
+    </section>
 
-        <div class="faq-list">
+    <section class="section comparison">
+        <div class="container">
 
-            <div class="faq-item reveal">
-                <div class="faq-question">
-                    Is it safe for young kids?
-                    <span>+</span>
+            <h2 class="section-title reveal">
+                SleepToy™ vs Generic Amazon Sets
+            </h2>
+
+            <p class="section-subtitle reveal">
+                The difference is obvious the moment you open the box.
+            </p>
+
+            <div class="compare-container reveal">
+
+                <!-- Карточка SleepToy (Победитель) -->
+                <div class="compare-card leader">
+                    <div class="card-badge">Our Choice</div>
+                    <h3 class="card-title">SleepToy™</h3>
+                    <p class="card-price-desc">Premium Quality & Safety</p>
+
+                    <ul class="features-list">
+                        <li>
+                            <span class="icon check">✔</span>
+                            <div class="text">
+                                <strong>Premium Safe Materials</strong>
+                                <p>100% certified non-toxic, child-safe materials only.</p>
+                            </div>
+                        </li>
+                        <li>
+                            <span class="icon check">✔</span>
+                            <div class="text">
+                                <strong>Fast US Shipping</strong>
+                                <p>Delivered from local warehouses in 2-5 business days.</p>
+                            </div>
+                        </li>
+                        <li>
+                            <span class="icon check">✔</span>
+                            <div class="text">
+                                <strong>Strong Durable Magnets</strong>
+                                <p>Reinforced magnets that actually hold structures together.</p>
+                            </div>
+                        </li>
+                        <li>
+                            <span class="icon check">✔</span>
+                            <div class="text">
+                                <strong>Real Brand Support</strong>
+                                <p>24/7 dedicated customer care and hassle-free warranty.</p>
+                            </div>
+                        </li>
+                        <li>
+                            <span class="icon check">✔</span>
+                            <div class="text">
+                                <strong>Educational STEM Focus</strong>
+                                <p>Designed together with experts to boost brain development.</p>
+                            </div>
+                        </li>
+                    </ul>
                 </div>
-                <div class="faq-answer">
-                    <div class="faq-answer-inner">
-                        Yes. Our magnetic tiles are BPA-free, non-toxic, and safety tested for children.
-                    </div>
-                </div>
-            </div>
 
-            <div class="faq-item reveal">
-                <div class="faq-question">
-                    How fast is shipping?
-                    <span>+</span>
-                </div>
-                <div class="faq-answer">
-                    <div class="faq-answer-inner">
-                        Orders ship directly from the USA with fast tracked delivery.
-                    </div>
-                </div>
-            </div>
+                <!-- Карточка Амазона (Проигравший) -->
+                <div class="compare-card loser">
+                    <h3 class="card-title">Generic Amazon Brands</h3>
+                    <p class="card-price-desc">Cheap Alternatives</p>
 
-            <div class="faq-item reveal">
-                <div class="faq-question">
-                    What ages is this for?
-                    <span>+</span>
+                    <ul class="features-list">
+                        <li>
+                            <span class="icon cross">✕</span>
+                            <div class="text">
+                                <strong>Premium Safe Materials</strong>
+                                <p>Sometimes (unverified sellers, strong plastic smell).</p>
+                            </div>
+                        </li>
+                        <li>
+                            <span class="icon cross">✕</span>
+                            <div class="text">
+                                <strong>Fast US Shipping</strong>
+                                <p>Varies drastically (often ships from overseas for weeks).</p>
+                            </div>
+                        </li>
+                        <li>
+                            <span class="icon cross">✕</span>
+                            <div class="text">
+                                <strong>Strong Durable Magnets</strong>
+                                <p>Weak magnets. Structures collapse instantly, frustrating kids.</p>
+                            </div>
+                        </li>
+                        <li>
+                            <span class="icon cross">✕</span>
+                            <div class="text">
+                                <strong>Real Brand Support</strong>
+                                <p>Usually none. Good luck returning a broken toy.</p>
+                            </div>
+                        </li>
+                        <li>
+                            <span class="icon cross">✕</span>
+                            <div class="text">
+                                <strong>Educational STEM Focus</strong>
+                                <p>Minimal. Just random cheap blocks without a clear system.</p>
+                            </div>
+                        </li>
+                    </ul>
                 </div>
-                <div class="faq-answer">
-                    <div class="faq-answer-inner">
-                        Recommended for children ages 3+, but older kids love building advanced creations too.
-                    </div>
-                </div>
+
             </div>
 
         </div>
+    </section>
 
-    </div>
-</section>
+    <section class="cta">
 
-<footer class="footer">
+        <div class="container">
 
-    <div class="container">
+            <div class="cta-card reveal">
 
-        <div class="footer-grid">
-
-            <div>
-                <div class="logo" style="color:#fff;margin-bottom:20px;">
-                    SleepToy™
-                </div>
+                <h2>
+                    Give Your Child<br>
+                    A Smarter Way To Play
+                </h2>
 
                 <p>
-                    Premium educational toys designed for modern families who want smarter play, better learning, and unforgettable childhood memories.
+                    Join thousands of parents choosing meaningful play, creativity, and STEM learning instead of cheap
+                    disposable toys.
                 </p>
-            </div>
 
-            <div>
-                <h3 style="margin-bottom:22px;">Shop</h3>
+                <button class="btn btn-primary">
+                    Get Your Glow Set Today
+                </button>
 
-                <div class="footer-links">
-                    <a href="#">Best Sellers</a>
-                    <a href="#">STEM Toys</a>
-                    <a href="#">Bundles</a>
-                </div>
-            </div>
-
-            <div>
-                <h3 style="margin-bottom:22px;">Support</h3>
-
-                <div class="footer-links">
-                    <a href="#">Shipping</a>
-                    <a href="#">Returns</a>
-                    <a href="#">Contact</a>
-                </div>
-            </div>
-
-            <div>
-                <h3 style="margin-bottom:22px;">Company</h3>
-
-                <div class="footer-links">
-                    <a href="#">About Us</a>
-                    <a href="#">Reviews</a>
-                    <a href="#">Privacy Policy</a>
-                </div>
             </div>
 
         </div>
 
-        <div class="footer-bottom">
-            © 2026 SleepToy™ — Designed for American Families
+    </section>
+
+    <section class="section faq">
+        <div class="container">
+
+            <h2 class="section-title reveal">
+                Frequently Asked Questions
+            </h2>
+
+            <div class="faq-list">
+
+                <div class="faq-item reveal">
+                    <div class="faq-question">
+                        Is it safe for young kids?
+                        <span>+</span>
+                    </div>
+                    <div class="faq-answer">
+                        <div class="faq-answer-inner">
+                            Yes. Our magnetic tiles are BPA-free, non-toxic, and safety tested for children.
+                        </div>
+                    </div>
+                </div>
+
+                <div class="faq-item reveal">
+                    <div class="faq-question">
+                        How fast is shipping?
+                        <span>+</span>
+                    </div>
+                    <div class="faq-answer">
+                        <div class="faq-answer-inner">
+                            Orders ship directly from the USA with fast tracked delivery.
+                        </div>
+                    </div>
+                </div>
+
+                <div class="faq-item reveal">
+                    <div class="faq-question">
+                        What ages is this for?
+                        <span>+</span>
+                    </div>
+                    <div class="faq-answer">
+                        <div class="faq-answer-inner">
+                            Recommended for children ages 3+, but older kids love building advanced creations too.
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+
+        </div>
+    </section>
+
+    <footer class="footer">
+
+        <div class="container">
+
+            <div class="footer-grid">
+
+                <div>
+                    <div class="logo" style="color:#fff;margin-bottom:20px;">
+                        SleepToy™
+                    </div>
+
+                    <p>
+                        Premium educational toys designed for modern families who want smarter play, better learning,
+                        and unforgettable childhood memories.
+                    </p>
+                </div>
+
+                <div>
+                    <h3 style="margin-bottom:22px;">Shop</h3>
+
+                    <div class="footer-links">
+                        <a href="#">Best Sellers</a>
+                        <a href="#">STEM Toys</a>
+                        <a href="#">Bundles</a>
+                    </div>
+                </div>
+
+                <div>
+                    <h3 style="margin-bottom:22px;">Support</h3>
+
+                    <div class="footer-links">
+                        <a href="#">Shipping</a>
+                        <a href="#">Returns</a>
+                        <a href="#">Contact</a>
+                    </div>
+                </div>
+
+                <div>
+                    <h3 style="margin-bottom:22px;">Company</h3>
+
+                    <div class="footer-links">
+                        <a href="#">About Us</a>
+                        <a href="#">Reviews</a>
+                        <a href="#">Privacy Policy</a>
+                    </div>
+                </div>
+
+            </div>
+
+            <div class="footer-bottom">
+                © 2026 SleepToy™ — Designed for American Families
+            </div>
+
         </div>
 
-    </div>
-
-</footer>
+    </footer>
 
 
 
-<script>
+    <script>
 
-    const slides = document.querySelectorAll('.hero-slide');
-const dots = document.querySelectorAll('.hero-dot');
+       const slides = document.querySelectorAll('.hero-slide');
+// Находим миниатюры вместо старых точек
+const thumbs = document.querySelectorAll('.hero-thumb'); 
 
 const nextBtn = document.querySelector('.hero-slider-btn.next');
 const prevBtn = document.querySelector('.hero-slider-btn.prev');
 
 let currentSlide = 0;
 
-function updateSlider(index){
-
-    slides.forEach(slide => {
-        slide.classList.remove('active');
-    });
-
-    dots.forEach(dot => {
-        dot.classList.remove('active');
-    });
+function updateSlider(index) {
+    slides.forEach(slide => slide.classList.remove('active'));
+    thumbs.forEach(thumb => thumb.classList.remove('active')); // Переключаем класс тут
 
     slides[index].classList.add('active');
-    dots[index].classList.add('active');
-
+    thumbs[index].classList.add('active'); // И тут
 }
 
 nextBtn.addEventListener('click', () => {
-
     currentSlide++;
-
-    if(currentSlide >= slides.length){
+    if (currentSlide >= slides.length) {
         currentSlide = 0;
     }
-
     updateSlider(currentSlide);
-
 });
 
 prevBtn.addEventListener('click', () => {
-
     currentSlide--;
-
-    if(currentSlide < 0){
+    if (currentSlide < 0) {
         currentSlide = slides.length - 1;
     }
-
     updateSlider(currentSlide);
-
 });
 
-dots.forEach((dot,index) => {
-
-    dot.addEventListener('click', () => {
-
+// Клик по миниатюре переключает слайд
+thumbs.forEach((thumb, index) => {
+    thumb.addEventListener('click', () => {
         currentSlide = index;
         updateSlider(currentSlide);
-
     });
-
 });
 
+// Автопрокрутка раз в 5 секунд
 setInterval(() => {
-
     currentSlide++;
-
-    if(currentSlide >= slides.length){
+    if (currentSlide >= slides.length) {
         currentSlide = 0;
     }
-
     updateSlider(currentSlide);
-
-},5000);
-
+}, 5000);
 
 
+        // REVEAL
 
-// REVEAL
+        const reveals = document.querySelectorAll('.reveal');
 
-const reveals = document.querySelectorAll('.reveal');
+        function revealOnScroll() {
+            reveals.forEach(el => {
+                const top = el.getBoundingClientRect().top;
 
-function revealOnScroll(){
-    reveals.forEach(el => {
-        const top = el.getBoundingClientRect().top;
-
-        if(top < window.innerHeight - 80){
-            el.classList.add('active');
-        }
-    });
-}
-
-window.addEventListener('scroll', revealOnScroll);
-revealOnScroll();
-
-const faqItems = document.querySelectorAll('.faq-item');
-
-faqItems.forEach(item => {
-
-    const question = item.querySelector('.faq-question');
-
-    question.addEventListener('click', () => {
-
-        const answer = item.querySelector('.faq-answer');
-
-        if(answer.style.maxHeight){
-            answer.style.maxHeight = null;
-        } else {
-            answer.style.maxHeight = answer.scrollHeight + 'px';
-        }
-
-    });
-
-});
-
-document.addEventListener('DOMContentLoaded', function () {
-    const heroButtons = document.querySelector('.hero-buttons');
-    const fixedBar = document.getElementById('js-fixed-bar');
-    const footer = document.querySelector('footer'); 
-
-    if (!heroButtons || !fixedBar) return;
-
-    const buttonsObserver = new IntersectionObserver((entries) => {
-        entries.forEach(entry => {
-            if (entry.isIntersecting) {
-                fixedBar.classList.remove('is-visible');
-            } else {
-                fixedBar.classList.add('is-visible');
-            }
-        });
-    }, {
-        threshold: 0
-    });
-
-    buttonsObserver.observe(heroButtons);
-
-    if (footer) {
-        footer.style.position = 'relative';
-
-        const footerObserver = new IntersectionObserver((entries) => {
-            entries.forEach(entry => {
-                if (entry.isIntersecting) {
-                    document.body.classList.add('sticky-bar-at-footer');
-                    footer.appendChild(fixedBar);
-                } else {
-                    document.body.classList.remove('sticky-bar-at-footer');
-                    // Возвращаем обратно в body
-                    document.body.appendChild(fixedBar);
+                if (top < window.innerHeight - 80) {
+                    el.classList.add('active');
                 }
             });
-        }, {
-            rootMargin: '0px 0px 80px 0px' 
+        }
+
+        window.addEventListener('scroll', revealOnScroll);
+        revealOnScroll();
+
+        const faqItems = document.querySelectorAll('.faq-item');
+
+        faqItems.forEach(item => {
+
+            const question = item.querySelector('.faq-question');
+
+            question.addEventListener('click', () => {
+
+                const answer = item.querySelector('.faq-answer');
+
+                if (answer.style.maxHeight) {
+                    answer.style.maxHeight = null;
+                } else {
+                    answer.style.maxHeight = answer.scrollHeight + 'px';
+                }
+
+            });
+
         });
 
-        footerObserver.observe(footer);
-    }
-});
+        document.addEventListener('DOMContentLoaded', () => {
+            const fixedBar = document.getElementById('js-fixed-bar');
 
-</script>
+            // Элементы, при появлении которых нужно скрыть бар
+            // Замените 'footer' на правильный селектор вашего футера, если это класс (например, '.footer')
+            const targetElements = document.querySelectorAll('footer, .hero-buttons');
+
+            // Храним состояние: виден ли какой-то из целевых элементов прямо сейчас
+            const visibleTargets = new Set();
+
+            if (!fixedBar || targetElements.length === 0) return;
+
+            const observerOptions = {
+                root: null, // отслеживаем относительно вьюпорта (экрана)
+                threshold: 0.1 // срабатывает, как только появляется хотя бы 10% элемента
+            };
+
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        // Если элемент вошел в зону видимости, добавляем его в Set
+                        visibleTargets.add(entry.target);
+                    } else {
+                        // Если вышел — удаляем
+                        visibleTargets.delete(entry.target);
+                    }
+                });
+
+                // Если в Set есть хотя бы один элемент — скрываем бар, если Set пустой — показываем
+                if (visibleTargets.size > 0) {
+                    fixedBar.classList.add('fixed-bottom-bar--hidden');
+                } else {
+                    fixedBar.classList.remove('fixed-bottom-bar--hidden');
+                }
+            }, observerOptions);
+
+            // Запускаем слежку за каждым найденным элементом
+            targetElements.forEach(element => observer.observe(element));
+        });
+
+    </script>
 
 </body>
+
 </html>
