@@ -1,0 +1,714 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Glow STEM Magnetic Tiles | Original SleepToy</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@400;600;700&family=Quicksand:wght@500;700&display=swap" rel="stylesheet">
+    
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+
+    <style>
+        :root {
+            --primary-color: rgb(28, 122, 44);     /* Основная кнопка */
+            --primary-hover: rgb(22, 99, 35);
+            --secondary-color: #a4d16c;           /* Фирменный светлый оттенок */
+            --text-dark: #2D3748;
+            --text-light: #718096;
+            --bg-light: #F7FAFC;
+            --font-heading: 'Fredoka', sans-serif;
+            --font-body: 'Quicksand', sans-serif;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: var(--font-body);
+            color: var(--text-dark);
+            line-height: 1.6;
+            overflow-x: hidden;
+            background-color: #ffffff;
+        }
+
+        h1, h2, h3, h4 {
+            font-family: var(--font-heading);
+        }
+
+        .container {
+            width: 100%;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        /* --- 1. TOP BANNER (US Shipping Focus) --- */
+        .top-bar {
+            background-color: var(--secondary-color);
+            color: #fff;
+            text-align: center;
+            padding: 10px 0;
+            font-weight: 700;
+            font-size: 0.9rem;
+            letter-spacing: 0.5px;
+        }
+
+        /* --- 2. HEADER & NAV --- */
+        header {
+            background: #fff;
+            padding: 15px 0;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+        .nav-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .logo {
+            font-size: 1.8rem;
+            font-weight: 700;
+            color: var(--primary-color);
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        .logo span { color: var(--secondary-color); }
+
+        /* --- 3. HERO SECTION --- */
+        .hero {
+            padding: 60px 0;
+            background: linear-gradient(180deg, rgba(164,209,108,0.1) 0%, rgba(255,255,255,1) 100%);
+        }
+        .hero-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 40px;
+            align-items: center;
+        }
+        @media (max-width: 768px) {
+            .hero-grid { grid-template-columns: 1fr; text-align: center; }
+        }
+        .badge {
+            background: rgba(28, 122, 44, 0.1);
+            color: var(--primary-color);
+            padding: 6px 16px;
+            border-radius: 50px;
+            font-weight: 700;
+            display: inline-block;
+            margin-bottom: 15px;
+            font-size: 0.85rem;
+            text-transform: uppercase;
+        }
+        .hero-text h1 {
+            font-size: 3rem;
+            line-height: 1.2;
+            margin-bottom: 20px;
+            color: #1A202C;
+        }
+        @media (max-width: 480px) { .hero-text h1 { font-size: 2.2rem; } }
+        .hero-text p {
+            font-size: 1.2rem;
+            color: var(--text-light);
+            margin-bottom: 30px;
+        }
+        .btn {
+            background-color: var(--primary-color);
+            color: white;
+            padding: 16px 36px;
+            border-radius: 50px;
+            text-decoration: none;
+            font-weight: 700;
+            font-size: 1.1rem;
+            display: inline-block;
+            box-shadow: 0 4px 15px rgba(28, 122, 44, 0.3);
+            transition: all 0.3s ease;
+            border: none;
+            cursor: pointer;
+        }
+        .btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(28, 122, 44, 0.4);
+            background-color: var(--primary-hover);
+        }
+        
+        /* Галерея в Hero */
+        .main-img-container {
+            background: #fff;
+            border-radius: 24px;
+            overflow: hidden;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.08);
+            border: 4px solid #fff;
+        }
+        .main-img-container img {
+            width: 100%;
+            display: block;
+            transition: transform 0.5s ease;
+        }
+        .main-img-container:hover img {
+            transform: scale(1.03);
+        }
+
+        /* --- 4. TRUSTED BY / SOCIAL PROOF --- */
+        .trust-bar {
+            padding: 30px 0;
+            background: var(--bg-light);
+            text-align: center;
+            border-top: 1px solid #E2E8F0;
+            border-bottom: 1px solid #E2E8F0;
+        }
+        .trust-bar p {
+            font-size: 0.9rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            color: var(--text-light);
+            margin-bottom: 15px;
+            font-weight: 700;
+        }
+        .logos-flex {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 40px;
+            flex-wrap: wrap;
+            opacity: 0.6;
+            font-weight: 700;
+            font-size: 1.2rem;
+        }
+
+        /* --- 5. WHY US VS AMAZON (Блок Сравнения) --- */
+        .comparison-section {
+            padding: 80px 0;
+        }
+        .section-title {
+            text-align: center;
+            font-size: 2.5rem;
+            margin-bottom: 15px;
+        }
+        .section-subtitle {
+            text-align: center;
+            color: var(--text-light);
+            margin-bottom: 50px;
+            font-size: 1.1rem;
+        }
+        .comp-table {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 30px;
+        }
+        @media (max-width: 768px) { .comp-table { grid-template-columns: 1fr; } }
+        
+        .comp-card {
+            background: #fff;
+            border-radius: 20px;
+            padding: 40px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.04);
+        }
+        .comp-card.our-brand {
+            border: 3px solid var(--secondary-color);
+            position: relative;
+        }
+        .comp-card.our-brand::before {
+            content: "THE ORIGINAL BRAND";
+            position: absolute;
+            top: -15px;
+            right: 30px;
+            background: var(--secondary-color);
+            color: #fff;
+            padding: 4px 12px;
+            border-radius: 10px;
+            font-size: 0.75rem;
+            font-weight: 700;
+        }
+        .comp-card h3 {
+            font-size: 1.5rem;
+            margin-bottom: 25px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        .comp-list-item {
+            display: flex;
+            align-items: flex-start;
+            gap: 12px;
+            margin-bottom: 18px;
+            font-size: 1.05rem;
+        }
+        .comp-list-item svg {
+            flex-shrink: 0;
+            margin-top: 4px;
+        }
+
+        /* --- 6. FEATURES / BENEFITS --- */
+        .features {
+            background-color: var(--bg-light);
+            padding: 80px 0;
+        }
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 30px;
+        }
+        .feature-card {
+            background: #fff;
+            padding: 35px;
+            border-radius: 20px;
+            text-align: center;
+            transition: all 0.3s ease;
+            border-bottom: 4px solid transparent;
+        }
+        .feature-card:hover {
+            transform: translateY(-5px);
+            border-bottom: 4px solid var(--secondary-color);
+            box-shadow: 0 15px 30px rgba(0,0,0,0.05);
+        }
+        .feature-icon {
+            width: 70px;
+            height: 70px;
+            background: rgba(164,209,108,0.15);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 20px;
+            color: var(--primary-color);
+        }
+        .feature-card h3 {
+            margin-bottom: 12px;
+            font-size: 1.3rem;
+        }
+        .feature-card p {
+            color: var(--text-light);
+            font-size: 0.95rem;
+        }
+
+        /* --- 7. PRODUCT OFFER (BUNDLE BLOCK) --- */
+        .product-block {
+            padding: 80px 0;
+        }
+        .prod-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 50px;
+            align-items: start;
+        }
+        @media (max-width: 768px) { .prod-grid { grid-template-columns: 1fr; } }
+        
+        .product-gallery {
+            position: sticky;
+            top: 100px;
+        }
+        .gallery-main {
+            border-radius: 20px;
+            overflow: hidden;
+            margin-bottom: 15px;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.05);
+        }
+        .gallery-main img { width: 100%; display: block; }
+        .thumbnails {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 10px;
+        }
+        .thumb {
+            border-radius: 10px;
+            overflow: hidden;
+            cursor: pointer;
+            border: 2px solid transparent;
+            transition: 0.2s;
+        }
+        .thumb.active, .thumb:hover {
+            border-color: var(--primary-color);
+        }
+        .thumb img { width: 100%; display: block; }
+
+        .prod-info h2 { font-size: 2.3rem; margin-bottom: 10px; }
+        .rating-stars {
+            display: flex;
+            align-items: center;
+            gap: 5px;
+            color: #FFB000;
+            font-weight: 700;
+            margin-bottom: 20px;
+        }
+        .rating-stars span { color: var(--text-light); font-size: 0.9rem; margin-left: 5px;}
+        
+        .price-box {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            margin-bottom: 25px;
+        }
+        .current-price { font-size: 2.2rem; font-weight: 700; color: var(--text-dark); }
+        .old-price { font-size: 1.5rem; text-decoration: line-through; color: var(--text-light); }
+        
+        /* Спецификации США безопасности */
+        .safety-badges {
+            display: flex;
+            gap: 15px;
+            margin-bottom: 30px;
+            flex-wrap: wrap;
+        }
+        .safety-tag {
+            background: #F0FDF4;
+            border: 1px solid #BBF7D0;
+            color: #166534;
+            padding: 6px 12px;
+            border-radius: 8px;
+            font-size: 0.85rem;
+            font-weight: 700;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        /* Блок бандла */
+        .bundle-box {
+            border: 2px solid #E2E8F0;
+            border-radius: 16px;
+            padding: 20px;
+            background: #FAFAFA;
+            margin-bottom: 30px;
+        }
+        .bundle-title {
+            font-weight: 700;
+            margin-bottom: 15px;
+            font-size: 1.1rem;
+            display: flex;
+            justify-content: space-between;
+        }
+        .bundle-title span { color: var(--primary-color); }
+        .bundle-item {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            padding: 12px 0;
+            border-top: 1px solid #E2E8F0;
+        }
+        .bundle-item img { width: 50px; height: 50px; border-radius: 8px; object-fit: cover; }
+        .bundle-details { flex-grow: 1; }
+        .bundle-details p { font-weight: 600; font-size: 0.95rem; }
+        .bundle-details span { color: var(--text-light); font-size: 0.85rem; }
+        .bundle-price { font-weight: 700; text-align: right; }
+
+        .guarantee-note {
+            margin-top: 15px;
+            font-size: 0.85rem;
+            color: var(--text-light);
+            text-align: center;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 6px;
+        }
+
+        /* --- 8. TESTIMONIALS (US Reviews) --- */
+        .testimonials {
+            background: var(--bg-light);
+            padding: 80px 0;
+        }
+        .reviews-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            gap: 30px;
+        }
+        .review-card {
+            background: #fff;
+            padding: 30px;
+            border-radius: 20px;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.02);
+        }
+        .reviewer-info {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            margin-bottom: 15px;
+        }
+        .reviewer-avatar {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            background: #E2E8F0;
+            overflow: hidden;
+        }
+        .reviewer-avatar img { width: 100%; height: 100%; object-fit: cover; }
+        .reviewer-name h4 { font-size: 1rem; }
+        .reviewer-name p { font-size: 0.8rem; color: #166534; font-weight: 700; }
+
+        /* --- 9. FOOTER --- */
+        footer {
+            background: #1A202C;
+            color: #A0AEC0;
+            padding: 40px 0;
+            text-align: center;
+            font-size: 0.9rem;
+        }
+        footer a { color: #fff; text-decoration: none; margin: 0 10px; }
+        footer a:hover { color: var(--secondary-color); }
+    </style>
+</head>
+<body>
+
+    <div class="top-bar">
+        🇺🇸 FREE & FAST SHIPPING FROM SC, USA • 100% CERTIFIED SAFE & NON-TOXIC
+    </div>
+
+    <header>
+        <div class="container nav-container">
+            <a href="#" class="logo">Sleep<span>Toy</span></a>
+            <a href="#shop" class="btn" style="padding: 10px 24px; font-size: 0.95rem;">Shop Now</a>
+        </div>
+    </header>
+
+    <section class="hero">
+        <div class="container hero-grid">
+            <div class="hero-text" data-aos="fade-right">
+                <span class="badge">🔥 Top Rated STEM Toy 2026</span>
+                <h1>Ignite Your Child’s Imagination — <span style="color: var(--primary-color);">Screen-Free!</span></h1>
+                <p>Premium Glow-in-the-Dark Magnetic Tiles engineered for safe, endless architectural discoveries. Designed for critical thinking, built for absolute durability.</p>
+                <a href="#shop" class="btn">Get The Bundle & Save 7%</a>
+            </div>
+            <div class="hero-image" data-aos="fade-left">
+                <div class="main-img-container">
+                    <img src="https://images.unsplash.com/photo-1596464716127-f2a82984de30?auto=format&fit=crop&w=600&q=80" alt="Kids playing with Glow Tiles">
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <div class="trust-bar">
+        <div class="container">
+            <p>As Trusted & Recommended By</p>
+            <div class="logos-flex">
+                <span>🏆 National Parenting Product Awards</span>
+                <span>💡 STEM Certified</span>
+                <span>⭐ 4.9/5 Mothers Choice</span>
+            </div>
+        </div>
+    </div>
+
+    <section class="comparison-section">
+        <div class="container">
+            <h2 class="section-title" data-aos="fade-up">Why Smart Parents Choose SleepToy Over Amazon Knock-Offs</h2>
+            <p class="section-subtitle" data-aos="fade-up">Don't compromise on safety and strength for a cheap imitation.</p>
+            
+            <div class="comp-table">
+                <div class="comp-card our-brand" data-aos="zoom-in-right">
+                    <h3 style="color: var(--primary-color);">
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><polyline points="20 6 9 17 4 12"></polyline></svg>
+                        SleepToy® Originals
+                    </h3>
+                    <div class="comp-list-item">
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" style="color: var(--primary-color);"><polyline points="20 6 9 17 4 12"></polyline></svg>
+                        <p><strong>100% Certified Safe:</strong> Strictly CPC (Children's Product Certificate) & ASTM approved. Pure food-grade ABS plastic.</p>
+                    </div>
+                    <div class="comp-list-item">
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" style="color: var(--primary-color);"><polyline points="20 6 9 17 4 12"></polyline></svg>
+                        <p><strong>Ultra-Strong NdFeB Magnets:</strong> Structures don't collapse. Towers stay tall, keeping kids engaged and unfrustrated.</p>
+                    </div>
+                    <div class="comp-list-item">
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" style="color: var(--primary-color);"><polyline points="20 6 9 17 4 12"></polyline></svg>
+                        <p><strong>Shipped from South Carolina:</strong> Fast 3-5 days delivery with responsive local American customer support.</p>
+                    </div>
+                </div>
+
+                <div class="comp-card" data-aos="zoom-in-left" style="background: #F7FAFC; opacity: 0.85;">
+                    <h3 style="color: #E53E3E;">
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
+                        Cheap Amazon Sellers
+                    </h3>
+                    <div class="comp-list-item">
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" style="color: #E53E3E;"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
+                        <p><strong>Unverified Materials:</strong> Toxic recycled plastics often bypass US safety standards through third-party drop-shippers.</p>
+                    </div>
+                    <div class="comp-list-item">
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" style="color: #E53E3E;"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
+                        <p><strong>Weak, Fragile Magnets:</strong> Tiny, low-grade magnets cause designs to cave in instantly, ruining playtime.</p>
+                    </div>
+                    <div class="comp-list-item">
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" style="color: #E53E3E;"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
+                        <p><strong>No Quality Control:</strong> Returns go to random international warehouses with zero actual customer service support.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="features">
+        <div class="container">
+            <h2 class="section-title" data-aos="fade-up">Designed For Deeper Play</h2>
+            <p class="section-subtitle" data-aos="fade-up">More than just blocks. A foundation for future engineers.</p>
+            
+            <div class="features-grid">
+                <div class="feature-card" data-aos="fade-up" data-aos-delay="100">
+                    <div class="feature-icon">✨</div>
+                    <h3>Glow-in-the-Dark Magic</h3>
+                    <p>Backlit luminescent magnetic tracks change the dynamics of bedtime play. Creates a calming ambient evening environment.</p>
+                </div>
+                <div class="feature-card" data-aos="fade-up" data-aos-delay="200">
+                    <div class="feature-icon">🧠</div>
+                    <h3>True STEM Discovery</h3>
+                    <p>Teaches physics, geometry, and spatial logic through active, dynamic motion. Recommended by educators across the US.</p>
+                </div>
+                <div class="feature-card" data-aos="fade-up" data-aos-delay="300">
+                    <div class="feature-icon">🛡️</div>
+                    <h3>CPC Certified Safety</h3>
+                    <p>100% Non-Toxic, BPA-Free, ultrasonically welded rivets keep magnets tightly sealed inside. Child-proof engineering.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="product-block" id="shop">
+        <div class="container prod-grid">
+            
+            <div class="product-gallery" data-aos="fade-right">
+                <div class="gallery-main">
+                    <img id="mainProductImg" src="https://images.unsplash.com/photo-1587654780291-39c9404d746b?auto=format&fit=crop&w=600&q=80" alt="STEM Tiles Main Product">
+                </div>
+                <div class="thumbnails">
+                    <div class="thumb active" onclick="changeImage('https://images.unsplash.com/photo-1587654780291-39c9404d746b?auto=format&fit=crop&w=600&q=80', this)">
+                        <img src="https://images.unsplash.com/photo-1587654780291-39c9404d746b?auto=format&fit=crop&w=150&q=80" alt="Thumb 1">
+                    </div>
+                    <div class="thumb" onclick="changeImage('https://images.unsplash.com/photo-1596464716127-f2a82984de30?auto=format&fit=crop&w=600&q=80', this)">
+                        <img src="https://images.unsplash.com/photo-1596464716127-f2a82984de30?auto=format&fit=crop&w=150&q=80" alt="Thumb 2">
+                    </div>
+                    <div class="thumb" onclick="changeImage('https://images.unsplash.com/photo-1566513461160-37324d83445a?auto=format&fit=crop&w=600&q=80', this)">
+                        <img src="https://images.unsplash.com/photo-1566513461160-37324d83445a?auto=format&fit=crop&w=150&q=80" alt="Thumb 3">
+                    </div>
+                    <div class="thumb" onclick="changeImage('https://images.unsplash.com/photo-1607604276583-eef5d076aa5f?auto=format&fit=crop&w=600&q=80', this)">
+                        <img src="https://images.unsplash.com/photo-1607604276583-eef5d076aa5f?auto=format&fit=crop&w=150&q=80" alt="Thumb 4">
+                    </div>
+                </div>
+            </div>
+
+            <div class="prod-info" data-aos="fade-left">
+                <h2>Glow STEM Magnetic Tiles Set</h2>
+                <div class="rating-stars">
+                    ⭐⭐⭐⭐⭐ <span>5.0 (12 Verified US Reviews)</span>
+                </div>
+
+                <div class="safety-badges">
+                    <span class="safety-tag">🇺🇸 Ships from US Warehouse</span>
+                    <span class="safety-tag">🛡️ CPC Kids Safety Certified</span>
+                </div>
+
+                <div class="price-box">
+                    <span class="current-price">$75.33</span>
+                    <span class="old-price">$81.00</span>
+                    <span class="badge" style="margin-bottom:0; background: #FFE4E6; color: #E11D48;">Save 7%</span>
+                </div>
+
+                <div class="bundle-box">
+                    <div class="bundle-title">
+                        <span>Super Builder Bundle Deal</span>
+                        <small style="color: var(--text-light); font-weight: normal;">2 items included</small>
+                    </div>
+
+                    <div class="bundle-item">
+                        <img src="https://images.unsplash.com/photo-1587654780291-39c9404d746b?auto=format&fit=crop&w=80&q=80" alt="Item 1">
+                        <div class="bundle-details">
+                            <p>Glow STEM Magnetic Tiles (110 pcs)</p>
+                            <span>Main Pack Included</span>
+                        </div>
+                        <div class="bundle-price">$49.00</div>
+                    </div>
+
+                    <div class="bundle-item">
+                        <img src="https://images.unsplash.com/photo-1566513461160-37324d83445a?auto=format&fit=crop&w=80&q=80" alt="Item 2">
+                        <div class="bundle-details">
+                            <p>STEM Magnetic Race Track Extension (70 pcs)</p>
+                            <span>Bonus Multi-Pack Set</span>
+                        </div>
+                        <div class="bundle-price">$32.00</div>
+                    </div>
+                </div>
+
+                <button class="btn" style="width: 100%; text-align: center; font-size: 1.2rem;">
+                    Add Bundle To Cart & Securing Deal
+                </button>
+                
+                <div class="guarantee-note">
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" style="color: var(--primary-color);"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path></svg>
+                    30-Day Risk-Free US Money Back Guarantee
+                </div>
+            </div>
+
+        </div>
+    </section>
+
+    <section class="testimonials">
+        <div class="container">
+            <h2 class="section-title" data-aos="fade-up">Loved By Over 10,000+ US Parents</h2>
+            <p class="section-subtitle" data-aos="fade-up">Real feedback from homes across America.</p>
+            
+            <div class="reviews-grid">
+                <div class="review-card" data-aos="fade-up">
+                    <div class="reviewer-info">
+                        <div class="reviewer-avatar">
+                            <img src="https://images.unsplash.com/photo-1544005313-94ddf0286df2?auto=format&fit=crop&w=100&q=80" alt="Sarah M.">
+                        </div>
+                        <div class="reviewer-name">
+                            <h4>Sarah M.</h4>
+                            <p>✅ Verified Buyer (Austin, TX)</p>
+                        </div>
+                    </div>
+                    <p>"I was skeptical about buying outside of Amazon, but the quality blew me away. The magnets are vastly superior, structures don't snap or break. Highly recommended for any parent concerned about real material safety!"</p>
+                </div>
+
+                <div class="review-card" data-aos="fade-up" data-aos-delay="100">
+                    <div class="reviewer-info">
+                        <div class="reviewer-avatar">
+                            <img src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&w=100&q=80" alt="David K.">
+                        </div>
+                        <div class="reviewer-name">
+                            <h4>David K.</h4>
+                            <p>✅ Verified Buyer (Chicago, IL)</p>
+                        </div>
+                    </div>
+                    <p>"Amazing glow effect! My 4-year-old completely abandoned his iPad for this set. Delivery took only 3 days to Chicago. Exceptional brand support."</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <footer>
+        <div class="container">
+            <p>&copy; 2026 SleepToy Originals. All Rights Reserved.</p>
+            <p style="margin-top: 10px; font-size: 0.8rem;">
+                <a href="#">Privacy Policy</a> | <a href="#">Terms of Service</a> | <a href="#">CPC Safety Documents</a>
+            </p>
+        </div>
+    </footer>
+
+    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+    <script>
+        // Инициализация красивых анимаций при скролле
+        AOS.init({
+            duration: 800,
+            once: true,
+            offset: 100
+        });
+
+        // Функция переключения изображений в галерее
+        function changeImage(imgSrc, thumbnailElement) {
+            document.getElementById('mainProductImg').src = imgSrc;
+            
+            // Убираем активный класс у всех превьюшек
+            const thumbs = document.querySelectorAll('.thumb');
+            thumbs.forEach(thumb => thumb.classList.remove('active'));
+            
+            // Добавляем активный класс выбранной
+            thumbnailElement.classList.add('active');
+        }
+    </script>
+</body>
+</html>
